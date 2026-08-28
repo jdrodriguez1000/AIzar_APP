@@ -28,6 +28,7 @@
 | [S-002](#s-002---informe-de-cierre-para-la-terminal-auditora) | Informe de cierre para la terminal auditora | 2026-08-28 | 000_preproject |
 | [S-003](#s-003---canal-de-vuelta-de-la-auditoria-aceptado-e-implementado) | Canal de vuelta de la auditoria aceptado e implementado | 2026-08-28 | 000_preproject |
 | [S-004](#s-004---los-datos-propios-del-proyecto-se-extraen-a-projectmd) | Los datos propios del proyecto se extraen a `PROJECT.md` | 2026-08-28 | 000_preproject |
+| [S-005](#s-005---el-metodo-vertical-se-incorpora-y-se-ajusta-al-vocabulario-propio) | El metodo VERTICAL se incorpora y se ajusta al vocabulario propio | 2026-08-28 | 000_preproject |
 
 ---
 
@@ -38,27 +39,37 @@
 | Etapa actual | `000_preproject` |
 | Ultima actualizacion | 2026-08-28 |
 | Salud | En marcha |
-| Avance de la etapa | Metodo de trabajo, persistencia, repositorio, ciclo completo inicio/cierre, canal de vuelta con la auditoria, y datos propios del proyecto extraidos a `PROJECT.md` listos; alcance del proyecto pendiente |
-| Bloqueos activos | Alcance y objetivo del proyecto sin definir (T-004); bloquea a su vez T-016 |
+| Avance de la etapa | Metodo de trabajo, persistencia, repositorio, ciclo completo inicio/cierre, canal de vuelta con la auditoria, datos propios del proyecto en `PROJECT.md`, y el metodo VERTICAL incorporado y ajustado (codigos, dueño de los Gates, trazabilidad, etapas, diseño de fases) listos; alcance del proyecto pendiente |
+| Bloqueos activos | Alcance y objetivo del proyecto sin definir (T-004); bloquea a su vez T-016 y el diseño de la fase Prototipo |
 
 ---
 
 ## 2. Ultimo realizado
 
-Se creo `PROJECT.md` en la raiz con los datos propios del proyecto: identidad, rutas, control de
-version, carpetas propias y codigos (D-021, T-017). Las dos skills, los dos agentes, `CLAUDE.md` y
-`_audit/index.md` dejan de llevar esos datos escritos dentro y los citan de ahi: `protocol-start`
-lo lee primero en su Paso 1b, y `protocol-close` al empezar el Paso 1. De paso se generalizaron
-tres menciones coyunturales a "el alcance de AIzar no esta definido (T-004)", que describian el
-dia y no el proyecto, por una regla condicional: comprobar si el alcance esta registrado. Verificado
-tras el cambio: cero menciones especificas quedan en `.claude/` y `CLAUDE.md`.
+Se incorporo `_methodology/` (metodo VERTICAL: `000_method.md` canonico mas `sources/`) y se
+ajusto contra el vocabulario propio en cuatro decisiones: **D-022** renombra Feature y Scenario a
+`FT-`/`SC-` y fusiona `T-` en la tarea del proyecto con `Origen` obligatorio (canonico §46.1,
+§46.2, Anexo A.13); **D-024** reparte el veredicto de los Gates en tres actos —evidencia
+(`executor`), dictamen (`auditor`), veredicto (**el usuario**)—, escrito en `PROJECT.md` y
+`CLAUDE.md` sin tocar el canonico (§32 manda escribirlo fuera); **D-025** fija la trazabilidad por
+declaracion hacia arriba, sin indice central, con `_product/` declarada (aun no creada) para
+cuando entre Descubrimiento (canonico §47.1, Anexo A.14); **D-026** adopta las etapas de VERTICAL
+con `000_preproject` como unica excepcion, hasta cerrar T-004. **D-027** aplaza los ajustes
+internos de cada fase a cuando se diseñe, con un esqueleto fijo de 8 secciones en
+`_methodology/phases/NNN_<fase>.md` (documentado en `PROJECT.md`); de ahi nacen T-018 y T-019
+(`Origen: metodo`), aparcadas. Ademas, **D-023** adopta `contract.md` del repositorio del auditor
+como contrato vigente (version 1, verificado sin contradicciones contra `CLAUDE.md` y
+`_audit/index.md`); el renombrado de `_review/CANAL.md` a `channel.md` no exigio cambios, y las
+menciones historicas se dejaron intactas. Leccion nueva **L-002**: un metodo externo se contrasta
+contra el vocabulario propio antes de adoptarlo.
 
 ---
 
 ## 3. Siguiente paso
 
-Recibir del usuario el alcance y el objetivo del proyecto para poder cerrar la etapa
-`000_preproject` y pasar a la definicion tecnica.
+Recibir del usuario el alcance y el objetivo del proyecto (T-004) para poder cerrar la etapa
+`000_preproject`, entrar en `Descubrimiento` y diseñar la fase Prototipo (D-027) antes de
+empezarla.
 
 ---
 
@@ -168,6 +179,60 @@ Recibir del usuario el alcance y el objetivo del proyecto para poder cerrar la e
   `_audit/index.md` siguen en `Pendiente`.
 - **Siguiente paso concreto:** recibir del usuario el alcance y el objetivo del proyecto (T-004)
   para poder cerrar la etapa `000_preproject`.
+
+---
+
+### S-005 - El metodo VERTICAL se incorpora y se ajusta al vocabulario propio
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-28 |
+| Etapa | 000_preproject |
+
+- **Etapa del proyecto:** `000_preproject` — quinta jornada del repositorio, sobre el commit
+  `31e2ff7` (S-004).
+- **Que quedo hecho:** se incorporo `_methodology/` (`000_method.md` canonico del metodo
+  VERTICAL, mas tres fuentes en `sources/`), se analizo entero y se ajusto contra el vocabulario
+  ya en uso, una decision a la vez:
+  - **D-022** — Feature y Scenario cambian a `FT-`/`SC-`; `T-` se fusiona en la tarea del
+    proyecto con `Origen` obligatorio (canonico §46, nuevas §46.1 y §46.2, nota en §47, Anexo
+    A.13).
+  - **D-024** — el veredicto de los Gates se reparte en tres actos: evidencia (`executor`),
+    dictamen (`auditor`), veredicto (**el usuario**). Escrito en `PROJECT.md` y `CLAUDE.md`; el
+    canonico no se toca, porque su §32 manda escribir la asignacion fuera del documento.
+  - **D-025** — trazabilidad por declaracion hacia arriba, sin indice central; se declara
+    `_product/` (aun no creada) para cuando entre Descubrimiento (canonico nueva §47.1, Anexo
+    A.14).
+  - **D-026** — las etapas del proyecto son las de VERTICAL; `000_preproject` es la unica
+    excepcion, y se abandona al cerrar T-004.
+  - **D-027** — los ajustes internos de cada fase se aplazan a cuando se diseñe esa fase, con un
+    esqueleto fijo de 8 secciones en `_methodology/phases/NNN_<fase>.md` (esqueleto documentado en
+    `PROJECT.md`). De ahi nacen **T-018** y **T-019** (`Origen: metodo`), aparcadas por esta misma
+    decision.
+  - **D-023** — se adopta `contract.md`, del repositorio del auditor, como contrato vigente
+    (version 1, 2026-08-28), tras leerlo entero y contrastarlo sin encontrar contradicciones
+    contra `CLAUDE.md` y `_audit/index.md`. El renombrado de `_review/CANAL.md` a `channel.md` no
+    exigio ningun cambio operativo; las menciones historicas a `CANAL.md` se dejaron intactas a
+    proposito (describen correctamente lo que paso ese dia).
+  - **L-002** — leccion nueva: un metodo externo se contrasta contra el vocabulario propio antes
+    de adoptarlo, porque el choque no se ve como error, se ve como dos cosas distintas llamadas
+    igual.
+- **Lo que quedo sin resolver, a proposito o no:**
+  - `_methodology/phases/` mete contenido propio del proyecto dentro de una carpeta declarada
+    agnostica en `PROJECT.md`. Es un parche local, anotado en la propia D-027; la regla general
+    agnostico/propio sigue sin decidirse.
+  - `contract.md` §1 y §8 duplican datos que ya viven en `PROJECT.md`. Anotado como "duplicidad
+    conocida, no resuelta" en D-023: el archivo es del auditor y de solo lectura para nosotros
+    (C-002).
+  - El dictamen del Gate que exige D-024 no tiene forma definida en `contract.md` §4, que solo
+    contempla `R-XXX.md` auditando informes de sesion.
+  - `_product/` esta declarada por D-025 pero no se creo ninguna carpeta ni archivo: es
+    deliberado, se crea al entrar en Descubrimiento.
+- **Sin auditoria pendiente de responder:** el tablero del auditor sigue con su tabla vacia.
+  `_audit/index.md` mantiene S-002, S-003 y S-004 en `Pendiente`; se anade S-005 en el mismo
+  estado.
+- **Siguiente paso concreto:** recibir del usuario el alcance y el objetivo del proyecto (T-004)
+  para poder cerrar la etapa `000_preproject`, entrar en `Descubrimiento` y diseñar la fase
+  Prototipo (D-027) antes de empezarla.
 
 ---
 

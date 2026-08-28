@@ -30,6 +30,12 @@
 | [D-019](#d-019---la-seccion-0-es-un-contrato-auditable-fila-a-fila) | La seccion 0 es un contrato auditable fila a fila | 2026-08-28 | Vigente |
 | [D-020](#d-020---el-eje-reversibleirreversible-funciona-a-criterio-hasta-que-exista-alcance) | El eje reversible/irreversible funciona a criterio hasta que exista alcance | 2026-08-28 | Vigente |
 | [D-021](#d-021---los-datos-propios-del-proyecto-viven-solo-en-projectmd) | Los datos propios del proyecto viven solo en `PROJECT.md` | 2026-08-28 | Vigente |
+| [D-022](#d-022---los-codigos-de-vertical-se-renombran-para-no-chocar-con-los-nuestros) | Los codigos de VERTICAL se renombran para no chocar con los nuestros | 2026-08-28 | Vigente |
+| [D-023](#d-023---contractmd-del-auditor-se-adopta-como-contrato-vigente) | `contract.md` del auditor se adopta como contrato vigente | 2026-08-28 | Vigente |
+| [D-024](#d-024---el-veredicto-de-los-gates-es-del-usuario) | El veredicto de los Gates es del usuario | 2026-08-28 | Vigente |
+| [D-025](#d-025---la-trazabilidad-se-registra-por-declaracion-hacia-arriba-sin-indice-central) | La trazabilidad se registra por declaracion hacia arriba, sin indice central | 2026-08-28 | Vigente |
+| [D-026](#d-026---las-etapas-son-las-de-vertical-y-000_preproject-es-su-unica-excepcion) | Las etapas son las de VERTICAL, y `000_preproject` es su unica excepcion | 2026-08-28 | Vigente |
+| [D-027](#d-027---cada-fase-se-disena-antes-de-entrar-en-ella-con-esqueleto-fijo) | Cada fase se disena antes de entrar en ella, con esqueleto fijo | 2026-08-28 | Vigente |
 
 ---
 
@@ -526,3 +532,265 @@
 - **Alternativas descartadas:** meter los datos dentro de `CLAUDE.md`, que mezcla instrucciones con
   datos y obliga a editar el archivo de reglas en cada proyecto nuevo; y copiar y buscar/reemplazar
   en cada proyecto, que diverge en cuanto haya mas de dos.
+
+---
+
+### D-022 - Los codigos de VERTICAL se renombran para no chocar con los nuestros
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-28 |
+| Etapa | 000_preproject |
+| Decidido por | usuario |
+| Estado | Vigente |
+
+- **Contexto:** al incorporar el metodo VERTICAL (`_methodology/000_method.md`) se comprobo su tabla
+  de identificadores (§46) contra los codigos ya en uso. **Tres prefijos chocaban:**
+
+  | Prefijo | En VERTICAL | Aqui | En `contract.md` del auditor |
+  |---|---|---|---|
+  | `F-` | Feature | — | **Hallazgo**, correlativo global |
+  | `S-` | Scenario | **Sesion de trabajo** | **Sesion del ejecutor**, base del conteo de huerfanas |
+  | `T-` | Task de una Vertical Slice | **Tarea del proyecto** | **Tarea** que cita `Aceptado - pendiente` |
+
+- **Decision:** cambiar los codigos de **VERTICAL**, no los nuestros. Feature pasa a **`FT-`** y
+  Scenario a **`SC-`** (§46.1). Con `T-` no se renombra: **se fusiona** en nuestra `T-XXX`, que gana
+  un **origen obligatorio** — `VS-XXX` cuando nace del producto, otro valor cuando no (§46.2).
+- **Razon del sentido del cambio:** nuestros prefijos estan en el historial de commits, en el
+  mecanismo con que el auditor cuenta sesiones, y en un **contrato bilateral** que prohibe reutilizar
+  codigos para que `F-012` siga significando lo mismo seis sesiones despues. Los de VERTICAL no
+  estan escritos en ningun sitio todavia: hay **cero instancias**. Se cambia lo unilateral y gratuito,
+  no lo bilateral y caro. Y la fuente `005 §27` los propone como recomendacion de forma, no como regla.
+- **Por que `T-` se fusiona en vez de renombrarse:** dos prefijos distintos llamados los dos «tarea»
+  es un choque que **no se ve** —el peor tipo—, porque no produce error: produce una lista con dos
+  poblaciones y reglas distintas sin que nada lo señale. Un solo espacio con origen tipado lo evita.
+- **Efecto sobre §47:** la refuerza. «Nada se construye sin una razon trazable» pasa de norma que hay
+  que recordar a **campo que esta o no esta**: una tarea sin origen es la tarea huerfana que §47 manda
+  cuestionar, y ahora se detecta mirando. Un origen distinto de `VS-XXX` no es una excepcion a §47,
+  es su respuesta: la razon existe, solo que no es de producto — que es justo el caso del meta-trabajo
+  de esta etapa (`T-017` no traza a ninguna necesidad porque no es producto).
+- **Alcance:** cambia la **notacion**, no el metodo. La cadena de trazabilidad, su direccion y su
+  regla siguen siendo las de §45 y §47. `N-`, `VS-`, `TC-` y `ADR-` estaban libres y entran sin tocar
+  nada.
+- **Queda registrado en el canonico** como **Anexo A.13**, y se paso por el criterio del propio
+  documento —«¿restringe el diseño del producto, o solo este documento?»—: **no requiere ADR**. El
+  mismo producto se construye igual se llamen `F-` o `FT-`.
+- **Alternativas descartadas:**
+  - **Renombrar los nuestros.** Obliga a reescribir el historial de commits, rompe el conteo de
+    sesiones del auditor y toca un contrato bilateral, todo para acomodar codigos que aun no existen.
+  - **Separar los espacios por carpeta** y confiar en el contexto —codigos de producto solo en los
+    artefactos de producto—. No sirve: un codigo existe para poder citarse **fuera** de su archivo,
+    y en un mensaje de commit o en un informe de auditoria no hay contexto que desambigue.
+  - **Prefijar por dominio** (`P-F-001`). Resuelve la colision al precio de volver ilegible cada cita.
+
+---
+
+### D-023 - `contract.md` del auditor se adopta como contrato vigente
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-28 |
+| Etapa | 000_preproject |
+| Decidido por | executor, con el usuario |
+| Estado | Vigente |
+
+- **Contexto:** al revisar el renombrado de `_review/CANAL.md` a `channel.md` se descubrio que el
+  rename era lo de menos: `channel.md` se declara **superado por `contract.md`**, un archivo nuevo en
+  la raiz del repositorio del auditor que reune el reparto de autoridad, los dos canales, el acuse de
+  recibo, los tres veredictos, el desacuerdo y los codigos de ambos lados. **Nada nuestro apuntaba a
+  el, y no lo habiamos leido.** Su propio encabezado dice: «un contrato que solo conoce una terminal
+  no es un contrato: es una suposicion».
+- **Evaluacion previa (D-003):** se leyo entero y se contrasto contra `CLAUDE.md` y `_audit/index.md`.
+  **Sin contradicciones:** los tres veredictos, el umbral de dos sesiones para `Huerfana`, la replica
+  unica con evidencia nueva, el eje reversible/irreversible y las cuatro columnas de nuestro indice
+  coinciden con lo ya implementado. Se adopta porque **coincide**, no por venir del auditor.
+- **Decision:** registrar `contract.md` en `PROJECT.md` como ruta, **con la version leida y
+  verificada**, y declarar en `CLAUDE.md` que obliga a los dos lados.
+- **Por que la version y no solo la ruta:** una ruta dice donde esta; no dice si lo que hay ahi sigue
+  siendo lo que leimos. Va por la **version 1**; anotarla convierte «no nos enteramos de que cambio»
+  en algo comprobable de un vistazo.
+- **El contrato no pasa por la evaluacion de D-003 en cada uso.** Esa evaluacion es para lo que el
+  auditor **propone**; el contrato es lo que ya esta **acordado**. Una clausula que nos parezca mal se
+  discute como discrepancia, no se incumple en silencio.
+- **Lo que NO se hizo, a proposito:** no se toco ninguna de las menciones historicas a `CANAL.md` en
+  `_audit/S-003.md`, `decisions.md` (D-018) ni `progress.md`. Describen correctamente lo que paso ese
+  dia, cuando el archivo se llamaba asi. Reescribirlas falsificaria el registro.
+- **Duplicidad conocida, no resuelta:** las secciones 1 y 8 de `contract.md` repiten datos que ya
+  viven en nuestro `PROJECT.md` —nombre, rutas, rama, remoto, carpetas, codigos—. Son dos copias de
+  la misma realidad en repositorios distintos, que es el problema que D-021 existia para evitar. No se
+  resuelve aqui porque **el archivo es del auditor y es de solo lectura para nosotros** (C-002):
+  requiere acuerdo entre las dos terminales, no una edicion nuestra.
+- **Alternativas descartadas:** copiar `contract.md` a nuestro repositorio, que crea una tercera copia
+  que divergira; y no registrarlo, que deja la relacion entre terminales dependiendo de que alguien se
+  acuerde de mirar un archivo ajeno.
+
+---
+
+### D-024 - El veredicto de los Gates es del usuario
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-28 |
+| Etapa | 000_preproject |
+| Decidido por | usuario |
+| Estado | Vigente |
+
+- **Contexto:** el metodo VERTICAL exige en su §32 que el veredicto de un Gate lo emita alguien
+  **independiente de la construccion** y **declarado antes de emitirlo**, pero deliberadamente no
+  dice quien: manda que cada proyecto lo asigne «en la definicion operativa del proyecto que lo
+  aplique». Esa casilla estaba vacia. Se rellena ahora porque **su valor caduca**: §32 avisa de que
+  un veredicto cuyo dueño se decide al llegar al Gate se asigna sabiendo ya que resultado conviene.
+- **El choque que aparecio al aplicarlo:** el candidato obvio era `auditor` —no construye, verifica
+  contra evidencia, no depende de `executor`—, pero **contradice el contrato**: `contract.md` §2 dice
+  que el auditor «mide y recomienda, **no tiene veto**», y un Gate es exactamente un veto, porque su
+  resultado «No aprobado» significa detener.
+- **La distincion que lo resuelve:** auditar y decidir no son la misma operacion aunque miren la
+  misma evidencia. **Auditar** responde «¿esto se sostiene contra la evidencia?» — pregunta sobre la
+  **verdad**, verificable. **Un Gate** responde «¿vale la pena gastar lo que viene despues?» —
+  pregunta sobre la **inversion**, que depende de quien absorbe el coste de equivocarse.
+- **Decision:** el Gate se parte en **tres actos**, y ninguno modifica el contrato:
+
+  | Acto | Quien | Que hace |
+  |---|---|---|
+  | 1 · Evidencia | `executor` | Construye y registra la evidencia. **Nunca emite veredicto** |
+  | 2 · Dictamen | `auditor` | Verifica criterio por criterio si la evidencia los sostiene. **No decide** |
+  | 3 · Veredicto | **el usuario** | Decide `Aprobado` / `No aprobado` |
+
+  Aplica a los dos Gates: el 1 (§28–§32, criterios en §29) y el 2 (§51).
+- **Razon de fondo:** decide quien paga. `auditor` no asume la perdida ni sabe cuanto vale seguir o
+  parar; pedirle esa decision seria pedirle una opinion disfrazada de dictamen. En cambio un dictamen
+  contra los siete criterios de §29 es exactamente lo que ya hace con cada informe, sin tocar el
+  reparto de autoridad.
+- **Donde se escribio:** la asignacion en `PROJECT.md` —que es la «definicion operativa» que §32
+  manda escribir fuera del canonico—, y la prohibicion de que `executor` emita veredictos en
+  `CLAUDE.md`, incluida la version encubierta («esto ya esta listo para pasar el Gate» es un
+  veredicto con otras palabras).
+- **Rastro de cada veredicto:** una `D-XXX` en este archivo, con su campo `Decidido por`, mas su fila
+  en `progress.md`. **No se crea codigo propio para los Gates:** un veredicto es una decision con
+  fecha, alternativas y consecuencias, y `decisions.md` ya tiene esa forma. Inventar `G-XXX` añadiria
+  un espacio de codigos que mantener a cambio de nada.
+- **Alternativas descartadas:**
+  - **`auditor` emite el veredicto.** Es lo mas literal respecto de §32, pero exige enmendar
+    `contract.md` §2, que es **bilateral** y de solo lectura para nosotros (C-002): requiere negociarlo
+    con la otra terminal, no editarlo. Y le pide una decision de inversion que no esta en condiciones
+    de tomar.
+  - **`executor` decide.** Es exactamente lo que §32 prohibe.
+  - **No declararlo y resolverlo al llegar.** Es la opcion por defecto si no se hace nada, y es la que
+    §32 señala como la peor de todas.
+- **Consecuencia asumida:** el Gate deja de poder resolverse entre las dos terminales. **Requiere al
+  usuario**, y por tanto puede esperar por el. Se acepta: una barrera de inversion que se puede
+  atravesar sin que el que invierte se entere no es una barrera.
+
+---
+
+### D-025 - La trazabilidad se registra por declaracion hacia arriba, sin indice central
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-28 |
+| Etapa | 000_preproject |
+| Decidido por | usuario |
+| Estado | Vigente |
+
+- **Contexto:** §45 del metodo exige recorrer la cadena `N → FT → SC → VS → T → TC` en las dos
+  direcciones, y §47 prohibe construir sin razon trazable. **Ninguna de las tres fuentes dice donde
+  se escribe el vinculo.** Una regla sin mecanismo no es comprobable: para poder cuestionar una tarea
+  huerfana hay que poder **detectar** que lo es. Se resuelve ahora porque lo siguiente que produce el
+  proyecto —las necesidades `N-XXX` de Descubrimiento (§14)— ya necesita sitio.
+- **Decision, en una regla:** **cada elemento declara unicamente a su padre; nunca a sus hijos.** La
+  necesidad es la raiz y no declara nada. `ADR-XXX` queda fuera de la cadena: cuelga de `ARCHIT`.
+- **Por que una sola direccion:** un hijo conoce a su padre en el momento en que nace; un padre no
+  conoce a sus hijos futuros. Escribir ambas crea dos afirmaciones sobre el mismo vinculo, y el dia
+  que una cambie sin la otra hay que decidir cual miente.
+- **Las dos direcciones de §45 se resuelven sin guardar nada:** hacia atras es una lectura encadenada
+  (cada elemento lleva al siguiente); hacia adelante es una busqueda («¿quien declara a `N-001` como
+  padre?»). Mecanico, sin criterio.
+- **Efecto sobre §47:** pasa de norma a comprobacion. Una tarea huerfana deja de ser un juicio sobre
+  si el trabajo «se justifica» y pasa a ser **un campo vacio o que apunta a algo inexistente**.
+  Completa lo que la D-022 empezo con el `Origen` obligatorio de la tarea, que es el ultimo eslabon.
+- **Carpeta:** `_product/`, cuarta pieza junto a `_methodology/` (**como** se construye),
+  `_persistence/` (**como va** el trabajo) y `_audit/` (lo que entregamos a la auditoria).
+  `_product/` es **que** se construye.
+- **No se crean archivos todavia**, salvo el que haga falta. Descubrimiento solo produce las salidas
+  de §14; el PRD, BDD, SPEC y ARCHIT nacen **despues** del Gate 1 (§33), y crearlos vacios ahora seria
+  la documentacion anticipada que §6 y §39 mandan evitar. La carpeta se crea al entrar en
+  Descubrimiento.
+- **Alternativas descartadas:**
+  - **Indice central de trazabilidad** (`traceability.md` con la cadena en una tabla). Comodo de leer
+    y imposible de mantener: duplica cada vinculo. **Nuestro propio `_audit/index.md` ya lleva escrita
+    esta leccion** — «no espejamos su tablero: dos copias de la misma realidad se separan, y entonces
+    hay que decidir cual miente». Peor aun: la tabla es la que se lee y el elemento el que es cierto.
+  - **Declarar en las dos direcciones.** Se lee mejor, pero admite contradiccion entre dos
+    afirmaciones sobre el mismo vinculo.
+  - **Meter el producto dentro de `_persistence/`.** Mezcla cosas con vidas distintas: el estado del
+    trabajo se reescribe cada sesion, y una `N-001` debe seguir diciendo lo mismo dentro de dos años.
+- **Registrado en el canonico** como **§47.1** y **Anexo A.14**, pasado por el criterio del propio
+  documento: **no requiere ADR** — decide donde se escribe el vinculo, no que se construye.
+
+---
+
+### D-026 - Las etapas son las de VERTICAL, y `000_preproject` es su unica excepcion
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-28 |
+| Etapa | 000_preproject |
+| Decidido por | usuario |
+| Estado | Vigente |
+
+- **Contexto:** `progress.md` viene usando `000_preproject` como etapa, un nombre nuestro que no
+  existe en VERTICAL. Al incorporar el metodo habia que decidir si conviven dos nomenclaturas de
+  etapas o una sola.
+- **Decision:** **una sola, la del metodo** — `Descubrimiento → Prototipo → [Gate 1] → Product
+  Baseline → WSLT → GRTH-NN → MVP → [Gate 2] → EVOL-NN`. `000_preproject` se conserva como **unica
+  excepcion**, y al cerrarse **T-004** se entra en `Descubrimiento` y deja de usarse.
+- **Por que `000_preproject` merece ser excepcion y no encajarse a la fuerza en `Descubrimiento`:**
+  en ella no se construye producto, se monta la forma de trabajar. Llamarla `Descubrimiento` diria
+  que el producto lleva cuatro sesiones avanzando, cuando lo que avanza es el andamio. Un nombre de
+  etapa es una afirmacion sobre donde esta el producto.
+- **Por que una sola nomenclatura y no dos en paralelo:** dos vocabularios para lo mismo obligan a
+  traducir en cada informe y en cada auditoria, y la traduccion se hace mal tarde o temprano.
+- **Donde vive:** el **vocabulario** en `PROJECT.md`, que es lo estable; **cual es la etapa de hoy**
+  en `_persistence/progress.md`, que es lo que cambia.
+- **Alternativas descartadas:** renombrar `000_preproject` a `Descubrimiento` retroactivamente, que
+  falsea el registro de cuatro sesiones ya cerradas y auditables; y mantener una numeracion propia
+  (`001_`, `002_`…) en paralelo a los nombres del metodo, que es la doble nomenclatura que esto evita.
+
+---
+
+### D-027 - Cada fase se disena antes de entrar en ella, con esqueleto fijo
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-28 |
+| Etapa | 000_preproject |
+| Decidido por | usuario |
+| Estado | Vigente |
+
+- **Contexto:** tras tres ajustes al metodo quedaban pendientes cuatro huecos mas —las salidas de la
+  etapa Prototipo, la puerta ausente entre GRTH y MVP, la viabilidad hibrida sin dueño (§50.1) y la
+  metrica del Gate 2 sin momento (A.6)—. El usuario propuso **no resolverlos ahora**, sino trabajar
+  fase por fase entradas, salidas, procesos, agentes y flujo, y ajustar el metodo en ese momento.
+- **Decision:** se acepta. **Los ajustes internos de una fase se hacen al definir esa fase**, no
+  antes.
+- **Razon:** es el propio metodo aplicado a si mismo. §6 y §39 mandan «definir suficientemente el
+  futuro inmediato y no especular sobre el futuro lejano», y §59 exige proporcionalidad al
+  esfuerzo. Diseñar las salidas del Prototipo **sin conocer el alcance** (T-004 sigue abierta) es
+  exactamente el extremo de documentacion anticipada que §6 describe como riesgo. Ademas los agentes
+  de una fase dependen del dominio: definidos antes de conocerlo, salen genericos.
+- **Por que los tres ajustes ya hechos si tocaban ahora:** D-022, D-024 y D-025 **atraviesan todas
+  las fases** —codigos, dueño de los Gates, trazabilidad— y no pertenecen a ninguna. Los que quedan
+  son internos a una fase. El corte cae donde debe.
+- **Condicion 1 — «al pasar a cada fase» significa ANTES de entrar.** La fase N se diseña al cerrar
+  la fase N-1. Diseñada desde dentro, una fase no define lo que se exige: describe lo que salio. Es
+  el mismo argumento que el metodo repite en §23, §32, A.6 y A.11.
+- **Condicion 2 — el esqueleto se fija una sola vez, ahora.** Ocho secciones iguales para todas las
+  fases (en `PROJECT.md`), porque ocho fases inventando cada una su estructura producen ocho
+  documentos incomparables. La **seccion 7, criterio de cierre**, cubre de paso un hueco real del
+  canonico: §41.1 avisa de que GRTH puede degenerar en Waterfall y §48 de que el MVP se estira, pero
+  ninguna fase tiene criterio de terminacion. Exigirlo en cada definicion lo resuelve sin parchear el
+  canonico fase por fase.
+- **Donde viven:** `_methodology/phases/NNN_<fase>.md`. Esto mete contenido **propio del proyecto**
+  dentro de una carpeta declarada agnostica, y queda anotado ahi mismo: `000_method.md` y `sources/`
+  se copian a otro proyecto, `phases/` no. Es la segunda vez que aparece la frontera
+  agnostico/propio, que sigue sin regla general (conversacion aplazada, sin decision).
+- **Se aparcan dos hallazgos que NO dependen de ninguna fase**, para que no se pierdan: **T-018** (el
+  criterio 6 de §29 es la pregunta del Gate puesta como requisito de si misma) y **T-019** (el
+  principio sin nombre que el metodo repite en cinco sitios).
+- **Alternativas descartadas:** resolver los cuatro huecos ahora, que especula sobre fases que estan
+  a meses y sin alcance conocido; y aplazarlos sin fijar esqueleto ni momento, que es aplazar sin
+  plan — y lo aplazado sin momento no se retoma, se olvida.

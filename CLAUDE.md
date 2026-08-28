@@ -14,6 +14,14 @@ Trabajamos en paralelo con una segunda terminal llamada **auditor**.
 - Su ruta, la del canal de vuelta y los demas datos propios de este proyecto estan en
   **`PROJECT.md`**.
 
+🔑 **Lo que las dos terminales se deben la una a la otra esta en `contract.md`**, en el
+repositorio del auditor (ruta y version leida, en `PROJECT.md`). Lo escribio el auditor y **obliga
+a los dos lados**: un contrato que solo conoce una terminal es una suposicion, no un contrato.
+
+⚠️ **El contrato no es una recomendacion, y por eso no pasa por la evaluacion de mas abajo.**
+Esa evaluacion es para lo que el auditor *propone*; el contrato es lo que ya esta *acordado*. Si
+alguna clausula nos parece mal, se discute como discrepancia —no se incumple en silencio.
+
 ## Tratamiento de lo entregado por auditor
 
 Analizar la informacion entregada por la terminal auditora y decidir si lo entregado es correcto:
@@ -65,6 +73,56 @@ ruta del informe en `Observaciones`.
 decides no implementarlo, la fila sigue diciendo `Con hallazgos` — y el porque de no implementarlo
 va a `decisions.md`. Marcar `Sin hallazgos` un informe que si los tuvo borra el hallazgo en
 silencio, que es justo lo que el indice existe para impedir.
+
+## Cada fase se disena antes de entrar en ella
+
+Las entradas, salidas, procesos, agentes y flujo de una fase **se escriben antes de empezarla**, no
+mientras se ejecuta. La fase N se disena al cerrar la fase N-1.
+
+🚨 **Diseñada desde dentro, una fase no define lo que se exige: describe lo que salio.** Si
+las salidas del Prototipo se escriben con tres dias de prototipado hechos, seran las que hubo, no
+las que hacian falta. El metodo repite este mismo argumento en cinco sitios —los usuarios antes de
+la prueba, el dueño del Gate antes de llegar, la metrica antes de medir, el alcance antes de
+prototipar— y todos dicen lo mismo: **lo que se define despues de ver el resultado no es una
+definicion.**
+
+⛔ **No diseñes fases lejanas.** Solo la siguiente. El resto es especulacion, y el propio metodo
+la prohibe (§6, §39): definir suficientemente el futuro inmediato y no especular sobre el lejano.
+
+El esqueleto obligatorio de esa definicion y donde vive estan en **`PROJECT.md`**.
+
+## Los Gates: no son tuyos
+
+El metodo de desarrollo trabaja con **Gates**: barreras de inversion cuyo veredicto puede **detener**
+el proyecto. **Tu no emites ninguno.**
+
+🚨 **Quien construye no puede ser su propio testigo.** Un sistema que se revisa a si mismo
+comprueba que es coherente, no que sea cierto — y solo lo segundo justifica seguir gastando. Tu
+papel en un Gate es **producir y anclar la evidencia**, nunca juzgarla.
+
+⛔ **Tampoco un veredicto adelantado.** «Esto ya esta listo para pasar el Gate» es un veredicto con
+otras palabras. Presenta la evidencia contra los criterios y para ahi.
+
+Quien emite el veredicto, quien dictamina y con que criterios estan en **`PROJECT.md`**. Se declara
+**antes** de llegar al Gate: decidirlo al llegar es elegir juez sabiendo ya que resultado conviene.
+
+## Trazabilidad: cada cosa nombra a su padre
+
+Nada se construye sin una razon trazable. El mecanismo es uno solo:
+
+🔑 **Cada elemento del producto declara unicamente a su padre. Nunca a sus hijos.** Un hijo
+conoce a su padre al nacer; un padre no conoce a sus hijos futuros. Escribir las dos direcciones
+crea dos afirmaciones sobre el mismo vinculo, y un dia divergen.
+
+⛔ **No crees un indice de trazabilidad**, por comodo que parezca. Repetiria en una tabla lo que
+ya esta en cada elemento, y entonces habria que decidir cual de los dos miente. **La cadena se
+recorre, no se guarda:** hacia atras leyendo encadenado, hacia adelante buscando quien declara a un
+codigo como padre.
+
+🚨 **Un elemento sin padre declarado es huerfano**, y eso no se discute: se corrige o se
+cuestiona su existencia. No es un juicio sobre si el trabajo se justifica — es un campo vacio.
+
+Los codigos, quien declara a quien y donde vive cada artefacto estan en **`PROJECT.md`**.
 
 ## Registro del proyecto
 

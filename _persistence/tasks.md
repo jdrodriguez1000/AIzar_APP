@@ -26,6 +26,8 @@
 | [T-015](#t-015---escribir-en-protocol-close-las-reglas-de-la-seccion-0) | Escribir en `protocol-close` las reglas de la seccion 0 | Implementada | Alta | No bloqueante |
 | [T-016](#t-016---poblar-el-inventario-de-acciones-irreversibles) | Poblar el inventario de acciones irreversibles | No implementada | Alta | No bloqueante |
 | [T-017](#t-017---extraer-los-datos-del-proyecto-a-projectmd) | Extraer los datos del proyecto a `PROJECT.md` | Implementada | Alta | No bloqueante |
+| [T-018](#t-018---resolver-la-circularidad-del-criterio-6-del-gate-1) | Resolver la circularidad del criterio 6 del Gate 1 | No implementada | Media | No bloqueante |
+| [T-019](#t-019---enunciar-una-sola-vez-el-principio-de-declarar-antes) | Enunciar una sola vez el principio de «declarar antes» | No implementada | Baja | No bloqueante |
 
 ---
 
@@ -315,3 +317,44 @@ T-004:** sin alcance no se sabe que hace el proyecto ni que puede romper. Ver D-
 `CLAUDE.md` y `_audit/index.md` dejan de llevar datos dentro y lo citan. De paso se generalizaron
 las tres menciones coyunturales a T-004. Verificado: cero menciones especificas en `.claude/` y
 `CLAUDE.md`. Ver D-021.
+
+---
+
+### T-018 - Resolver la circularidad del criterio 6 del Gate 1
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | metodo |
+| Fecha | - |
+
+El criterio **6** de §29 —«existe confianza suficiente para realizar la inversion del MVP»— es la
+pregunta del Gate 1 (§28) puesta como requisito de si misma. Tiene consecuencia practica con la
+**D-024**: si `auditor` dictaminara el criterio 6 estaria emitiendo el veredicto que esa decision le
+prohibe. Propuesta a evaluar: declarar que los criterios **1–5 y 7 son materia del dictamen** y el
+**6 es el veredicto**, propiedad de su dueño.
+
+**No depende de ninguna fase ni del alcance:** es una inconsistencia interna del canonico. Aparcada
+por D-027; se resuelve al definir la fase Prototipo, o antes si conviene.
+
+---
+
+### T-019 - Enunciar una sola vez el principio de «declarar antes»
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | metodo |
+| Fecha | - |
+
+El metodo repite el mismo argumento en cinco sitios sin nombrarlo: §23 (los usuarios representativos
+se definen antes de la prueba), §32 (el dueño del Gate, antes de llegar), A.6 (la metrica, antes de
+medir), A.11 (el alcance del prototipo, en Descubrimiento) y la regla de D-027 (la fase, antes de
+entrar). Todos dicen: **lo que se define despues de ver el resultado no es una definicion.**
+
+Enunciarlo una vez y citarlo desde los cinco, en lugar de reargumentarlo cada vez. Mejora de
+redaccion del canonico, sin consecuencia sobre el diseño del producto. Aparcada por D-027.
