@@ -13,14 +13,18 @@
 | [T-002](#t-002---crear-claudemd-con-las-reglas-executorauditor) | Crear `CLAUDE.md` con las reglas executor/auditor | Implementada | Alta | Bloqueante |
 | [T-003](#t-003---estructurar-los-archivos-de-persistencia-indice-codigos-y-estados) | Estructurar los archivos de persistencia (indice, codigos y estados) | Implementada | Alta | Bloqueante |
 | [T-004](#t-004---recibir-el-alcance-y-objetivo-del-proyecto) | Recibir el alcance y objetivo del proyecto | No implementada | Alta | Bloqueante |
-| [T-005](#t-005---definir-el-canal-de-entrega-de-la-auditoria) | Definir el canal de entrega de la auditoria | No implementada | Media | No bloqueante |
+| [T-005](#t-005---definir-el-canal-de-entrega-de-la-auditoria) | Definir el canal de entrega de la auditoria | Implementada | Media | No bloqueante |
 | [T-006](#t-006---inicializar-el-repositorio-git-y-enlazarlo-con-github) | Inicializar el repositorio git y enlazarlo con GitHub | Implementada | Alta | Bloqueante |
 | [T-007](#t-007---crear-la-skill-protocol-close) | Crear la skill `protocol-close` | Implementada | Alta | No bloqueante |
 | [T-008](#t-008---crear-el-agente-session-closer) | Crear el agente `session-closer` | Implementada | Alta | No bloqueante |
 | [T-009](#t-009---crear-la-skill-protocol-start) | Crear la skill `protocol-start` | Implementada | Alta | No bloqueante |
-| [T-010](#t-010---incorporar-al-arranque-la-lectura-del-tablero-del-auditor) | Incorporar al arranque la lectura del tablero del auditor | No implementada | Media | No bloqueante |
+| [T-010](#t-010---incorporar-al-arranque-la-lectura-del-tablero-del-auditor) | Incorporar al arranque la lectura del tablero del auditor | Implementada | Media | No bloqueante |
 | [T-011](#t-011---crear-el-agente-session-starter) | Crear el agente `session-starter` | Implementada | Alta | No bloqueante |
 | [T-012](#t-012---anadir-al-cierre-el-informe-para-la-auditoria) | Anadir al cierre el informe para la auditoria | Implementada | Alta | No bloqueante |
+| [T-013](#t-013---crear-el-indice-de-auditorias-_auditindexmd) | Crear el indice de auditorias `_audit/index.md` | Implementada | Alta | No bloqueante |
+| [T-014](#t-014---implementar-el-canal-de-vuelta-de-la-auditoria) | Implementar el canal de vuelta de la auditoria | Implementada | Alta | No bloqueante |
+| [T-015](#t-015---escribir-en-protocol-close-las-reglas-de-la-seccion-0) | Escribir en `protocol-close` las reglas de la seccion 0 | Implementada | Alta | No bloqueante |
+| [T-016](#t-016---poblar-el-inventario-de-acciones-irreversibles) | Poblar el inventario de acciones irreversibles | No implementada | Alta | No bloqueante |
 
 ---
 
@@ -104,15 +108,15 @@ Relacionada con el supuesto A-003.
 ### T-005 - Definir el canal de entrega de la auditoria
 | Campo | Valor |
 |---|---|
-| Estado | No implementada |
+| Estado | Implementada |
 | Importancia | Media |
 | Urgencia | No bloqueante |
 | Etapa | 000_preproject |
 | Origen | executor |
-| Fecha | - |
+| Fecha | 2026-08-28 |
 
-Establecer como llegan a `executor` los hallazgos de `auditor`: pegados por el usuario,
-en un archivo acordado, o leyendo la carpeta del auditor. Relacionada con el supuesto A-001.
+Resuelta: el auditor definio el canal en `AIzar_Auditor/_review/` y `executor` lo evaluo y acepto
+(D-018). A-001 queda `Confirmado`.
 
 ---
 
@@ -185,16 +189,15 @@ auditor (ver D-011 y T-010).
 ### T-010 - Incorporar al arranque la lectura del tablero del auditor
 | Campo | Valor |
 |---|---|
-| Estado | No implementada |
+| Estado | Implementada |
 | Importancia | Media |
 | Urgencia | No bloqueante |
 | Etapa | 000_preproject |
 | Origen | executor |
-| Fecha | - |
+| Fecha | 2026-08-28 |
 
-Cuando T-005 defina por que canal llegan los hallazgos de `auditor`, anadir a `protocol-start` el
-paso que los lee y los compara con `_persistence/tasks.md`, reportando el desfase sin corregirlo.
-Depende de T-005. Ver D-011.
+Implementada como **Paso 1c** de `protocol-start`: lee `../AIzar_Auditor/_review/index.md` y reporta
+las auditorias nuevas y las entregadas sin acuse de recibo, sin corregir nada. Ver D-018.
 
 ---
 
@@ -228,3 +231,69 @@ Nuevo Paso 6b en `protocol-close`: escribe `_audit/S-XXX.md` completo antes del 
 seccion obligatoria «Que pedimos auditar». El reporte de pantalla gana un bloque con la version
 corta. Propagado al agente `session-closer` y a las tablas de actores de ambos protocolos, y
 anunciado en `CLAUDE.md`. Ver D-016.
+
+---
+
+### T-013 - Crear el indice de auditorias `_audit/index.md`
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Alta |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | usuario |
+| Fecha | 2026-08-28 |
+
+Indice de informes con estado `Pendiente` / `Sin hallazgos` / `Con hallazgos`. `S-002` queda
+registrado como `Pendiente`. El Paso 6b de `protocol-close` anade la fila; `protocol-start` reporta
+las pendientes; `CLAUDE.md` recoge quien escribe el veredicto y por que no se puede suavizar.
+Ver D-017.
+
+---
+
+### T-014 - Implementar el canal de vuelta de la auditoria
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Alta |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-28 |
+
+Primera tarea con `Origen: auditor`, evaluada y aceptada segun D-003. Paso 1c en `protocol-start`;
+seccion 0 con tres veredictos en el informe del Paso 6b de `protocol-close`; columna `Respondida en`
+y autoridad de estados en `_audit/index.md`; recepcion, registro de hallazgos y reglas de
+desacuerdo en `CLAUDE.md`. Ver D-018.
+
+---
+
+### T-015 - Escribir en `protocol-close` las reglas de la seccion 0
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Alta |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-28 |
+
+Que exige cada veredicto para ser auditable, la prohibicion de marcar `Implementado` lo que el diff
+no muestre, y que la tabla vaya completa porque un hallazgo omitido no cuenta como contestado.
+Ver D-019.
+
+---
+
+### T-016 - Poblar el inventario de acciones irreversibles
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Alta |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | executor |
+| Fecha | - |
+
+Listar que acciones son irreversibles en este proyecto (borrar datos, publicar, migrar, gastar, y
+las propias del dominio), para que el desempate de D-018 deje de aplicarse a criterio. **Depende de
+T-004:** sin alcance no se sabe que hace el proyecto ni que puede romper. Ver D-020.

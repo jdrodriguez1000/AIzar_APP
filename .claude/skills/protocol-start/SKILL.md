@@ -30,9 +30,11 @@ fecha siendo sesiones distintas, y ordenar por fecha las mezcla.
 | **`session-closer`** | `progress.md`, `tasks.md`, propuestas de deuda, el informe `_audit/S-XXX.md`, el commit y su push |
 | **auditor** | su propio repositorio; audita, verifica y recomienda |
 
-⚠️ **Hoy el arranque no lee nada del auditor**, porque todavia no esta definido por que canal
-llegan sus hallazgos (supuesto A-001, tarea T-005). Cuando se defina, este protocolo gana un paso.
-**Mientras tanto, no inventes ese paso ni busques archivos en el repositorio del auditor.**
+El auditor trabaja **fuera de nuestras sesiones**: puede haber auditado entre el ultimo cierre y
+ahora, y **nada en nuestro repositorio se entera solo**. Por eso el Paso 1c lo mira.
+
+🚨 **Su repositorio es de solo lectura para nosotros** (restriccion C-002). Se lee, se reporta, y
+nunca se escribe en el.
 
 ---
 
@@ -73,6 +75,35 @@ archivos»* mas abajo.
 
 Si alguno no existe o esta vacio, **dilo en el reporte** en lugar de inventar contenido.
 
+### 1c. Y el tablero del auditor
+
+```bash
+cat ../AIzar_Auditor/_review/index.md
+```
+
+Es el **canal de vuelta** (D-018): una fila por auditoria entregada, apuntando a un `R-XXX.md` que
+audita uno de nuestros `_audit/S-XXX.md`, en emparejamiento 1:1.
+
+Mira dos cosas, y las dos van al reporte:
+
+| Lo que ves en su tabla | Que significa | Que haces |
+|---|---|---|
+| una fila que **no** figura en nuestro `_audit/index.md` con su veredicto | auditoria entregada **sin acuse de recibo** | reportala arriba: es lo primero de la jornada |
+| una fila marcada `Huerfana` | pasaron dos sesiones nuestras sin recogerla | reportala **primero que ninguna otra**: se re-entrega con prioridad |
+
+Si hay una auditoria nueva, **di su ruta, su veredicto y cuantos hallazgos siguen abiertos**. No la
+resumas ni la interpretes: quien la va a leer entera es `executor`.
+
+⚠️ **No abras los `R-XXX.md` salvo que el indice diga que hay algo nuevo.** El tablero es la
+respuesta por defecto, igual que en `_persistence/`.
+
+🚨 **El estado de cada hallazgo es del auditor, no nuestro.** El decide cuando un hallazgo queda
+cerrado, verificandolo sobre un commit posterior. Nosotros no llevamos copia de esos estados: lo
+nuestro son las tareas, decisiones y deuda que salgan de ellos. **No espejes su tablero.**
+
+⚠️ Si la carpeta no existe o no se puede leer, **dilo en el reporte** y sigue. No supongas que no
+hay auditorias.
+
 ### Por que el `git` va primero
 
 > 🔑 **`progress.md` es lo que alguien escribio que paso. `git log` es lo que paso.**
@@ -90,6 +121,7 @@ sabiendo si se les puede creer.
 | la primera linea de `git status -sb` dice `ahead` | la sesion anterior **no subio** | *«🚨 N commits sin subir a `origin` — el trabajo existe solo en este disco»* |
 | hay commits que tocan `_persistence/` **posteriores** al ultimo que toco `progress.md` | el archivo de estado se sello antes que la ultima entrada | *«⚠️ `progress.md` se sello en `<hash>` y hay N commits posteriores de `_persistence/`»* |
 | el indice de un archivo y sus entradas no coinciden | un cierre quedo a medias | *«⚠️ `<archivo>`: `<codigo>` esta en el indice y no en el detalle (o al reves)»* |
+| hay una auditoria en `_review/index.md` sin veredicto en nuestro `_audit/index.md` | se entrego y no se recogio | *«🚨 `R-XXX` entregada el <fecha> sin acuse de recibo»* |
 
 La cuarta se comprueba con **dos** ordenes, no con una:
 
@@ -163,6 +195,8 @@ teniendo clara **que pregunta concreta** quieres responder con cada uno:
 | `_persistence/assumptions.md` | haya tareas apoyadas en supuestos sin confirmar, o supuestos que puedan haber caducado |
 | `_persistence/lessons.md` | se vaya a repetir un tipo de trabajo que ya fallo antes |
 | `_persistence/debt_tec.md` | haya deuda que bloquee lo siguiente, o propuestas del cierre sin confirmar |
+| `_audit/index.md` | necesites contrastar el Paso 1c: que auditorias hemos recogido ya y cuales seguimos debiendo |
+| `../AIzar_Auditor/_review/R-XXX.md` | el Paso 1c muestre una auditoria nueva **y** el usuario pida el detalle. Por defecto basta con anunciarla |
 
 ⚠️ **`temporal/` no se lee.** Es el area de trabajo del usuario, no parte del registro, y su
 contenido cambia o desaparece sin aviso.

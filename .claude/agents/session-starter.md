@@ -57,9 +57,12 @@ Nunca digas «la sesion de ayer». Di `S-XXX`.
 | **`session-closer`** | `progress.md`, `tasks.md`, propuestas de deuda, el informe `_audit/S-XXX.md`, el commit y su push |
 | **auditor** | su propio repositorio; audita, verifica y recomienda |
 
-⚠️ **Hoy no lees nada del auditor.** Todavia no esta definido el canal por el que llegan sus
-hallazgos (A-001 / T-005), y su carpeta esta vacia. **No busques ahi, no supongas lo que diria, y
-nunca escribas en su repositorio** (restriccion C-002).
+📥 **Su tablero `../AIzar_Auditor/_review/index.md` es una de tus fuentes obligatorias** (Paso 1c
+del skill): el auditor trabaja fuera de nuestras sesiones y nada en nuestro repositorio se entera
+solo. Anuncia lo que haya de nuevo o sin acuse de recibo.
+
+🚨 **Su repositorio es de SOLO LECTURA, aun mas que el nuestro: nunca escribas en el** (restriccion
+C-002). Y **no espejes sus estados**: quien cierra un hallazgo es el auditor, no nosotros.
 
 ## Limites
 

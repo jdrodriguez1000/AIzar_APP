@@ -26,6 +26,7 @@
 |---|---|---|---|
 | [S-001](#s-001---metodo-de-trabajo-persistencia-y-protocolo-de-cierre) | Metodo de trabajo, persistencia y protocolo de cierre | 2026-08-28 | 000_preproject |
 | [S-002](#s-002---informe-de-cierre-para-la-terminal-auditora) | Informe de cierre para la terminal auditora | 2026-08-28 | 000_preproject |
+| [S-003](#s-003---canal-de-vuelta-de-la-auditoria-aceptado-e-implementado) | Canal de vuelta de la auditoria aceptado e implementado | 2026-08-28 | 000_preproject |
 
 ---
 
@@ -36,17 +37,24 @@
 | Etapa actual | `000_preproject` |
 | Ultima actualizacion | 2026-08-28 |
 | Salud | En marcha |
-| Avance de la etapa | Metodo de trabajo, persistencia, repositorio y ciclo completo inicio/cierre listos; alcance del proyecto pendiente |
-| Bloqueos activos | Alcance y objetivo del proyecto sin definir (T-004) |
+| Avance de la etapa | Metodo de trabajo, persistencia, repositorio, ciclo completo inicio/cierre y canal de vuelta con la auditoria listos; alcance del proyecto pendiente |
+| Bloqueos activos | Alcance y objetivo del proyecto sin definir (T-004); bloquea a su vez T-016 |
 
 ---
 
 ## 2. Ultimo realizado
 
-El cierre pasa a producir un informe para la terminal auditora en `_audit/S-XXX.md`, dentro del
-mismo commit que describe, para que la auditoria se haga sobre un estado verificable y no sobre un
-relato (D-016). Con eso queda montado el ciclo completo: arranque, registro del porque durante la
-jornada, y cierre.
+Se creo `_audit/index.md`, indice de informes con estado por fila (`Pendiente` / `Sin hallazgos` /
+`Con hallazgos`), para saber cuales sesiones quedan sin auditar en vez de asumir que la ultima es
+la unica pendiente (D-017, T-013). El auditor entrego su propuesta de canal de vuelta en
+`AIzar_Auditor/_review/CANAL.md`; se evaluo segun D-003 —verificando primero que la carpeta
+existiera y fuera legible— y se acepto (D-018, T-014, primera tarea con `Origen: auditor`): Paso 1c
+en `protocol-start`, seccion 0 con tres veredictos en el informe del Paso 6b de `protocol-close`,
+y las reglas de recepcion/desacuerdo en `CLAUDE.md`. Con eso cerraron T-005, T-010 y A-001
+(`Confirmado`); D-011 quedo `Revocada por D-018`. El auditor senalo ademas que audita la seccion 0
+fila a fila con tres exigencias que no estaban escritas en `protocol-close`: se anadieron (D-019,
+T-015). Y que su inventario de acciones irreversibles esta vacio hasta que exista alcance: se
+acepto que el desempate se aplique a criterio mientras tanto (D-020, T-016, depende de T-004).
 
 ---
 
@@ -107,6 +115,31 @@ Recibir del usuario el alcance y el objetivo del proyecto para poder cerrar la e
   `session-closer`, y a `CLAUDE.md`. Se reescribio A-001: la **ida** del informe deja de ser
   supuesto (la fija D-016); queda abierto solo el **canal de vuelta** de las observaciones del
   auditor.
+- **Siguiente paso concreto:** recibir del usuario el alcance y el objetivo del proyecto (T-004)
+  para poder cerrar la etapa `000_preproject`.
+
+### S-003 - Canal de vuelta de la auditoria aceptado e implementado
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-28 |
+| Etapa | 000_preproject |
+
+- **Etapa del proyecto:** `000_preproject` — tercera jornada del repositorio, sobre el commit
+  `dced7b5` (S-002).
+- **Que quedo hecho:** se creo `_audit/index.md` con estado por fila para saber que sesiones
+  faltan por auditar, en vez de asumir cual es "la ultima" (D-017, T-013). El auditor entrego su
+  propuesta de canal de vuelta (`AIzar_Auditor/_review/CANAL.md`); se evaluo segun D-003 —se
+  verifico primero que la carpeta existiera y fuera legible— y se acepto (D-018, T-014, primera
+  tarea con `Origen: auditor`). Tres puntos suyos mejoraron la propuesta propia: el veredicto
+  `Aceptado — pendiente`, el desempate por reversibilidad, y que un rechazo por coste sin `DT-XXX`
+  sea por si solo un hallazgo. Se cerraron T-005, T-010 y A-001 (`Confirmado`); D-011 quedo
+  `Revocada por D-018`. El auditor notifico ademas que audita la seccion 0 fila a fila con tres
+  exigencias no escritas en `protocol-close`: se anadieron (D-019, T-015), porque `session-closer`
+  no lee conversaciones, solo su skill. Se acepto tambien su limitacion del inventario de acciones
+  irreversibles, vacio hasta que exista alcance (D-020, T-016, depende de T-004).
+- **Sin auditoria pendiente de responder:** `_review/index.md` del auditor existe pero su tabla
+  esta vacia — no hay ninguna auditoria entregada todavia. La fila de S-002 en `_audit/index.md`
+  sigue en `Pendiente`.
 - **Siguiente paso concreto:** recibir del usuario el alcance y el objetivo del proyecto (T-004)
   para poder cerrar la etapa `000_preproject`.
 

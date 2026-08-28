@@ -10,7 +10,7 @@
 
 | Codigo | Supuesto | Fecha | Estado |
 |---|---|---|---|
-| [A-001](#a-001---el-canal-de-vuelta-de-la-auditoria) | El canal de vuelta de la auditoria | 2026-08-28 | Abierto |
+| [A-001](#a-001---el-canal-de-vuelta-de-la-auditoria) | El canal de vuelta de la auditoria | 2026-08-28 | Confirmado |
 | [A-002](#a-002---un-unico-proyecto-por-directorio) | Un unico proyecto por directorio | 2026-08-28 | Abierto |
 | [A-003](#a-003---el-proyecto-arranca-desde-cero) | El proyecto arranca desde cero | 2026-08-28 | Abierto |
 
@@ -31,8 +31,12 @@
 | Campo | Valor |
 |---|---|
 | Fecha | 2026-08-28 |
-| Estado | Abierto |
+| Estado | Confirmado |
 | Tarea relacionada | T-005 |
+
+✅ **Cerrado el 2026-08-28.** El auditor definio el canal de vuelta y se verifico que existe y es
+legible: `AIzar_Auditor/_review/`. Lo que era supuesto pasa a D-018. Se conserva la entrada para que
+se entienda que se creia mientras estuvo abierto.
 
 - **Alcance actual:** la **ida** ya no es un supuesto. D-016 la fija: cada cierre deja el informe
   en `_audit/S-XXX.md`, dentro del commit que describe, y el auditor lo lee de ahi.

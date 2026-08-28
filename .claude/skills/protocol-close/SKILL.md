@@ -345,6 +345,51 @@ No escribas como si compartiera contexto:
 | Rama | main |
 | Commit auditado | el commit que contiene este archivo (`git log -1 -- _audit/S-XXX.md`) |
 
+## 0. Respuesta a la auditoria anterior     <-- omitir solo si no hay ninguna sin responder
+
+| Hallazgo | Veredicto | Evidencia / Razon |
+|---|---|---|
+| F-001 — <resumen> | Implementado | T-014, en este commit |
+| F-002 — <resumen> | Aceptado — pendiente | T-015, `No implementada` |
+| F-003 — <resumen> | No se implementa | D-018 |
+
+Los tres veredictos son los unicos validos:
+
+| Veredicto | Cuando |
+|---|---|
+| `Implementado` | hecho, y esta en este commit |
+| `Aceptado — pendiente` | de acuerdo, pero aun no hecho — **con su `T-XXX`** |
+| `No se implementa` | rechazado — **con su `D-XXX`** |
+
+### 🚨 Esta tabla se audita fila a fila. Cada veredicto exige algo comprobable
+
+| Veredicto | Lo que el auditor va a comprobar | Si no esta |
+|---|---|---|
+| `Implementado` | que la correccion **aparezca en el diff de este commit** | es un hallazgo, y el original **sigue abierto** |
+| `Aceptado — pendiente` | que cite su `T-XXX`, y que esa tarea **exista y siga abierta** | el hallazgo no se da por recogido |
+| `No se implementa` | que cite su `D-XXX` | un rechazo sin decision registrada **no es auditable** |
+
+⚠️ **No marques `Implementado` lo que el diff no muestre.** Si estas de acuerdo pero no esta hecho,
+su veredicto es `Aceptado — pendiente` con su tarea abierta. Marcarlo hecho no lo adelanta: lo
+convierte en un hallazgo nuevo y deja el original abierto igual.
+
+### 🚨 La tabla va completa: un hallazgo omitido NO cuenta como contestado
+
+**Todos los hallazgos entregados y no cerrados entran en la tabla**, uno por fila, incluso los que
+no tocaste esta sesion. Un `F-NNN` que no aparezca **sigue `Entregado` y el auditor lo reclama**:
+no se interpreta como aceptado ni como rechazado por omision.
+
+Si un hallazgo no se atendio y no sabes por que, **ponlo igual** y dilo en «Sin resolver» del
+reporte. Una fila incomoda vale mas que una ausencia silenciosa.
+
+🚨 **`Aceptado — pendiente` no es opcional ni un adorno.** Sin el, un hallazgo con el que estamos de
+acuerdo pero que aun no hicimos no esta implementado ni rechazado: **no aparece en ningun sitio y
+desaparece del radar.** Esa es la forma en que se pierden los hallazgos buenos.
+
+⚠️ Un hallazgo rechazado **por coste o prioridad** —no por ser incorrecto— es deuda tecnica por
+definicion y exige su `DT-XXX`. Un rechazo por coste sin entrada en `debt_tec.md` es, por si solo,
+un hallazgo del auditor, y no requiere criterio: se comprueba mirando si la entrada existe.
+
 ## 1. Que se hizo
 <lo que muestra el diff, con codigos y rutas. Archivos creados, modificados y por que>
 
@@ -376,6 +421,27 @@ di que no lo encontraste y que eso mismo conviene revisarlo.
 
 ⚠️ Sigue rigiendo la regla de siempre: **solo lo que la evidencia respalde**. Un punto debil
 inventado desperdicia la auditoria igual que uno omitido.
+
+### Y su fila en `_audit/index.md`
+
+El informe no sirve de nada si el auditor no sabe que existe. **Anade su fila** al indice, con
+estado **`Pendiente`** y `-` en observaciones:
+
+```
+| `S-XXX.md` | S-XXX | AAAA-MM-DD | Pendiente | - | - |
+```
+
+La ultima columna es **`Respondida en`**: se rellena cuando un informe posterior contesta a la
+auditoria de esta fila. Tu la dejas en `-`.
+
+🚨 **`Pendiente` es el unico estado que escribes tu.** `Sin hallazgos` y `Con hallazgos` los pone
+`executor` cuando la auditoria vuelve — tu no puedes saber que encontro alguien que todavia no ha
+mirado.
+
+⚠️ **No pongas el hash del commit en la fila.** No puedes: la fila se escribe antes del commit que
+la contiene. El auditor lo obtiene con `git log -1 -- _audit/S-XXX.md`, igual que el resultado del
+push se mira con `git status -sb` en vez de anotarse (Paso 4). Es la misma imposibilidad, y la
+misma solucion: preguntarle a git en vez de intentar escribirlo.
 
 ⚠️ **Este informe no reemplaza a `_persistence/`.** Es una vista de **esta sesion** para un lector
 externo, no una copia del registro. Y **nunca escribas en el repositorio del auditor**: el informe
@@ -477,7 +543,7 @@ retransmite. Un reporte recortado se recorta dos veces.
 
 ### Commit
 Indices de `_persistence/` — <al dia | corregidos | 🚨 SIN COMPROBAR — <que fallo>>
-Informe de auditoria — `_audit/S-XXX.md`, incluido en el commit
+Informe de auditoria — `_audit/S-XXX.md`, incluido en el commit; fila anadida a `_audit/index.md` como `Pendiente`
 <hash corto> — <primera linea del mensaje>
 <"subido a origin, `git status -sb` sin ahead" | 🚨 "SIN SUBIR — <que fallo>">
 

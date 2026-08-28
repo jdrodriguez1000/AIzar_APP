@@ -24,6 +24,48 @@ Analizar la informacion entregada por la terminal auditora y decidir si lo entre
 Las recomendaciones de `auditor` no se implementan de forma automatica: pasan siempre por
 esta evaluacion previa.
 
+### Como llegan
+
+Las auditorias llegan al repositorio del auditor, **de solo lectura para nosotros**:
+`..\AIzar_Auditor\_review\` — `index.md` es el tablero y cada `R-XXX.md` audita nuestro
+`_audit/S-XXX.md`, en emparejamiento 1:1. `session-starter` mira ese tablero en cada arranque.
+
+### Que hacer al recibir una
+
+1. **Acusa recibo**: actualiza la fila en `_audit/index.md` con `Sin hallazgos` / `Con hallazgos` y
+   la ruta del `R-XXX.md`. ⚠️ Si pasan **dos sesiones sin acuse**, el auditor marca su auditoria
+   como `Huerfana` y la re-entrega con prioridad.
+2. **Registra cada hallazgo** donde le corresponda, citando su codigo `F-NNN`:
+   - lo aceptas y lo haces o lo haras → **`T-XXX`** con `Origen: auditor`
+   - lo rechazas **porque el hallazgo es incorrecto** → **`D-XXX`** con la evidencia que lo contradice
+   - lo rechazas **aunque tenga razon**, por coste o prioridad → **`D-XXX`** + 🚨 **`DT-XXX`**
+3. **Contesta en el siguiente informe**, en su seccion 0, con uno de los tres veredictos:
+   `Implementado` / `Aceptado — pendiente` / `No se implementa`.
+
+🚨 **El estado de cada hallazgo es del auditor, no nuestro.** El lo cierra verificando la correccion
+sobre un commit posterior. **No espejes su tablero:** lo nuestro son las tareas, decisiones y deuda
+que salgan de el.
+
+### Cuando no estemos de acuerdo
+
+- Lo que se le pide al auditor es **«¿el razonamiento del rechazo se sostiene contra la
+  evidencia?»**, no «¿estas de acuerdo?». La primera es auditable; la segunda es una opinion.
+- **Una sola replica, y solo con evidencia nueva.** Repetir el mismo argumento con otras palabras
+  no es replicar.
+- Si tras esa vuelta seguis discrepando, decide **quien absorbe el coste de equivocarse**:
+  **reversible** → decides tu y se registra la discrepancia; **irreversible** (borrar datos,
+  publicar, migrar, gastar) → **se escala al usuario antes de actuar**, nunca despues.
+- **Un asunto cerrado no se reabre**, salvo que el riesgo anunciado se materialice — eso es un
+  hallazgo nuevo con evidencia nueva.
+
+📥 **Al actualizar la fila de `_audit/index.md`:** estado `Sin hallazgos` o `Con hallazgos`, y la
+ruta del informe en `Observaciones`.
+
+🚨 **El estado registra lo que el auditor encontro, no lo que decidiste aceptar.** Si señala algo y
+decides no implementarlo, la fila sigue diciendo `Con hallazgos` — y el porque de no implementarlo
+va a `decisions.md`. Marcar `Sin hallazgos` un informe que si los tuvo borra el hallazgo en
+silencio, que es justo lo que el indice existe para impedir.
+
 ## Registro del proyecto
 
 El estado del proyecto vive en `_persistence/`. `progress.md` es el archivo principal: se lee al

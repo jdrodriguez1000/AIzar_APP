@@ -19,12 +19,16 @@
 | [D-008](#d-008---el-cierre-lo-ejecuta-el-agente-session-closer) | El cierre lo ejecuta el agente `session-closer` | 2026-08-28 | Vigente |
 | [D-009](#d-009---una-sesion-es-una-jornada-no-un-dia) | Una sesion es una jornada, no un dia | 2026-08-28 | Vigente |
 | [D-010](#d-010---el-porque-se-registra-en-el-momento-con-disparadores-explicitos) | El porque se registra en el momento, con disparadores explicitos | 2026-08-28 | Vigente |
-| [D-011](#d-011---el-arranque-no-lee-al-auditor-hasta-que-t-005-defina-el-canal) | El arranque no lee al auditor hasta que T-005 defina el canal | 2026-08-28 | Vigente |
+| [D-011](#d-011---el-arranque-no-lee-al-auditor-hasta-que-t-005-defina-el-canal) | El arranque no lee al auditor hasta que T-005 defina el canal | 2026-08-28 | Revocada por D-018 |
 | [D-012](#d-012---el-arranque-lo-ejecuta-el-agente-session-starter-con-haiku) | El arranque lo ejecuta el agente `session-starter`, con haiku | 2026-08-28 | Vigente |
 | [D-013](#d-013---el-arranque-es-de-solo-lectura-y-bash-es-su-unica-frontera) | El arranque es de solo lectura, y `Bash` es su unica frontera | 2026-08-28 | Vigente |
 | [D-014](#d-014---el-arranque-precede-a-la-primera-peticion-de-la-conversacion) | El arranque precede a la primera peticion de la conversacion | 2026-08-28 | Vigente |
 | [D-015](#d-015---temporal-queda-fuera-del-repositorio) | `temporal/` queda fuera del repositorio | 2026-08-28 | Vigente |
 | [D-016](#d-016---el-cierre-produce-un-informe-para-la-auditoria-anclado-al-commit) | El cierre produce un informe para la auditoria, anclado al commit | 2026-08-28 | Vigente |
+| [D-017](#d-017---el-estado-de-cada-auditoria-vive-en-_auditindexmd) | El estado de cada auditoria vive en `_audit/index.md` | 2026-08-28 | Vigente |
+| [D-018](#d-018---se-acepta-el-canal-de-vuelta-propuesto-por-el-auditor) | Se acepta el canal de vuelta propuesto por el auditor | 2026-08-28 | Vigente |
+| [D-019](#d-019---la-seccion-0-es-un-contrato-auditable-fila-a-fila) | La seccion 0 es un contrato auditable fila a fila | 2026-08-28 | Vigente |
+| [D-020](#d-020---el-eje-reversibleirreversible-funciona-a-criterio-hasta-que-exista-alcance) | El eje reversible/irreversible funciona a criterio hasta que exista alcance | 2026-08-28 | Vigente |
 
 ---
 
@@ -236,7 +240,7 @@
 | Fecha | 2026-08-28 |
 | Etapa | 000_preproject |
 | Decidido por | executor |
-| Estado | Vigente |
+| Estado | Revocada por D-018 |
 
 - **Contexto:** el protocolo de inicio de referencia traia un paso obligatorio que leia el tablero
   de la terminal auditora. Se comprobo en esta sesion que `AIzar_Auditor/` **esta vacia**: no hay
@@ -366,3 +370,123 @@
   lo que venga del auditor lo evalua `executor` antes de implementarlo.
 - **Alternativas descartadas:** mostrar el informe solo en pantalla para copiar y pegar; y
   escribirlo en un segundo commit posterior, que separaria el informe del estado que describe.
+
+---
+
+### D-017 - El estado de cada auditoria vive en `_audit/index.md`
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-28 |
+| Etapa | 000_preproject |
+| Decidido por | usuario |
+| Estado | Vigente |
+
+- **Contexto:** con D-016 el cierre empezo a producir un informe por sesion, pero no habia forma de
+  saber cual tocaba auditar. Decirle al auditor «lee el ultimo» falla en cuanto se acumulan varias
+  sesiones sin auditar: auditaria uno e ignoraria el resto.
+- **Decision:** crear `_audit/index.md`, indice de informes con estado por fila:
+  `Pendiente` / `Sin hallazgos` / `Con hallazgos`, mas la ruta de las observaciones recibidas.
+  `session-closer` anade la fila como `Pendiente` en el Paso 6b; `executor` escribe el veredicto
+  cuando la auditoria vuelve. `protocol-start` reporta las filas `Pendiente` al arrancar.
+- **Razon:** la pregunta util no es «cual es el ultimo informe» sino «cuales no se han auditado»,
+  y esa se responde con un estado en su columna — el mismo patron de los siete archivos de
+  `_persistence/`. Ademas deja registro de que se auditó y que no, que hasta ahora no existia en
+  ningun sitio.
+- **Regla que lo sostiene:** 🚨 **el estado registra lo que el auditor encontro, no lo que
+  aceptamos.** Si señala algo y `executor` decide no implementarlo (D-003), la fila sigue diciendo
+  `Con hallazgos`, y el porque del rechazo va a `decisions.md`. Lo contrario permitiria borrar en
+  silencio un hallazgo incomodo.
+- **Detalle heredado:** la fila no lleva el hash del commit, por la misma imposibilidad del Paso 4
+  —se escribe antes del commit que la contiene—. Se obtiene con `git log -1 -- _audit/S-XXX.md`.
+- **Alternativas descartadas:** un puntero `LATEST.md`, que se desfasa y solo apunta a uno; y que
+  el auditor deduzca el id mas alto, que ignora las sesiones acumuladas sin auditar.
+
+---
+
+### D-018 - Se acepta el canal de vuelta propuesto por el auditor
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-28 |
+| Etapa | 000_preproject |
+| Decidido por | executor, sobre propuesta de auditor |
+| Estado | Vigente |
+
+- **Contexto:** el auditor entrego en `AIzar_Auditor/_review/CANAL.md` una propuesta completa del
+  canal de vuelta, que era lo unico que faltaba de A-001 y T-005. **Primera entrega del auditor**,
+  asi que se evaluo segun D-003 antes de implementar nada.
+- **Verificado antes de aceptar:** la carpeta `_review/` existe, es legible desde este repositorio,
+  y su `index.md` esta creado y vacio — ninguna auditoria entregada todavia. No se acepto sobre el
+  relato: se comprobo.
+- **Decision: aceptado e implementado.** `_review/index.md` como tablero, `R-XXX.md` en
+  emparejamiento 1:1 con nuestros `_audit/S-XXX.md`, anclados a nuestro commit y no a `HEAD`.
+  Nuestro lado: Paso 1c en `protocol-start`, seccion 0 con tres veredictos en el informe, columna
+  `Respondida en`, y las reglas de recepcion y desacuerdo en `CLAUDE.md`.
+- **Razon:** el diseño es el espejo del nuestro y no introduce convenciones nuevas. Tres puntos
+  suyos mejoran lo que nosotros habiamos propuesto:
+  1. **`Aceptado — pendiente`** como tercer veredicto. Sin el, un hallazgo aceptado y aplazado no
+     esta implementado ni rechazado: desaparece del radar. Nuestra tabla de dos veredictos tenia ese
+     hueco.
+  2. **El desempate por reversibilidad**, en vez de escalar siempre al usuario: si es reversible
+     decide `executor`; si es irreversible se escala **antes** de actuar. Decide quien absorbe el
+     coste de equivocarse, no quien argumenta mejor.
+  3. **Un rechazo por coste sin su `DT-XXX` es, por si solo, un hallazgo.** Convierte nuestra regla
+     de la deuda oculta en algo comprobable sin criterio: se mira si la entrada existe.
+- **Reparto de autoridad, que es lo que evita el problema del espejo:** el estado de cada hallazgo
+  `F-NNN` lo lleva el auditor en su `findings.md`, y solo el lo cierra, verificando sobre un commit
+  posterior. Nosotros no copiamos esos estados: lo nuestro son las tareas, decisiones y deuda que
+  salgan de ellos. Dos copias de la misma realidad se separan, y entonces hay que decidir cual miente.
+- **Acuse de recibo:** actualizar nuestra fila en `_audit/index.md`. Vive en nuestro repositorio, asi
+  que el auditor lo comprueba sin que nadie se lo cuente. Dos sesiones sin acuse y la auditoria se
+  marca `Huerfana` y se re-entrega con prioridad.
+- **Revoca D-011**, cuya condicion («hasta que T-005 defina el canal») ya se cumplio.
+- **Alternativas descartadas:** que el usuario transporte las observaciones pegandolas, que no
+  sobrevive a una sesion cerrada ni se puede releer despues; y espejar su tablero de hallazgos en
+  nuestro `tasks.md`, que duplica estado y garantiza divergencia.
+
+---
+
+### D-019 - La seccion 0 es un contrato auditable fila a fila
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-28 |
+| Etapa | 000_preproject |
+| Decidido por | executor, sobre notificacion de auditor |
+| Estado | Vigente |
+
+- **Contexto:** el auditor implemento en su lado las reglas del bucle que ya estaban acordadas
+  (lectura de nuestra seccion 0, tabla de discrepancias que alguien escriba, y contador de replicas).
+  Anuncia que no nos pide implementar nada nuevo.
+- **Evaluacion (D-003):** correcto, y **sin embargo si cambiaba algo en nuestro lado**. La seccion 0
+  pasa a auditarse fila a fila con tres exigencias —`Implementado` visible en el diff,
+  `Aceptado — pendiente` con su `T-XXX` abierta, `No se implementa` con su `D-XXX`— mas la regla de
+  que un hallazgo omitido no cuenta como contestado. Ninguna estaba escrita en `protocol-close`.
+- **Decision:** escribirlas en el Paso 6b, donde las lee quien redacta la seccion 0.
+- **Razon:** `session-closer` **no lee las conversaciones**: arranca en frio y solo tiene su skill.
+  Una regla acordada en un mensaje y no escrita en el protocolo no existe para quien debe cumplirla.
+  Es el mismo hueco que el auditor acaba de cerrar en su lado —acordado pero no implementado— y
+  aparece aqui por la misma razon.
+- **Regla que se anade y no teniamos:** la tabla va **completa**, con todos los hallazgos abiertos
+  aunque no se tocaran esta sesion. La omision no significa nada, y por eso no puede usarse.
+- **Alternativas descartadas:** confiar en que `executor` se lo recuerde al closer en el traspaso,
+  que depende de que se acuerde justo esa jornada.
+
+---
+
+### D-020 - El eje reversible/irreversible funciona a criterio hasta que exista alcance
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-28 |
+| Etapa | 000_preproject |
+| Decidido por | executor |
+| Estado | Vigente |
+
+- **Contexto:** el desempate de una discrepancia depende de si el asunto es reversible o
+  irreversible (D-018). El auditor señala que su inventario de acciones irreversibles esta **vacio**,
+  porque poblarlo exige saber que hace el proyecto — y el alcance sigue sin definirse (T-004).
+- **Decision:** aceptar que hasta entonces ese eje **se aplica a criterio**, diciendolo
+  explicitamente cada vez que se use, en vez de presentarlo como la lectura de una tabla que no
+  existe. Se crea T-015 para poblar nuestro lado del inventario cuando T-004 se cierre.
+- **Razon:** la alternativa seria inventar ahora una lista de acciones irreversibles para un
+  proyecto cuyo alcance no conocemos — es decir, adivinar. Un criterio declarado como criterio se
+  puede discutir; un criterio disfrazado de tabla, no.
+- **Consecuencia:** una razon mas, pequeña y real, para cerrar T-004.
