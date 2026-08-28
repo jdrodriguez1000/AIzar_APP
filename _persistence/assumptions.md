@@ -10,7 +10,7 @@
 
 | Codigo | Supuesto | Fecha | Estado |
 |---|---|---|---|
-| [A-001](#a-001---sincronizacion-via-archivos-de-persistencia) | Sincronizacion via archivos de persistencia | 2026-08-28 | Abierto |
+| [A-001](#a-001---el-canal-de-vuelta-de-la-auditoria) | El canal de vuelta de la auditoria | 2026-08-28 | Abierto |
 | [A-002](#a-002---un-unico-proyecto-por-directorio) | Un unico proyecto por directorio | 2026-08-28 | Abierto |
 | [A-003](#a-003---el-proyecto-arranca-desde-cero) | El proyecto arranca desde cero | 2026-08-28 | Abierto |
 
@@ -27,17 +27,21 @@
 
 ## Supuestos
 
-### A-001 - Sincronizacion via archivos de persistencia
+### A-001 - El canal de vuelta de la auditoria
 | Campo | Valor |
 |---|---|
 | Fecha | 2026-08-28 |
 | Estado | Abierto |
 | Tarea relacionada | T-005 |
 
-- **Supuesto:** `auditor` lee el contenido de este proyecto (incluido `_persistence/`) y entrega
-  sus hallazgos por un medio que `executor` puede consultar o que el usuario transmite.
-- **Riesgo si es falso:** los ciclos de auditoria no se cierran y las recomendaciones se pierden.
-- **Como validarlo:** confirmar con el usuario el canal exacto de entrega de la auditoria.
+- **Alcance actual:** la **ida** ya no es un supuesto. D-016 la fija: cada cierre deja el informe
+  en `_audit/S-XXX.md`, dentro del commit que describe, y el auditor lo lee de ahi.
+- **Supuesto que queda abierto:** que `auditor` entrega sus hallazgos por un medio que `executor`
+  puede consultar, o que el usuario transmite.
+- **Riesgo si es falso:** los ciclos de auditoria no se cierran — mandamos informes y las
+  observaciones no vuelven, o vuelven sin quedar registradas en ningun sitio.
+- **Como validarlo:** ver una auditoria real y decidir entonces el canal de vuelta. Decidirlo
+  antes de ver una seria adivinar.
 
 ---
 

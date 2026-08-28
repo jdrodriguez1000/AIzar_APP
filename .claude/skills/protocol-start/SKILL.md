@@ -27,7 +27,7 @@ fecha siendo sesiones distintas, y ordenar por fecha las mezcla.
 | Actor | Que deja escrito |
 |---|---|
 | **executor** (sesion de trabajo) | construye, y registra el porque en el momento |
-| **`session-closer`** | `progress.md`, `tasks.md`, propuestas de deuda, el commit y su push |
+| **`session-closer`** | `progress.md`, `tasks.md`, propuestas de deuda, el informe `_audit/S-XXX.md`, el commit y su push |
 | **auditor** | su propio repositorio; audita, verifica y recomienda |
 
 ⚠️ **Hoy el arranque no lee nada del auditor**, porque todavia no esta definido por que canal

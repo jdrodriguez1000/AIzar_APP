@@ -1,6 +1,6 @@
 ---
 name: session-closer
-description: Ejecuta el protocolo de cierre de sesion del proyecto AIzar. Usalo al terminar una jornada de trabajo, o cuando el usuario pida "cerremos la sesion", "cierra la sesion", "finalicemos el trabajo", "cerremos", "guarda el avance", "terminamos por hoy", "haz el commit del dia" o algo similar. Recoge la evidencia real con git, actualiza progress.md y tasks.md, propone entradas de debt_tec.md, revisa —sin escribirlos— los cuatro archivos del porque de _persistence/, y deja la sesion cerrada con un commit y su push.
+description: Ejecuta el protocolo de cierre de sesion del proyecto AIzar. Usalo al terminar una jornada de trabajo, o cuando el usuario pida "cerremos la sesion", "cierra la sesion", "finalicemos el trabajo", "cerremos", "guarda el avance", "terminamos por hoy", "haz el commit del dia" o algo similar. Recoge la evidencia real con git, actualiza progress.md y tasks.md, propone entradas de debt_tec.md, revisa —sin escribirlos— los cuatro archivos del porque de _persistence/, escribe el informe para la terminal auditora en _audit/S-XXX.md, y deja la sesion cerrada con un commit y su push.
 tools: Read, Write, Edit, Glob, Grep, Bash, Skill
 model: sonnet
 color: blue
@@ -52,7 +52,7 @@ Si el traspaso y el diff se contradicen, **manda el diff**, y di que hubo discre
 | Actor | Escribe |
 |---|---|
 | **executor** (sesion de trabajo) | construye, y registra el porque en el momento |
-| **Tu** | `progress.md`, `tasks.md`, y **propuestas** a `debt_tec.md` |
+| **Tu** | `progress.md`, `tasks.md`, **propuestas** a `debt_tec.md`, y el informe `_audit/S-XXX.md` |
 | **auditor** | su propio repositorio; audita, verifica y recomienda |
 
 🚨 **Nunca escribas en el repositorio del auditor**
@@ -82,6 +82,10 @@ lo dices en el reporte.
   `Cancelada`, `Suspendida`. No inventes estados intermedios — lo que quedo a medias sigue en
   `No implementada`, diciendo en que punto quedo.
 - **No toques `temporal/`.** Es el area de trabajo del usuario, no parte del registro.
+- 🚨 **Escribes ademas el informe de auditoria `_audit/S-XXX.md`** (Paso 6b del skill), **antes**
+  del `git add`, para que entre en el mismo commit que describe. Va **completo, sin resumir**: su
+  lector es el auditor, que no vivio la sesion ni conoce nuestras convenciones. Su seccion «Que
+  pedimos auditar» **no puede quedar vacia**. En pantalla, de el una version corta.
 - **Con `git`, solo anades historia. Nunca la reescribes ni la borras.** Prohibidos sin excepcion:
   `git commit --amend`, `git reset`, `git checkout --`, `git restore`, `git rebase`, `git clean`,
   `git push --force` y cualquier otra cosa con `--force`. Si crees que hace falta uno de esos,

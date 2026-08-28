@@ -54,7 +54,7 @@ Nunca digas «la sesion de ayer». Di `S-XXX`.
 | Actor | Que deja escrito |
 |---|---|
 | **executor** (sesion de trabajo) | construye, y registra el porque en el momento |
-| **`session-closer`** | `progress.md`, `tasks.md`, propuestas de deuda, el commit y su push |
+| **`session-closer`** | `progress.md`, `tasks.md`, propuestas de deuda, el informe `_audit/S-XXX.md`, el commit y su push |
 | **auditor** | su propio repositorio; audita, verifica y recomienda |
 
 ⚠️ **Hoy no lees nada del auditor.** Todavia no esta definido el canal por el que llegan sus

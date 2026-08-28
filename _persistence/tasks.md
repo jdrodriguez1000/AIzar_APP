@@ -20,6 +20,7 @@
 | [T-009](#t-009---crear-la-skill-protocol-start) | Crear la skill `protocol-start` | Implementada | Alta | No bloqueante |
 | [T-010](#t-010---incorporar-al-arranque-la-lectura-del-tablero-del-auditor) | Incorporar al arranque la lectura del tablero del auditor | No implementada | Media | No bloqueante |
 | [T-011](#t-011---crear-el-agente-session-starter) | Crear el agente `session-starter` | Implementada | Alta | No bloqueante |
+| [T-012](#t-012---anadir-al-cierre-el-informe-para-la-auditoria) | Anadir al cierre el informe para la auditoria | Implementada | Alta | No bloqueante |
 
 ---
 
@@ -210,3 +211,20 @@ Depende de T-005. Ver D-011.
 Agente en `.claude/agents/session-starter.md`, modelo `haiku`, unico autorizado a invocar la skill
 `protocol-start`. De solo lectura, con lista blanca y negra explicita de comandos `Bash`. Ver
 D-012. `CLAUDE.md` gana la seccion «Inicio de sesion».
+
+---
+
+### T-012 - Anadir al cierre el informe para la auditoria
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Alta |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | usuario |
+| Fecha | 2026-08-28 |
+
+Nuevo Paso 6b en `protocol-close`: escribe `_audit/S-XXX.md` completo antes del `git add`, con la
+seccion obligatoria «Que pedimos auditar». El reporte de pantalla gana un bloque con la version
+corta. Propagado al agente `session-closer` y a las tablas de actores de ambos protocolos, y
+anunciado en `CLAUDE.md`. Ver D-016.

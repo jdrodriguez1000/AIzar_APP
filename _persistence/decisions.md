@@ -24,6 +24,7 @@
 | [D-013](#d-013---el-arranque-es-de-solo-lectura-y-bash-es-su-unica-frontera) | El arranque es de solo lectura, y `Bash` es su unica frontera | 2026-08-28 | Vigente |
 | [D-014](#d-014---el-arranque-precede-a-la-primera-peticion-de-la-conversacion) | El arranque precede a la primera peticion de la conversacion | 2026-08-28 | Vigente |
 | [D-015](#d-015---temporal-queda-fuera-del-repositorio) | `temporal/` queda fuera del repositorio | 2026-08-28 | Vigente |
+| [D-016](#d-016---el-cierre-produce-un-informe-para-la-auditoria-anclado-al-commit) | El cierre produce un informe para la auditoria, anclado al commit | 2026-08-28 | Vigente |
 
 ---
 
@@ -334,3 +335,34 @@
   no es parte de esa historia. Ademas evita arrastrar contenido ajeno a un repositorio que sube a
   GitHub. Lo que de ahi valga se traslada al proyecto adaptado, que es lo que se registra.
 - **Alternativas descartadas:** versionar `temporal/` como archivo historico de lo que se uso de guia.
+
+---
+
+### D-016 - El cierre produce un informe para la auditoria, anclado al commit
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-28 |
+| Etapa | 000_preproject |
+| Decidido por | usuario |
+| Estado | Vigente |
+
+- **Contexto:** la terminal auditora necesita saber que se hizo y que se propone como siguiente
+  tarea para poder auditar. Se evaluaron dos vias: mostrar el informe en pantalla para copiarlo y
+  pegarlo, o guardarlo en un archivo que el auditor lea.
+- **Decision:** el cierre escribe **`_audit/S-XXX.md`** con el informe **completo**, un archivo por
+  sesion, **antes del `git add`** para que entre en el mismo commit que describe. En pantalla se
+  muestra ademas una **version corta**. Nuevo Paso 6b de `protocol-close`.
+- **Razon:** el copiar-pegar deja la auditoria **sin ancla**: si lo informado solo existio en
+  pantalla, al volver las observaciones no hay contra que contrastarlas — no se puede comprobar si
+  se audito lo que se mando ni sobre que version. Con el informe dentro del commit, el auditor
+  ejecuta `git log -1 -- _audit/S-XXX.md`, obtiene el hash y **verifica cada afirmacion contra el
+  diff real** en vez de creersela. La auditoria pasa de opinable a verificable, y no cuesta un paso
+  extra: aprovecha el commit que el cierre ya hace.
+- **Detalle que hace util el informe:** lleva una seccion obligatoria **«Que pedimos auditar»** con
+  nuestros propios puntos debiles. Un informe que solo cuenta lo bien que fue todo produce
+  auditorias flojas, porque el auditor gasta su turno redescubriendo lo que ya sabiamos.
+- **Alcance:** esto define el **canal de ida**. El de vuelta —como llegan sus observaciones— sigue
+  abierto (A-001 / T-005), y se decidira despues de ver una auditoria real. Sigue rigiendo D-003:
+  lo que venga del auditor lo evalua `executor` antes de implementarlo.
+- **Alternativas descartadas:** mostrar el informe solo en pantalla para copiar y pegar; y
+  escribirlo en un segundo commit posterior, que separaria el informe del estado que describe.

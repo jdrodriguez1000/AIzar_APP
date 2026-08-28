@@ -25,6 +25,7 @@
 | Codigo | Sesion | Fecha | Etapa |
 |---|---|---|---|
 | [S-001](#s-001---metodo-de-trabajo-persistencia-y-protocolo-de-cierre) | Metodo de trabajo, persistencia y protocolo de cierre | 2026-08-28 | 000_preproject |
+| [S-002](#s-002---informe-de-cierre-para-la-terminal-auditora) | Informe de cierre para la terminal auditora | 2026-08-28 | 000_preproject |
 
 ---
 
@@ -35,16 +36,17 @@
 | Etapa actual | `000_preproject` |
 | Ultima actualizacion | 2026-08-28 |
 | Salud | En marcha |
-| Avance de la etapa | Metodo de trabajo, persistencia, repositorio y protocolo de cierre listos; alcance del proyecto pendiente |
+| Avance de la etapa | Metodo de trabajo, persistencia, repositorio y ciclo completo inicio/cierre listos; alcance del proyecto pendiente |
 | Bloqueos activos | Alcance y objetivo del proyecto sin definir (T-004) |
 
 ---
 
 ## 2. Ultimo realizado
 
-Se inicializo el repositorio git con remoto en GitHub, y quedo montado el ciclo de cierre de
-sesion: la skill `protocol-close` adaptada a la estructura de `_persistence/`, y el agente
-`session-closer` que es el unico que la ejecuta.
+El cierre pasa a producir un informe para la terminal auditora en `_audit/S-XXX.md`, dentro del
+mismo commit que describe, para que la auditoria se haga sobre un estado verificable y no sobre un
+relato (D-016). Con eso queda montado el ciclo completo: arranque, registro del porque durante la
+jornada, y cierre.
 
 ---
 
@@ -60,7 +62,7 @@ Recibir del usuario el alcance y el objetivo del proyecto para poder cerrar la e
 | Hito | Etapa | Estado |
 |---|---|---|
 | `H-01` Metodo de trabajo y persistencia definidos | 000_preproject | Completado |
-| `H-02` Repositorio y protocolo de cierre operativos | 000_preproject | Completado |
+| `H-02` Ciclo de inicio y cierre de sesion operativo | 000_preproject | Completado |
 | `H-03` Alcance y objetivo del proyecto definidos | 000_preproject | Pendiente |
 | `H-04` Definicion tecnica (stack y arquitectura) | por definir | Pendiente |
 
@@ -85,6 +87,26 @@ Recibir del usuario el alcance y el objetivo del proyecto para poder cerrar la e
   crearon la skill `protocol-close` y el agente `session-closer` (sonnet), y la skill
   `protocol-start` y el agente `session-starter` (haiku). El material de partida vino de
   `temporal/` (skills y agentes de otro proyecto), analizado y adaptado a esta estructura.
+- **Siguiente paso concreto:** recibir del usuario el alcance y el objetivo del proyecto (T-004)
+  para poder cerrar la etapa `000_preproject`.
+
+---
+
+### S-002 - Informe de cierre para la terminal auditora
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-28 |
+| Etapa | 000_preproject |
+
+- **Etapa del proyecto:** `000_preproject` — segunda jornada del repositorio, sobre el commit
+  inicial `868ea7c` (S-001).
+- **Que quedo hecho:** el cierre gana un Paso 6b obligatorio en `protocol-close` que escribe
+  `_audit/S-XXX.md` **antes** del `git add`, para que quede dentro del mismo commit que describe
+  y el auditor pueda anclar cada afirmacion a un `git show` real (T-012, D-016). El cambio se
+  propago a la tabla de actores de `protocol-close` y `protocol-start`, al agente
+  `session-closer`, y a `CLAUDE.md`. Se reescribio A-001: la **ida** del informe deja de ser
+  supuesto (la fija D-016); queda abierto solo el **canal de vuelta** de las observaciones del
+  auditor.
 - **Siguiente paso concreto:** recibir del usuario el alcance y el objetivo del proyecto (T-004)
   para poder cerrar la etapa `000_preproject`.
 

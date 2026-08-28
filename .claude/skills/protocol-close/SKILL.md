@@ -25,7 +25,7 @@ diff es escribir hechos. Si las dos cosas se contradicen, **manda el diff**.
 | Actor | Escribe | No escribe |
 |---|---|---|
 | **executor** (sesion de trabajo) | construye, y registra el porque en el momento | — |
-| **El cierre** (este protocolo) | `progress.md`, `tasks.md`, propuestas a `debt_tec.md` | los cuatro del porque |
+| **El cierre** (este protocolo) | `progress.md`, `tasks.md`, propuestas a `debt_tec.md`, el informe `_audit/S-XXX.md` | los cuatro del porque |
 | **auditor** | su propio repositorio | no construye |
 
 🚨 **Nunca escribas en `C:\Users\USUARIO\Documents\Company_TripleS\Proyectos_TripleS\AIzar_Auditor`.**
@@ -303,6 +303,86 @@ una leccion**. Ese es el camino por el que algo se escapa sin que ninguna herram
 
 ---
 
+## Paso 6b — El informe para la auditoria (obligatorio)
+
+Escribe **`_audit/S-XXX.md`**, con el mismo id que la entrada que acabas de crear en
+`progress.md`. Un archivo por sesion. Si `_audit/` no existe, creala.
+
+🚨 **Va antes del `git add`, y no es un detalle de orden: es lo que hace auditable la auditoria.**
+Al entrar en el mismo commit que el trabajo que describe, el auditor puede averiguar exactamente
+que estado esta juzgando:
+
+```bash
+git log -1 -- _audit/S-XXX.md
+```
+
+Con ese hash puede ir al `git show` y **verificar cada afirmacion del informe contra el diff real**,
+en vez de creersela. Un informe que no se puede anclar a un commit deja al auditor juzgando un
+relato.
+
+### Para quien escribes
+
+El auditor **no vivio la sesion, no conoce nuestras convenciones y trabaja en otro repositorio**.
+No escribas como si compartiera contexto:
+
+- **Cita siempre codigo y ruta** (`T-004`, `D-006`, `_persistence/tasks.md`). Son su unica via
+  para ir a comprobar.
+- **Explica lo que un externo no puede deducir**, pero no repitas los archivos enteros: el informe
+  cuenta **esta sesion**, no el proyecto entero.
+- 🚨 **Escribe el informe completo, sin resumir.** Lo que se ahorre aqui es exactamente lo que el
+  auditor tendra que reconstruir, y lo reconstruira adivinando.
+
+### Estructura del informe
+
+```markdown
+# Informe de auditoria — S-XXX
+
+| Campo | Valor |
+|---|---|
+| Sesion | S-XXX |
+| Fecha | AAAA-MM-DD |
+| Etapa | |
+| Rama | main |
+| Commit auditado | el commit que contiene este archivo (`git log -1 -- _audit/S-XXX.md`) |
+
+## 1. Que se hizo
+<lo que muestra el diff, con codigos y rutas. Archivos creados, modificados y por que>
+
+## 2. Que NO se hizo, y por que
+<lo que quedo pendiente o a medias, y en que punto quedo. Tareas `No implementada` relevantes>
+
+## 3. Decisiones tomadas
+<cada `D-XXX` de esta sesion: que se decidio, por que, y **las alternativas descartadas**>
+
+## 4. Supuestos vigentes y riesgos
+<`A-XXX` abiertos, que se apoya en ellos, y que pasa si resultan falsos>
+
+## 5. Siguiente tarea propuesta
+<la primera accion concreta de la proxima sesion, con su codigo, importancia y urgencia>
+
+## 6. Que pedimos auditar
+<nuestros propios puntos debiles: lo que quedo flojo, la decision de la que menos seguros
+estamos, el supuesto en el que nos apoyamos sin confirmar>
+```
+
+### 🚨 La seccion 6 es obligatoria y no puede quedar vacia
+
+Un informe que solo cuenta lo bien que fue todo produce auditorias flojas: el auditor gasta su
+turno redescubriendo lo que nosotros ya sabiamos.
+
+**Senalar nuestros propios puntos debiles lo manda directo a lo que importa.** Escribe al menos un
+punto real. «Nada que senalar» **no es una respuesta valida**: si de verdad no encuentras ninguno,
+di que no lo encontraste y que eso mismo conviene revisarlo.
+
+⚠️ Sigue rigiendo la regla de siempre: **solo lo que la evidencia respalde**. Un punto debil
+inventado desperdicia la auditoria igual que uno omitido.
+
+⚠️ **Este informe no reemplaza a `_persistence/`.** Es una vista de **esta sesion** para un lector
+externo, no una copia del registro. Y **nunca escribas en el repositorio del auditor**: el informe
+vive en el nuestro, y el es quien lo lee.
+
+---
+
 ## Paso 7 — El commit y el push
 
 **Primero la verificacion, despues el commit.** Nunca al reves.
@@ -397,8 +477,16 @@ retransmite. Un reporte recortado se recorta dos veces.
 
 ### Commit
 Indices de `_persistence/` — <al dia | corregidos | 🚨 SIN COMPROBAR — <que fallo>>
+Informe de auditoria — `_audit/S-XXX.md`, incluido en el commit
 <hash corto> — <primera linea del mensaje>
 <"subido a origin, `git status -sb` sin ahead" | 🚨 "SIN SUBIR — <que fallo>">
+
+### Informe para la auditoria
+`_audit/S-XXX.md` — version corta:
+- **Se hizo:** <una linea>
+- **Quedo pendiente:** <una linea>
+- **Siguiente tarea propuesta:** <codigo y accion>
+- **Pedimos auditar:** <los puntos de la seccion 6, en una lista breve>
 
 ### Para manana
 <el siguiente paso concreto, tal como quedo en progress.md>

@@ -106,6 +106,10 @@ a ti mismo. Por lo mismo, **el agente se lanza fresco, nunca como `fork`.**
 
 Su reporte final no llega solo al usuario: **retransmitelo entero**, sin resumirlo.
 
+📤 **Cada cierre deja tambien el informe para la terminal auditora en `_audit/S-XXX.md`**, dentro
+del mismo commit que describe — asi el auditor sabe exactamente que estado esta juzgando. El
+informe va completo; en pantalla se muestra una version corta.
+
 ⚠️ **Lo que el closer NO puede hacer, y por eso es cosa tuya:** los cuatro archivos del porque
 —`decisions.md`, `assumptions.md`, `constraints.md`, `lessons.md`— **no son suyos**. El arranca en
 frio y solo ve archivos; un porque nace en la conversacion y no aparece en ningun `git diff`. Si
