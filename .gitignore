@@ -1,0 +1,32 @@
+# Secretos - nunca deben entrar al historial
+.env
+.env.*
+*.pem
+*.key
+secrets.json
+credentials.json
+
+# Sistema operativo
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Editores
+.vscode/
+.idea/
+*.swp
+
+# Dependencias y artefactos (para cuando haya codigo)
+node_modules/
+dist/
+build/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Area de trabajo del usuario - material en transito, no es parte del registro
+temporal/
+
+# Claude Code - configuracion local de la maquina
+.claude/settings.local.json
