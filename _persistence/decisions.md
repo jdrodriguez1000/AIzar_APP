@@ -29,6 +29,7 @@
 | [D-018](#d-018---se-acepta-el-canal-de-vuelta-propuesto-por-el-auditor) | Se acepta el canal de vuelta propuesto por el auditor | 2026-08-28 | Vigente |
 | [D-019](#d-019---la-seccion-0-es-un-contrato-auditable-fila-a-fila) | La seccion 0 es un contrato auditable fila a fila | 2026-08-28 | Vigente |
 | [D-020](#d-020---el-eje-reversibleirreversible-funciona-a-criterio-hasta-que-exista-alcance) | El eje reversible/irreversible funciona a criterio hasta que exista alcance | 2026-08-28 | Vigente |
+| [D-021](#d-021---los-datos-propios-del-proyecto-viven-solo-en-projectmd) | Los datos propios del proyecto viven solo en `PROJECT.md` | 2026-08-28 | Vigente |
 
 ---
 
@@ -490,3 +491,38 @@
   proyecto cuyo alcance no conocemos — es decir, adivinar. Un criterio declarado como criterio se
   puede discutir; un criterio disfrazado de tabla, no.
 - **Consecuencia:** una razon mas, pequeña y real, para cerrar T-004.
+
+---
+
+### D-021 - Los datos propios del proyecto viven solo en `PROJECT.md`
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-28 |
+| Etapa | 000_preproject |
+| Decidido por | usuario |
+| Estado | Vigente |
+
+- **Contexto:** al plantear como reutilizar este metodo en otros proyectos se midio cuanto habia
+  atado a AIzar: 17 menciones —nombre, rutas absolutas, remoto— repartidas por las dos skills, los
+  dos agentes y `CLAUDE.md`. Cambiar de proyecto obligaba a editarlas una a una, y olvidar cualquiera
+  deja un protocolo apuntando al proyecto anterior.
+- **Decision:** crear `PROJECT.md` en la raiz con la identidad, las rutas, el remoto, las carpetas y
+  los codigos. Los protocolos, los agentes y `CLAUDE.md` **dejan de llevar datos dentro** y los leen
+  de ahi: `protocol-start` en su Paso 1b (antes que nada, porque las rutas de los pasos siguientes
+  salen de el) y `protocol-close` al empezar el Paso 1.
+- **Razon:** separa **instrucciones** de **datos**. `CLAUDE.md` dice como se trabaja y `PROJECT.md`
+  sobre que; lo primero es reutilizable tal cual y lo segundo se reescribe una vez por proyecto.
+  Verificado despues del cambio: **cero menciones especificas** quedan en `.claude/` ni en `CLAUDE.md`.
+- **Se aprovecho para quitar lo coyuntural**, que era el problema mas silencioso: tres sitios decian
+  «el alcance de AIzar no esta definido (T-004)». Eso no describe al proyecto, describe **hoy**, y
+  habria quedado mintiendo en cuanto T-004 se cerrara. Ahora la regla es condicional: comprueba si el
+  alcance esta registrado y, si no lo esta, dilo.
+- **Limite honesto:** esto es indireccion, no plantillas. No hay sustitucion automatica de variables:
+  el agente lee `PROJECT.md` y usa lo que dice. La ganancia es un solo sitio que cambiar; el coste,
+  un archivo mas que leer al arrancar.
+- **Regla que lo mantiene util:** en `PROJECT.md` va **solo lo estable**. Lo que cambia cada jornada
+  va a `progress.md`. Un archivo de identidad que hay que actualizar cada dia deja de ser fiable,
+  porque nadie lo mantiene y todos lo siguen citando.
+- **Alternativas descartadas:** meter los datos dentro de `CLAUDE.md`, que mezcla instrucciones con
+  datos y obliga a editar el archivo de reglas en cada proyecto nuevo; y copiar y buscar/reemplazar
+  en cada proyecto, que diverge en cuanto haya mas de dos.

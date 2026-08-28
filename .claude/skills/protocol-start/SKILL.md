@@ -1,6 +1,6 @@
 ---
 name: protocol-start
-description: Protocolo de inicio de sesion del proyecto AIzar. Lee de forma obligatoria el estado de git, CLAUDE.md, _persistence/progress.md y _persistence/tasks.md; a demanda decisions.md, constraints.md, assumptions.md, lessons.md y debt_tec.md. Con eso presenta en pantalla donde esta el proyecto, las ultimas tareas realizadas y las siguientes, ordenadas por urgencia e importancia. Es de solo lectura. Uso exclusivo del agente session-starter.
+description: Protocolo de inicio de sesion del proyecto. Lee de forma obligatoria el estado de git, CLAUDE.md, _persistence/progress.md y _persistence/tasks.md; a demanda decisions.md, constraints.md, assumptions.md, lessons.md y debt_tec.md. Con eso presenta en pantalla donde esta el proyecto, las ultimas tareas realizadas y las siguientes, ordenadas por urgencia e importancia. Es de solo lectura. Uso exclusivo del agente session-starter.
 ---
 
 # Protocolo de inicio de sesion
@@ -62,13 +62,15 @@ limpio, el arranque no dice nada, y el trabajo de la jornada anterior existe sol
 ⚠️ **Si `git log` falla porque no hay commits todavia**, no es un error: el repositorio esta
 recien creado. Dilo y sigue.
 
-### 1b. Despues, los tres archivos que siempre se leen
+### 1b. Despues, los archivos que siempre se leen
 
-1. **`CLAUDE.md`** — que es el proyecto y como se trabaja. Es corto a proposito y es el **ancla
-   contra inventar**.
-2. **`_persistence/progress.md`** — secciones 1 (Estado general), 2 (Ultimo realizado),
+1. **`PROJECT.md`** — los datos propios de este proyecto: nombre, rutas, remoto, codigos. **Todo lo
+   que en este protocolo aparece como «el proyecto» o «el auditor» se resuelve ahi.** Leelo primero:
+   sin el no tienes las rutas de los pasos siguientes.
+2. **`CLAUDE.md`** — como se trabaja. Es corto a proposito y es el **ancla contra inventar**.
+3. **`_persistence/progress.md`** — secciones 1 (Estado general), 2 (Ultimo realizado),
    3 (Siguiente paso), y la tabla de sesiones del indice.
-3. **`_persistence/tasks.md`** — el indice, que ya trae estado, importancia y urgencia de cada tarea.
+4. **`_persistence/tasks.md`** — el indice, que ya trae estado, importancia y urgencia de cada tarea.
 
 De los dos de `_persistence/` lee **el indice**, no el archivo entero. Ver *«Como se leen estos
 archivos»* mas abajo.
@@ -78,7 +80,7 @@ Si alguno no existe o esta vacio, **dilo en el reporte** en lugar de inventar co
 ### 1c. Y el tablero del auditor
 
 ```bash
-cat ../AIzar_Auditor/_review/index.md
+cat "<ruta del campo «Canal de vuelta» de PROJECT.md>"
 ```
 
 Es el **canal de vuelta** (D-018): una fila por auditoria entregada, apuntando a un `R-XXX.md` que
@@ -174,9 +176,10 @@ corrida.** Si no lo abriste, no lo digas.
 Vale para el alcance, la tecnologia, el metodo y que significa cada etapa. **No completes con lo
 que suele llevar un proyecto de este tipo.**
 
-🚨 **Aqui esto pesa mas que en ningun otro proyecto: el alcance de AIzar todavia no esta
-definido** (tarea T-004). Cualquier cosa que suene razonable sobre que es AIzar, para que sirve o
-con que se va a construir **esta inventada, sin excepcion**.
+🚨 **Comprueba si el alcance del proyecto esta registrado antes de decir una palabra sobre el.**
+Si `PROJECT.md`, `CLAUDE.md` y `_persistence/` no dicen que es, para que sirve ni con que se
+construye, entonces **cualquier cosa que suene razonable sobre eso esta inventada, sin excepcion**.
+Dilo como lo que es: «el alcance no esta registrado».
 
 Si algo no esta escrito en ningun sitio, di **«no esta registrado»**. Es una respuesta valida y
 util. Rellenarlo no lo es.
@@ -196,7 +199,7 @@ teniendo clara **que pregunta concreta** quieres responder con cada uno:
 | `_persistence/lessons.md` | se vaya a repetir un tipo de trabajo que ya fallo antes |
 | `_persistence/debt_tec.md` | haya deuda que bloquee lo siguiente, o propuestas del cierre sin confirmar |
 | `_audit/index.md` | necesites contrastar el Paso 1c: que auditorias hemos recogido ya y cuales seguimos debiendo |
-| `../AIzar_Auditor/_review/R-XXX.md` | el Paso 1c muestre una auditoria nueva **y** el usuario pida el detalle. Por defecto basta con anunciarla |
+| el `R-XXX.md` que indique el tablero | el Paso 1c muestre una auditoria nueva **y** el usuario pida el detalle. Por defecto basta con anunciarla |
 
 ⚠️ **`temporal/` no se lee.** Es el area de trabajo del usuario, no parte del registro, y su
 contenido cambia o desaparece sin aviso.

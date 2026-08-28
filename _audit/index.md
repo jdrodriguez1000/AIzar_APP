@@ -43,7 +43,7 @@ puede comprobarlo sin que nadie se lo cuente. Si pasan **dos sesiones sin acuse*
 auditoria como `Huerfana` y la re-entrega con prioridad (D-018).
 
 🚨 **Aqui no se lleva el estado de cada hallazgo.** Un hallazgo lo cierra el auditor, verificando la
-correccion sobre un commit posterior; su estado vive en `AIzar_Auditor/_persistence/findings.md`.
+correccion sobre un commit posterior; su estado vive en el `findings.md` del repositorio del auditor (ruta en `PROJECT.md`).
 Lo nuestro son las tareas, decisiones y deuda que salgan de el. **No espejamos su tablero**: dos
 copias de la misma realidad se separan, y entonces hay que decidir cual miente.
 
@@ -60,5 +60,6 @@ dejaria de servir para lo unico que sirve.
 |---|---|---|---|---|---|
 | `S-002.md` | S-002 | 2026-08-28 | Pendiente | - | - |
 | `S-003.md` | S-003 | 2026-08-28 | Pendiente | - | - |
+| `S-004.md` | S-004 | 2026-08-28 | Pendiente | - | - |
 
 > `S-001` cerro antes de que existiera este mecanismo (D-016), asi que no tiene informe.

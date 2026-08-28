@@ -27,6 +27,7 @@
 | [S-001](#s-001---metodo-de-trabajo-persistencia-y-protocolo-de-cierre) | Metodo de trabajo, persistencia y protocolo de cierre | 2026-08-28 | 000_preproject |
 | [S-002](#s-002---informe-de-cierre-para-la-terminal-auditora) | Informe de cierre para la terminal auditora | 2026-08-28 | 000_preproject |
 | [S-003](#s-003---canal-de-vuelta-de-la-auditoria-aceptado-e-implementado) | Canal de vuelta de la auditoria aceptado e implementado | 2026-08-28 | 000_preproject |
+| [S-004](#s-004---los-datos-propios-del-proyecto-se-extraen-a-projectmd) | Los datos propios del proyecto se extraen a `PROJECT.md` | 2026-08-28 | 000_preproject |
 
 ---
 
@@ -37,24 +38,20 @@
 | Etapa actual | `000_preproject` |
 | Ultima actualizacion | 2026-08-28 |
 | Salud | En marcha |
-| Avance de la etapa | Metodo de trabajo, persistencia, repositorio, ciclo completo inicio/cierre y canal de vuelta con la auditoria listos; alcance del proyecto pendiente |
+| Avance de la etapa | Metodo de trabajo, persistencia, repositorio, ciclo completo inicio/cierre, canal de vuelta con la auditoria, y datos propios del proyecto extraidos a `PROJECT.md` listos; alcance del proyecto pendiente |
 | Bloqueos activos | Alcance y objetivo del proyecto sin definir (T-004); bloquea a su vez T-016 |
 
 ---
 
 ## 2. Ultimo realizado
 
-Se creo `_audit/index.md`, indice de informes con estado por fila (`Pendiente` / `Sin hallazgos` /
-`Con hallazgos`), para saber cuales sesiones quedan sin auditar en vez de asumir que la ultima es
-la unica pendiente (D-017, T-013). El auditor entrego su propuesta de canal de vuelta en
-`AIzar_Auditor/_review/CANAL.md`; se evaluo segun D-003 —verificando primero que la carpeta
-existiera y fuera legible— y se acepto (D-018, T-014, primera tarea con `Origen: auditor`): Paso 1c
-en `protocol-start`, seccion 0 con tres veredictos en el informe del Paso 6b de `protocol-close`,
-y las reglas de recepcion/desacuerdo en `CLAUDE.md`. Con eso cerraron T-005, T-010 y A-001
-(`Confirmado`); D-011 quedo `Revocada por D-018`. El auditor senalo ademas que audita la seccion 0
-fila a fila con tres exigencias que no estaban escritas en `protocol-close`: se anadieron (D-019,
-T-015). Y que su inventario de acciones irreversibles esta vacio hasta que exista alcance: se
-acepto que el desempate se aplique a criterio mientras tanto (D-020, T-016, depende de T-004).
+Se creo `PROJECT.md` en la raiz con los datos propios del proyecto: identidad, rutas, control de
+version, carpetas propias y codigos (D-021, T-017). Las dos skills, los dos agentes, `CLAUDE.md` y
+`_audit/index.md` dejan de llevar esos datos escritos dentro y los citan de ahi: `protocol-start`
+lo lee primero en su Paso 1b, y `protocol-close` al empezar el Paso 1. De paso se generalizaron
+tres menciones coyunturales a "el alcance de AIzar no esta definido (T-004)", que describian el
+dia y no el proyecto, por una regla condicional: comprobar si el alcance esta registrado. Verificado
+tras el cambio: cero menciones especificas quedan en `.claude/` y `CLAUDE.md`.
 
 ---
 
@@ -140,6 +137,35 @@ Recibir del usuario el alcance y el objetivo del proyecto para poder cerrar la e
 - **Sin auditoria pendiente de responder:** `_review/index.md` del auditor existe pero su tabla
   esta vacia — no hay ninguna auditoria entregada todavia. La fila de S-002 en `_audit/index.md`
   sigue en `Pendiente`.
+- **Siguiente paso concreto:** recibir del usuario el alcance y el objetivo del proyecto (T-004)
+  para poder cerrar la etapa `000_preproject`.
+
+---
+
+### S-004 - Los datos propios del proyecto se extraen a `PROJECT.md`
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-28 |
+| Etapa | 000_preproject |
+
+- **Etapa del proyecto:** `000_preproject` — cuarta jornada del repositorio, sobre el commit
+  `ec8e982` (S-003).
+- **Que quedo hecho:** al preguntarse que haria falta para reutilizar este metodo en otros
+  proyectos, se midio cuanto habia atado a AIzar: 17 menciones (nombre, rutas absolutas, remoto)
+  repartidas en las dos skills, los dos agentes y `CLAUDE.md`. Se creo `PROJECT.md` en la raiz con
+  identidad, rutas, control de versiones, carpetas propias y codigos; los protocolos, agentes,
+  `CLAUDE.md` y `_audit/index.md` dejan de llevar esos datos dentro y los leen de ahi:
+  `protocol-start` en su Paso 1b (primero, porque sin el no tiene las rutas de los pasos
+  siguientes) y `protocol-close` al empezar el Paso 1 (D-021, T-017). Se aprovecho el cambio para
+  generalizar tres menciones coyunturales — "el alcance de AIzar no esta definido (T-004)" — por
+  una regla condicional que comprueba si el alcance esta registrado, en vez de asumir que sigue
+  sin estarlo. Verificado tras el cambio: cero menciones especificas en `.claude/` y `CLAUDE.md`.
+- **Lo que se dejo tal cual, a proposito:** `_audit/S-003.md` sigue mencionando "AIzar" fuera de
+  `PROJECT.md`. No se toca: D-018 establece que un informe de auditoria ya entregado no se
+  reescribe.
+- **Sin auditoria pendiente de responder:** el tablero del auditor (`_review/index.md`) sigue con
+  su tabla vacia — no hay ninguna auditoria entregada todavia. Las filas de S-002 y S-003 en
+  `_audit/index.md` siguen en `Pendiente`.
 - **Siguiente paso concreto:** recibir del usuario el alcance y el objetivo del proyecto (T-004)
   para poder cerrar la etapa `000_preproject`.
 

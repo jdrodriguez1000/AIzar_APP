@@ -11,8 +11,8 @@ Trabajamos en paralelo con una segunda terminal llamada **auditor**.
 - `auditor` **no ejecuta** el proyecto.
 - `auditor` audita, verifica y valida lo realizado por la terminal ejecutora, y entrega
   recomendaciones y siguientes pasos.
-- Ruta de la terminal auditora:
-  `C:\Users\USUARIO\Documents\Company_TripleS\Proyectos_TripleS\AIzar_Auditor`
+- Su ruta, la del canal de vuelta y los demas datos propios de este proyecto estan en
+  **`PROJECT.md`**.
 
 ## Tratamiento de lo entregado por auditor
 
@@ -26,8 +26,8 @@ esta evaluacion previa.
 
 ### Como llegan
 
-Las auditorias llegan al repositorio del auditor, **de solo lectura para nosotros**:
-`..\AIzar_Auditor\_review\` — `index.md` es el tablero y cada `R-XXX.md` audita nuestro
+Las auditorias llegan al repositorio del auditor, **de solo lectura para nosotros**, en la ruta
+que indica `PROJECT.md`: `index.md` es el tablero y cada `R-XXX.md` audita nuestro
 `_audit/S-XXX.md`, en emparejamiento 1:1. `session-starter` mira ese tablero en cada arranque.
 
 ### Que hacer al recibir una
@@ -67,6 +67,12 @@ va a `decisions.md`. Marcar `Sin hallazgos` un informe que si los tuvo borra el 
 silencio, que es justo lo que el indice existe para impedir.
 
 ## Registro del proyecto
+
+Los datos propios de este proyecto —nombre, rutas, remoto, codigos— viven en **`PROJECT.md`**, y
+solo ahi: ningun protocolo los lleva escritos dentro. Si cambian, se cambian en un sitio.
+
+⚠️ En `PROJECT.md` va solo **lo estable**. Lo que cambia cada jornada —etapa, avance, bloqueos— va
+a `_persistence/progress.md`.
 
 El estado del proyecto vive en `_persistence/`. `progress.md` es el archivo principal: se lee al
 abrir sesion. Cada archivo abre con su indice y sus convenciones — leelas antes de escribir en el.

@@ -25,6 +25,7 @@
 | [T-014](#t-014---implementar-el-canal-de-vuelta-de-la-auditoria) | Implementar el canal de vuelta de la auditoria | Implementada | Alta | No bloqueante |
 | [T-015](#t-015---escribir-en-protocol-close-las-reglas-de-la-seccion-0) | Escribir en `protocol-close` las reglas de la seccion 0 | Implementada | Alta | No bloqueante |
 | [T-016](#t-016---poblar-el-inventario-de-acciones-irreversibles) | Poblar el inventario de acciones irreversibles | No implementada | Alta | No bloqueante |
+| [T-017](#t-017---extraer-los-datos-del-proyecto-a-projectmd) | Extraer los datos del proyecto a `PROJECT.md` | Implementada | Alta | No bloqueante |
 
 ---
 
@@ -297,3 +298,20 @@ Ver D-019.
 Listar que acciones son irreversibles en este proyecto (borrar datos, publicar, migrar, gastar, y
 las propias del dominio), para que el desempate de D-018 deje de aplicarse a criterio. **Depende de
 T-004:** sin alcance no se sabe que hace el proyecto ni que puede romper. Ver D-020.
+
+---
+
+### T-017 - Extraer los datos del proyecto a `PROJECT.md`
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Alta |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | usuario |
+| Fecha | 2026-08-28 |
+
+`PROJECT.md` con identidad, rutas, remoto, carpetas y codigos. Las dos skills, los dos agentes,
+`CLAUDE.md` y `_audit/index.md` dejan de llevar datos dentro y lo citan. De paso se generalizaron
+las tres menciones coyunturales a T-004. Verificado: cero menciones especificas en `.claude/` y
+`CLAUDE.md`. Ver D-021.

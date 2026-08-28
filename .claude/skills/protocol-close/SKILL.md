@@ -1,6 +1,6 @@
 ---
 name: protocol-close
-description: Protocolo de cierre de sesion del proyecto AIzar. Recoge la evidencia real del trabajo (git status, git diff, git log), actualiza de forma obligatoria _persistence/progress.md y _persistence/tasks.md, propone entradas de debt_tec.md, y solo revisa —sin escribirlos— decisions.md, assumptions.md, constraints.md y lessons.md; despues deja la sesion cerrada con un commit y su push. Uso exclusivo del agente session-closer, que se lanza al terminar una jornada de trabajo o cuando el usuario pida "cerremos la sesion", "cierra la sesion", "finalicemos el trabajo", "guarda el avance", "terminamos por hoy" o algo similar.
+description: Protocolo de cierre de sesion del proyecto. Recoge la evidencia real del trabajo (git status, git diff, git log), actualiza de forma obligatoria _persistence/progress.md y _persistence/tasks.md, propone entradas de debt_tec.md, y solo revisa —sin escribirlos— decisions.md, assumptions.md, constraints.md y lessons.md; despues deja la sesion cerrada con un commit y su push. Uso exclusivo del agente session-closer, que se lanza al terminar una jornada de trabajo o cuando el usuario pida "cerremos la sesion", "cierra la sesion", "finalicemos el trabajo", "guarda el avance", "terminamos por hoy" o algo similar.
 ---
 
 # Protocolo de cierre de sesion
@@ -28,8 +28,8 @@ diff es escribir hechos. Si las dos cosas se contradicen, **manda el diff**.
 | **El cierre** (este protocolo) | `progress.md`, `tasks.md`, propuestas a `debt_tec.md`, el informe `_audit/S-XXX.md` | los cuatro del porque |
 | **auditor** | su propio repositorio | no construye |
 
-🚨 **Nunca escribas en `C:\Users\USUARIO\Documents\Company_TripleS\Proyectos_TripleS\AIzar_Auditor`.**
-Ese repositorio no es nuestro (restriccion C-002). Lo que venga de la auditoria se refleja en
+🚨 **Nunca escribas en el repositorio del auditor** — su ruta esta en `PROJECT.md`.
+No es nuestro (restriccion C-002). Lo que venga de la auditoria se refleja en
 `_persistence/tasks.md` como tarea con `Origen: auditor`, y solo despues de que `executor` la
 evalue y la considere correcta (decision D-003).
 
@@ -39,7 +39,10 @@ evalue y la considere correcta (decision D-003).
 
 ## Paso 1 — Recoger la evidencia (antes de escribir nada)
 
-En este orden, sin saltarte ninguno:
+Empieza leyendo **`PROJECT.md`**: los datos propios de este proyecto —nombre, rutas, remoto,
+codigos—. Todo lo que en este protocolo aparece como «el proyecto» o «el auditor» se resuelve ahi.
+
+Despues, en este orden y sin saltarte ninguno:
 
 ```
 git status
@@ -325,7 +328,7 @@ relato.
 El auditor **no vivio la sesion, no conoce nuestras convenciones y trabaja en otro repositorio**.
 No escribas como si compartiera contexto:
 
-- **Cita siempre codigo y ruta** (`T-004`, `D-006`, `_persistence/tasks.md`). Son su unica via
+- **Cita siempre codigo y ruta** (`T-014`, `D-018`, `_persistence/tasks.md`). Son su unica via
   para ir a comprobar.
 - **Explica lo que un externo no puede deducir**, pero no repitas los archivos enteros: el informe
   cuenta **esta sesion**, no el proyecto entero.
