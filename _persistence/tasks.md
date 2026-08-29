@@ -28,6 +28,11 @@
 | [T-017](#t-017---extraer-los-datos-del-proyecto-a-projectmd) | Extraer los datos del proyecto a `PROJECT.md` | Implementada | Alta | No bloqueante |
 | [T-018](#t-018---resolver-la-circularidad-del-criterio-6-del-gate-1) | Resolver la circularidad del criterio 6 del Gate 1 | No implementada | Media | No bloqueante |
 | [T-019](#t-019---enunciar-una-sola-vez-el-principio-de-declarar-antes) | Enunciar una sola vez el principio de «declarar antes» | No implementada | Baja | No bloqueante |
+| [T-020](#t-020---decidir-el-nivel-de-concrecion-de-rr-003-auditar-el-historial) | Decidir el nivel de concrecion de `RR-003` («Auditar el historial») | No implementada | Media | No bloqueante |
+| [T-021](#t-021---fijar-la-regla-de-asignacion-de-los-codigos-rr-nnn) | Fijar la regla de asignacion de los codigos `RR-NNN` | No implementada | Media | No bloqueante |
+| [T-022](#t-022---decidir-los-huecos-de-cobertura-del-recetario-que-entran-y-que-se-poda) | Decidir los huecos de cobertura del recetario (que entra y que se poda) | No implementada | Media | No bloqueante |
+| [T-023](#t-023---revisar-rastros-de-fecha-huerfana-en-la-cabecera-de-guidemd) | Revisar rastros de fecha huerfana en la cabecera de `guide.md` | No implementada | Baja | No bloqueante |
+| [T-024](#t-024---resolver-la-contradiccion-menor-del-1-de-guidemd) | Resolver la contradiccion menor del §1 de `guide.md` | No implementada | Baja | No bloqueante |
 
 ---
 
@@ -358,3 +363,107 @@ entrar). Todos dicen: **lo que se define despues de ver el resultado no es una d
 
 Enunciarlo una vez y citarlo desde los cinco, en lugar de reargumentarlo cada vez. Mejora de
 redaccion del canonico, sin consecuencia sobre el diseño del producto. Aparcada por D-027.
+
+---
+
+### T-020 - Decidir el nivel de concrecion de `RR-003` («Auditar el historial»)
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | executor |
+| Fecha | - |
+
+`_global/guide.md` se declara «procedimientos, ordenes concretas, formatos» y lo cumple en
+`RR-005` (formato literal de salida), `RR-011` (plantillas pegables) y `RR-004` (forma del
+comando). La subseccion «Auditar el historial» de `RR-003` rompe ese patron: describe tres
+barridos sobre el historial de git **sin un solo comando**, justo donde mas falta hace uno —
+nadie improvisa un barrido anclado al formato de un secreto sin ejemplo delante. La fuente
+`_global/sources/GUIDE.md` §2.b tiene los comandos reales (ver D-029, que congelo esa fuente).
+
+Decidir con el usuario si esos comandos bajan al recetario o si el agnosticismo de herramienta
+justifica dejarlo en prosa — teniendo en cuenta que `RR-003` ya asume git en todo su cuerpo, asi
+que el agnosticismo ya esta roto en la practica. Punto 5 del analisis de nueve de la sesion S-006.
+
+---
+
+### T-021 - Fijar la regla de asignacion de los codigos `RR-NNN`
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | executor |
+| Fecha | - |
+
+`_global/guide.md` no dice si los codigos `RR-NNN` son estables. Si un proyecto poda `RR-005` y
+renumera lo que sigue, su `RR-007` deja de ser el `RR-007` de los demas proyectos, y la propia
+instruccion del indice de la guia (`grep -n "RR-007" guide.md`) se vuelve una trampa: el mismo
+codigo apunta a recetas distintas segun la copia.
+
+Falta anadir una linea explicita en `guide.md`: los codigos son globales, nunca se reasignan,
+nunca se renumeran, y un hueco (`RR-005` ausente) es informacion, no un error a corregir. Encaja
+con la doctrina de trazabilidad de `CLAUDE.md` (cada codigo es estable una vez asignado). Punto 6
+del analisis de nueve de la sesion S-006.
+
+---
+
+### T-022 - Decidir los huecos de cobertura del recetario (que entra y que se poda)
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | executor |
+| Fecha | - |
+
+Para servir a «todo proyecto de desarrollo de software», `_global/guide.md` (834 lineas) tiene
+huecos de cobertura del **como** transversal: convencion de commits y ramas, como se revierte
+algo ya publicado, como entra una dependencia nueva, copias de seguridad antes de una migracion,
+que corre en CI.
+
+**La tarea NO es anadir esas recetas sin mas.** La propia guia avisa de que su enemigo es su
+tamano — «si deja de leerse el indice de un vistazo, se poda antes de anadir» — y ya esta en 834
+lineas. La tarea es **decidir con el usuario que entra y que se poda a cambio**, receta por
+receta, no acumular. Punto 7 del analisis de nueve de la sesion S-006.
+
+---
+
+### T-023 - Revisar rastros de fecha huerfana en la cabecera de `guide.md`
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | executor |
+| Fecha | - |
+
+La cabecera de `_global/guide.md` sustituyo «Ultima revision» por el sello `VERSION 1` mas
+`_global/changelog.md` (D-028). Ese cambio de mecanismo puede haber dejado algun rastro suelto de
+fecha de revision que ya no aplica bajo el esquema nuevo. Falta una revision especifica —no se
+hizo en la sesion S-006, solo se aplico el cambio de fondo— para confirmar que no quedo ningun
+resto huerfano. Punto 8 del analisis de nueve de la sesion S-006.
+
+---
+
+### T-024 - Resolver la contradiccion menor del §1 de `guide.md`
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | executor |
+| Fecha | - |
+
+El §1 de `_global/guide.md` («Cuando se usa, y como se mantiene») dice que la guia «nunca se lee
+entera, y nunca de corrido». Pero el paso 3 del ritual de adaptacion —«borra lo que no aplica»—
+exige exactamente una lectura completa para poder decidir que sobra. Es el unico momento en que
+la guia si se lee entera, y hoy queda como una contradiccion sin resolver en vez de una excepcion
+reconocida. Ajustar el §1 para que la nombre como la unica lectura completa prevista. Punto 9 del
+analisis de nueve de la sesion S-006.

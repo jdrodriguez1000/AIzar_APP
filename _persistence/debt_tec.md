@@ -12,6 +12,7 @@
 |---|---|---|---|---|
 | [DT-001](#dt-001---duplicidad-de-datos-entre-contractmd-y-projectmd) | Duplicidad de datos entre `contract.md` y `PROJECT.md` | No implementada | Media | No bloqueante |
 | [DT-002](#dt-002---_methodology-mezcla-contenido-agnostico-y-propio-en-phases) | `_methodology/` mezcla contenido agnostico y propio en `phases/` | No implementada | Baja | No bloqueante |
+| [DT-003](#dt-003---_global-no-tiene-gitignore-propio-ni-esta-declarada-en-projectmd) | `_global/` no tiene `.gitignore` propio ni esta declarada en `PROJECT.md` | No implementada | Baja | No bloqueante |
 
 ---
 
@@ -95,3 +96,32 @@ Plantilla:
   `PROJECT.md`.
 - **Como pagarla:** decidir la regla general agnostico/propio (posiblemente separando `phases/` a
   otra carpeta de primer nivel) y aplicarla de una vez, en vez de resolverla carpeta por carpeta.
+
+---
+
+### DT-003 - `_global/` no tiene `.gitignore` propio ni esta declarada en `PROJECT.md`
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | executor (PROPUESTA — pendiente de confirmar) |
+| Fecha | 2026-08-28 |
+
+- **Que se hizo:** en esta sesion se incorporo `_global/` al repositorio (`guide.md`,
+  `changelog.md`, `sources/GUIDE.md`), analizada entera y ajustada en cuatro decisiones (D-028,
+  D-029, D-030 y la version 1 registrada). Se creo y edito la carpeta, pero **no se toco ni
+  `PROJECT.md` ni `.gitignore`**: `PROJECT.md` §«Carpetas propias» sigue listando solo
+  `_methodology/`, `_product/`, `_persistence/`, `_audit/` y `temporal/`, y `_global/` no aparece
+  en ninguna linea del `.gitignore` actual.
+- **Por que:** la sesion se dedico integramente al contenido de la guia (los nueve puntos del
+  analisis); el registro de la carpeta en si misma no se abordo.
+- **Costo de no pagarla:** `_global/` es una carpeta de primer nivel real en el repositorio, con
+  reglas propias (D-029: `sources/` es de solo lectura, igual que `_methodology/sources/`) que hoy
+  solo constan en `_persistence/constraints.md` y `decisions.md`, no en el registro estable de
+  carpetas. Quien lea solo `PROJECT.md` no sabe que `_global/` existe ni que es.
+- **Como pagarla:** anadir una fila a la tabla «Carpetas propias» de `PROJECT.md` describiendo
+  `_global/` (recetario transversal, agnostico, se copia a otros proyectos) y confirmar si hace
+  falta alguna exclusion especifica en `.gitignore` para esa carpeta (hoy ninguna receta lo exige,
+  pero no se verifico explicitamente).

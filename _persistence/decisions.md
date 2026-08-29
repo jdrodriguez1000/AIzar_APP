@@ -36,6 +36,9 @@
 | [D-025](#d-025---la-trazabilidad-se-registra-por-declaracion-hacia-arriba-sin-indice-central) | La trazabilidad se registra por declaracion hacia arriba, sin indice central | 2026-08-28 | Vigente |
 | [D-026](#d-026---las-etapas-son-las-de-vertical-y-000_preproject-es-su-unica-excepcion) | Las etapas son las de VERTICAL, y `000_preproject` es su unica excepcion | 2026-08-28 | Vigente |
 | [D-027](#d-027---cada-fase-se-disena-antes-de-entrar-en-ella-con-esqueleto-fijo) | Cada fase se disena antes de entrar en ella, con esqueleto fijo | 2026-08-28 | Vigente |
+| [D-028](#d-028---la-guia-transversal-se-copia-por-proyecto-con-sello-de-version) | La guia transversal se copia por proyecto, con sello de version | 2026-08-28 | Vigente |
+| [D-029](#d-029---la-fuente-de-la-guia-se-congela-en-_globalsources-y-las-flechas-se-anclan-por-titulo) | La fuente de la guia se congela en `_global/sources/`, y las flechas se anclan por titulo | 2026-08-28 | Vigente |
+| [D-030](#d-030---lo-que-aplica-de-la-guia-se-decide-con-dos-ejes-quien-construye-y-si-el-producto-llama-a-un-modelo) | Lo que aplica de la guia se decide con dos ejes: quien construye, y si el producto llama a un modelo | 2026-08-28 | Vigente |
 
 ---
 
@@ -794,3 +797,159 @@
 - **Alternativas descartadas:** resolver los cuatro huecos ahora, que especula sobre fases que estan
   a meses y sin alcance conocido; y aplazarlos sin fijar esqueleto ni momento, que es aplazar sin
   plan — y lo aplazado sin momento no se retoma, se olvida.
+
+---
+
+### D-028 - La guia transversal se copia por proyecto, con sello de version
+
+- **Fecha:** 2026-08-28
+- **Contexto:** `_global/guide.md` es un recetario transversal del **como** se hacen las cosas en
+  cualquier proyecto de software. El archivo ordenaba copiarse a cada proyecto y adaptarse alli,
+  pero su propia seccion 0 condena las segundas fuentes de verdad («envejece sin avisar»). El mismo
+  argumento se aplicaba en un sitio y se ignoraba en el otro, con un agravante: dos documentos que
+  un lector tiene delante se pueden ver discrepar; N copias en N proyectos no las ve nadie juntas
+  nunca.
+- **Decision:** se mantiene la copia por proyecto —**copia sellada**— y se le anaden las tres piezas
+  que la hacen sostenible:
+  1. **Sello de version.** La global lleva un numero (`VERSION 1`) que sube solo cuando cambia el
+     fondo de una receta. Cada copia declara en cabecera de que version salio.
+  2. **`_global/CHANGELOG.md`.** Una linea por version, la mas reciente arriba.
+  3. **En la copia se borra y se anade, nunca se reescribe.** Una receta que se queda, se queda
+     intacta; el aterrizaje al proyecto va en un bloque marcado debajo.
+- **Razon:** el argumento a favor de copiar se sostiene —una guia compartida no se puede corregir
+  sin romper a los demas, y una guia que no se corrige miente—. Lo que faltaba era **saber cuando
+  una copia se quedo vieja**. El sello convierte esa comprobacion de «comparar 640 lineas a ojo» a
+  «comparar dos numeros», y esa es la diferencia entre una comprobacion que se hace y una que no.
+- **Por que la pieza 3 es la que sostiene las otras dos:** una frase distinta dentro de una receta
+  puede ser una mejora local, una adaptacion al proyecto o texto viejo, y **las tres se ven igual en
+  un diff**. Prohibiendo reescribir, cada diferencia tiene una lectura unica: lo que falta es poda,
+  lo que sobra es aterrizaje, y lo que esta debe ser identico. De paso hace ejecutable la vuelta que
+  la guia ya prometia: una correccion se hace **en la global** y baja a las copias, en vez de morir
+  en el proyecto donde se encontro.
+- **Coste asumido y aun sin dueno:** alguien tiene que comparar los dos numeros. Si ese momento no
+  tiene sitio fijo, no ocurrira —es el mismo fallo que `RR-002` describe—. El candidato es el
+  arranque de sesion, pero **no se decide aqui**: la guia dice que lo fija cada proyecto el dia que
+  la copia.
+- **Tambien en esta pasada:** se retira `lessons-global.md`, que la guia declaraba como su pareja y
+  que **no se va a crear** (decision del usuario). El porque transversal ya viaja dentro de cada
+  receta, asi que la retirada fue editorial: cabecera, la tabla de tres archivos del §0 —ahora dos—
+  y el §1. El porque de un dia concreto sigue yendo al `lessons.md` del proyecto.
+- **Alternativas descartadas:**
+  - **Fuente unica compartida** (un solo archivo leido desde todos los proyectos): corrige una vez y
+    vale para todos, pero **ningun proyecto puede podarla**, y un lector que aprende a saltarse
+    secciones que no le aplican termina saltandose el archivo. Ademas corregirla pensando en el
+    proyecto de hoy se la cambia a los demas sin mirarlos.
+  - **Copia sin sello** (lo que habia): permite adaptar, pero la vuelta que el propio archivo promete
+    —«sube y corrige esta»— no se puede ejecutar sin comparar el documento entero contra cada copia.
+    Nadie lo hace, y la global se congela mientras las copias mejoran en secreto.
+  - **Permitir reescribir en la copia y sincronizar despues:** es la version comoda, y es la que
+    borra la distincion entre mejora, adaptacion y texto viejo. Sin esa distincion no hay
+    sincronizacion posible.
+
+---
+
+### D-029 - La fuente de la guia se congela en `_global/sources/`, y las flechas se anclan por titulo
+
+- **Fecha:** 2026-08-28
+- **Contexto:** cada receta de `_global/guide.md` abre con una flecha `↳ GUIDE §N` a su origen. Ese
+  `GUIDE` resulto ser `Edu_TripleS/GUIDE.md` (2.554 lineas, el manual del curso del que se destilo
+  el recetario), pero **la ruta aparecia una sola vez y de pasada**, en el Anexo A. Tres problemas:
+  en la maquina hay tres archivos llamados `GUIDE.md`; una copia de la guia en otro proyecto no
+  tiene ese archivo al lado; y los numeros de seccion de un documento vivo **se mueven sin avisar**.
+- **Decision:** tres cosas.
+  1. **La fuente se congela dentro del repo**, en `_global/sources/GUIDE.md`, con cabecera de
+     snapshot: fecha de la toma, «no se edita aqui», y la regla de precedencia (**si la fuente y
+     `guide.md` discrepan, manda `guide.md`**).
+  2. **La flecha se declara como procedencia, no como lectura obligatoria**, en la cabecera de
+     `guide.md`. Una copia sin la fuente al lado **no esta rota**.
+  3. **Las 13 flechas se anclan por titulo ademas del numero.**
+- **Razon 1 - congelar mata el problema del renumerado.** Una fuente congelada no mueve sus
+  secciones: `§8.l` significa lo mismo dentro de dos anos. Ademas **el patron ya existia en el
+  proyecto**: `_methodology/000_method.md` guarda sus fuentes intactas en `sources/` con la misma
+  regla de precedencia. `guide.md` vs `GUIDE.md` es a `_global/` lo que `000_method.md` vs
+  `005_vertical.md` es a `_methodology/`.
+- **Razon 2 - la declaracion cubre lo que congelar no cubre.** El manual son 2.500 lineas y **no
+  viaja con las copias**. Sin declarar que la flecha es procedencia, en cada copia serian trece
+  punteros rotos - y un puntero que promete lo que no cumple quema la confianza en los que si
+  funcionan.
+- **Razon 3 - el titulo se puede buscar, el numero no.** El propio indice de `guide.md` prohibe los
+  numeros de linea porque «se desplazan y mienten sin avisar», y el archivo apuntaba trece veces a
+  numeros de seccion de un documento vivo: **no se estaba aplicando a si mismo su regla**. Congelar
+  lo resuelve hoy, pero el dia que se retome el snapshot los numeros vuelven a moverse; el titulo
+  sigue siendo lo grepeable.
+- **Por que `_global/sources/` y no `_methodology/sources/`** (que fue la propuesta inicial del
+  usuario): `PROJECT.md` declara que `_methodology/` es **VERTICAL** - `000_method.md` y `sources/`,
+  agnosticos, se copian tal cual. `GUIDE.md` no es VERTICAL ni es metodo; la propia guia dice «no
+  es el metodo». Meterlo ahi difuminaba una frontera recien fijada y separaba la fuente de su
+  destilado. Se copia el **patron**, no la carpeta.
+- **Verificacion previa (`RR-003` aplicado a nosotros mismos):** antes de meter 2.554 lineas de un
+  manual personal en un repo con remoto publico en GitHub se escaneo la fuente. Claves con formato
+  de secreto: cero. Correos: cero. Rutas personales: dos lineas con la ruta de usuario de Windows,
+  generica. Apto para subir.
+- **No sube la version de `guide.md`:** sigue en 1. La v1 se creo hoy y **no existe ninguna copia
+  todavia**, asi que no hay nada que pueda estar atrasado. Subir a v2 antes de que la v1 llegue a
+  ningun sitio seria ruido en el `changelog.md`. Se anota dentro de la linea de la v1.
+- **Alternativas descartadas:**
+  - **Dejar las flechas apuntando a `Edu_TripleS/`:** depende de una carpeta externa que ni viaja
+    con el repo ni esta bajo su control, y cuyo renumerado nadie detecta.
+  - **Borrar las flechas:** es la trazabilidad hacia el padre que `CLAUDE.md` exige. Borrarlas deja
+    doce recetas huerfanas.
+  - **Una tabla de correspondencias receta-seccion:** seria un indice de trazabilidad, que
+    `CLAUDE.md` prohibe explicitamente - dos afirmaciones sobre el mismo vinculo, y un dia divergen.
+- **Queda fuera de alcance, por decision del usuario:** `Proyectos_TripleS/_global/guide.md` (el
+  original del que salio esta copia) y `Proyectos_TripleS/RandomAI/_guide/GUIDE.md`. Los borra el.
+  Se anoto que «no tenerlos en cuenta» no es un estado que el disco recuerde: mientras existan, un
+  archivo que no debe usarse se ve igual que uno que si - y hoy costo una edicion en el equivocado.
+
+---
+
+### D-030 - Lo que aplica de la guia se decide con dos ejes: quien construye, y si el producto llama a un modelo
+
+- **Fecha:** 2026-08-28
+- **Contexto:** `_global/guide.md` tenia **tres niveles de condicionalidad y ninguno declarado**:
+  recetas universales, `RR-008`-`RR-010` condicionales pero en el cuerpo y sin marca, y dos anexos
+  condicionales con marca. El paso «borra lo que no aplica» del ritual de adaptacion quedaba a
+  juicio de quien copiaba. El usuario aporto los tres tipos de proyecto que va a construir: (1) la
+  sesion principal construye todo, sin API en produccion; (2) orquestador + workers, sin API en
+  produccion; (3) orquestador + workers, con API en produccion.
+- **Decision:** el criterio son **dos ejes independientes**, declarados en la guia y respondidos al
+  copiarla:
+  - **Eje A - quien construye:** una persona / una sesion de IA sola / orquestador + workers.
+  - **Eje B - que se construye:** el producto llama a un modelo en produccion, si o no.
+  Cada bloque condicional se marca con 🅰️, 🅱️ o 💻 (maquina), y lo sin marca es universal.
+- **Por que dos y no uno:** son ortogonales. El caso 2 del usuario construye con agentes y entrega
+  una aplicacion sin IA; existe tambien el simetrico —una persona escribiendo a mano un producto que
+  si llama a un modelo—. Un solo eje no puede separar esos casos.
+- **El hallazgo que motivo la particion del Anexo A.** Se titulaba «Solo si el proyecto usa modelos
+  de lenguaje», y **sus seis entradas no caian todas del mismo lado**: los diez frenos del harness,
+  el control de coste y la inyeccion de prompt son del eje A (construccion); TDD-frente-a-evals y
+  la rubrica/juez son del eje B (producto). Con ese titulo, **un proyecto del caso 2 se saltaba el
+  anexo entero** —«mi aplicacion no lleva IA»— y perdia justo los frenos y el control de coste que
+  mas falta le hacen, porque va a tener un orquestador quemando tokens sin techo. Es el modo de
+  fallo que `RR-004` describe: una advertencia mal partida no avisa a medias, **tranquiliza**.
+  Se parte en **Anexo A (construccion)** y **Anexo B (producto)**; Windows pasa a **Anexo C**.
+- **`RR-008` sube de categoria en vez de bajar.** El analisis previo lo daba por condicional y
+  proponia moverlo a un anexo. **Era falso para los tres casos del usuario:** en el caso 1 el que
+  teclea sigue siendo una IA, y el problema que la receta describe —la misma sesion escribe el
+  codigo y sus pruebas— esta intacto. Se queda en el cuerpo, sin marca, y se corrige su primera
+  frase: suponia que «el ciclo lo corre una persona», que en estos proyectos **no pasa nunca**.
+  `RR-009` y `RR-010` si llevan 🅰️: dependen de que haya reparto de trabajo.
+- **El proveedor no es un tercer eje**, y se dice explicitamente: los frenos, medir tokens antes de
+  pagar y validar al juez se hacen igual contra Anthropic, OpenAI o quien sea. Saltarse una receta
+  «porque eso es de Anthropic» es saltarsela por un motivo que no existe.
+- **Los ejes se declaran ANTES de podar**, en el paso 2 del ritual, junto al sello. Declarados al
+  final describen lo que se borro; declarados antes deciden que se borra. Es el mismo argumento que
+  `RR-008` hace con el criterio y que `CLAUDE.md` hace con las fases.
+- **Tambien:** la fila del §1 que mandaba abrir «`RR-008` a `RR-011`» cuando teclea un agente metia
+  `RR-011` (entregar un hallazgo) en un grupo condicional al que no pertenece. Se parte en tres
+  filas.
+- **No sube la version:** sigue en 1, por lo mismo que en D-029 — la v1 aun no se ha copiado a
+  ningun sitio.
+- **Alternativas descartadas:**
+  - **Un solo eje «¿interviene un modelo?»:** es la pregunta ambigua que ya causaba el fallo. Los
+    casos 2 y 3 la responden «si» y necesitan cosas distintas.
+  - **Mover `RR-008`-`RR-010` a un anexo** (la propuesta inicial del executor): habria mandado al
+    anexo la receta que la propia guia llama «la mas importante del archivo», en proyectos donde
+    aplica siempre.
+  - **Dejar el Anexo A entero y solo aclarar su titulo:** no basta. El problema no es el titulo, es
+    que dentro conviven dos conjuntos que se borran en momentos distintos.

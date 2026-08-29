@@ -13,6 +13,7 @@
 | [A-001](#a-001---el-canal-de-vuelta-de-la-auditoria) | El canal de vuelta de la auditoria | 2026-08-28 | Confirmado |
 | [A-002](#a-002---un-unico-proyecto-por-directorio) | Un unico proyecto por directorio | 2026-08-28 | Abierto |
 | [A-003](#a-003---el-proyecto-arranca-desde-cero) | El proyecto arranca desde cero | 2026-08-28 | Abierto |
+| [A-004](#a-004---la-comprobacion-del-desfase-de-la-guia-tendra-dueno-cuando-se-copie) | La comprobacion del desfase de la guia tendra dueno cuando se copie | 2026-08-28 | Abierto |
 
 ---
 
@@ -72,3 +73,26 @@ se entienda que se creia mientras estuvo abierto.
 - **Supuesto:** no hay codigo previo que integrar; el directorio estaba vacio salvo `_persistence/`.
 - **Riesgo si es falso:** decisiones de arquitectura tomadas sin considerar lo existente.
 - **Como validarlo:** preguntar al usuario si existe codigo o sistema previo.
+
+---
+
+### A-004 - La comprobacion del desfase de la guia tendra dueno cuando se copie
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-28 |
+| Estado | Abierto |
+| Decision relacionada | D-028 |
+
+- **Supuesto:** el sello de version de `_global/guide.md` sirve porque **alguien comparara los dos
+  numeros** —el de la global y el de la copia— con alguna regularidad. La guia deja ese momento a
+  cada proyecto, «el dia que se copia».
+- **Por que se registra:** hoy **no existe ninguna copia**, asi que el mecanismo no se ha ejercitado
+  ni una vez. Se esta construyendo sobre algo que todavia no ha demostrado ocurrir.
+- **Riesgo si es falso:** el sello se convierte en decoracion. Las copias divergen igual que sin el,
+  con el agravante de que la cabecera afirma una version que nadie comprueba — y un dato que se ve
+  fiable y no lo es es peor que no tener dato. Es exactamente el fallo que `RR-002` describe: lo que
+  «ya se hara» se cobra solo cuando ya hay algo que perder.
+- **Como validarlo:** en la **primera copia real** de la guia a un proyecto, comprobar que el paso 2
+  del ritual fija un momento concreto para la comparacion, y que ese momento se ejecuta al menos una
+  vez. Si al hacer la primera copia nadie fija el momento, el supuesto queda **refutado** y hay que
+  llevar la comprobacion al arranque de sesion, que es el unico sitio con dueno garantizado.

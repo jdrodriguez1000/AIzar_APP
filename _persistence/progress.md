@@ -29,6 +29,7 @@
 | [S-003](#s-003---canal-de-vuelta-de-la-auditoria-aceptado-e-implementado) | Canal de vuelta de la auditoria aceptado e implementado | 2026-08-28 | 000_preproject |
 | [S-004](#s-004---los-datos-propios-del-proyecto-se-extraen-a-projectmd) | Los datos propios del proyecto se extraen a `PROJECT.md` | 2026-08-28 | 000_preproject |
 | [S-005](#s-005---el-metodo-vertical-se-incorpora-y-se-ajusta-al-vocabulario-propio) | El metodo VERTICAL se incorpora y se ajusta al vocabulario propio | 2026-08-28 | 000_preproject |
+| [S-006](#s-006---la-guia-transversal-_globalguidemd-se-analiza-y-se-ajustan-sus-primeros-cuatro-puntos) | La guia transversal `_global/guide.md` se analiza y se ajustan sus primeros cuatro puntos | 2026-08-28 | 000_preproject |
 
 ---
 
@@ -39,37 +40,54 @@
 | Etapa actual | `000_preproject` |
 | Ultima actualizacion | 2026-08-28 |
 | Salud | En marcha |
-| Avance de la etapa | Metodo de trabajo, persistencia, repositorio, ciclo completo inicio/cierre, canal de vuelta con la auditoria, datos propios del proyecto en `PROJECT.md`, y el metodo VERTICAL incorporado y ajustado (codigos, dueño de los Gates, trazabilidad, etapas, diseño de fases) listos; alcance del proyecto pendiente |
+| Avance de la etapa | Metodo de trabajo, persistencia, repositorio, ciclo completo inicio/cierre, canal de vuelta con la auditoria, datos propios del proyecto en `PROJECT.md`, el metodo VERTICAL incorporado y ajustado, y ahora la guia transversal `_global/guide.md` incorporada al repositorio y con sus primeros cuatro puntos de ajuste resueltos (D-028, D-029, D-030); quedan cinco puntos del mismo analisis para la proxima sesion (T-020 a T-024) y alcance del proyecto pendiente |
 | Bloqueos activos | Alcance y objetivo del proyecto sin definir (T-004); bloquea a su vez T-016 y el diseño de la fase Prototipo |
 
 ---
 
 ## 2. Ultimo realizado
 
-Se incorporo `_methodology/` (metodo VERTICAL: `000_method.md` canonico mas `sources/`) y se
-ajusto contra el vocabulario propio en cuatro decisiones: **D-022** renombra Feature y Scenario a
-`FT-`/`SC-` y fusiona `T-` en la tarea del proyecto con `Origen` obligatorio (canonico §46.1,
-§46.2, Anexo A.13); **D-024** reparte el veredicto de los Gates en tres actos —evidencia
-(`executor`), dictamen (`auditor`), veredicto (**el usuario**)—, escrito en `PROJECT.md` y
-`CLAUDE.md` sin tocar el canonico (§32 manda escribirlo fuera); **D-025** fija la trazabilidad por
-declaracion hacia arriba, sin indice central, con `_product/` declarada (aun no creada) para
-cuando entre Descubrimiento (canonico §47.1, Anexo A.14); **D-026** adopta las etapas de VERTICAL
-con `000_preproject` como unica excepcion, hasta cerrar T-004. **D-027** aplaza los ajustes
-internos de cada fase a cuando se diseñe, con un esqueleto fijo de 8 secciones en
-`_methodology/phases/NNN_<fase>.md` (documentado en `PROJECT.md`); de ahi nacen T-018 y T-019
-(`Origen: metodo`), aparcadas. Ademas, **D-023** adopta `contract.md` del repositorio del auditor
-como contrato vigente (version 1, verificado sin contradicciones contra `CLAUDE.md` y
-`_audit/index.md`); el renombrado de `_review/CANAL.md` a `channel.md` no exigio cambios, y las
-menciones historicas se dejaron intactas. Leccion nueva **L-002**: un metodo externo se contrasta
-contra el vocabulario propio antes de adoptarlo.
+Se incorporo al repositorio `_global/guide.md` (recetario transversal de desarrollo de software,
+834 lineas), analizado entero contra un listado de nueve puntos y se aplicaron los primeros
+cuatro:
+
+- **D-028** — la guia se sigue copiando por proyecto, pero ahora con sello de version (`VERSION
+  1`), `_global/changelog.md` (una linea por version) y la regla de que en la copia se borra y se
+  añade, nunca se reescribe. Se retira la pareja `lessons-global.md`, que no se va a crear.
+- **D-029** — la fuente del recetario se congela en `_global/sources/GUIDE.md` (snapshot intacto
+  de `Edu_TripleS/GUIDE.md`, con regla de precedencia si discrepa de `guide.md`), y las trece
+  flechas `↳ GUIDE §N` se anclan por titulo ademas de por numero. Se verifico la fuente contra
+  secretos antes de subirla (cero claves, cero correos, dos rutas de usuario genericas — apto).
+  Quedan fuera de alcance dos archivos que el usuario borrara por su cuenta:
+  `Proyectos_TripleS/_global/guide.md` y `Proyectos_TripleS/RandomAI/_guide/GUIDE.md`.
+- **D-030** — lo que aplica de la guia se decide con dos ejes independientes (quien construye:
+  persona / IA sola / orquestador+workers; que se construye: llama a un modelo en produccion o
+  no), marcados 🅰️/🅱️/💻. El Anexo A se parte en Anexo A (construccion) y Anexo B (producto); Windows
+  pasa a Anexo C. `RR-008` se queda en el cuerpo sin marca (aplica siempre que quien teclea es una
+  IA); `RR-009` y `RR-010` llevan 🅰️.
+- **Ademas**, `C-005` fija que `_global/sources/GUIDE.md` es de solo lectura, y `A-004` deja
+  registrado que el mecanismo del sello de version no se ha ejercitado ni una vez (no existe
+  ninguna copia todavia).
+
+Dos lecciones nuevas: **L-003** (un indice a mano en un `.md` con editor de TOC automatico
+necesita jerarquia de encabezados correcta mas un comentario de aviso, o el generador lo destroza
+en silencio) y **L-004** (un archivo duplicado sin marca — `_global/` existia dos veces, dentro y
+fuera de `AIzar_App/` — hace que se edite el equivocado; ya habia pasado antes de detectar el
+problema).
+
+**Quedan cinco puntos del mismo analisis de nueve para la proxima sesion**, registrados como
+T-020 a T-024 con contexto completo para retomarlos sin releer nada.
 
 ---
 
 ## 3. Siguiente paso
 
-Recibir del usuario el alcance y el objetivo del proyecto (T-004) para poder cerrar la etapa
-`000_preproject`, entrar en `Descubrimiento` y diseñar la fase Prototipo (D-027) antes de
-empezarla.
+Retomar los puntos 5 a 9 del analisis de `_global/guide.md`, en el orden del listado: **T-020**
+(nivel de concrecion de `RR-003`), **T-021** (regla de asignacion de codigos `RR-NNN`), **T-022**
+(huecos de cobertura del recetario — decidir que entra y que se poda), **T-023** (fechas
+huerfanas en la cabecera) y **T-024** (contradiccion menor del §1). En paralelo sigue pendiente
+recibir del usuario el alcance y el objetivo del proyecto (T-004) para poder cerrar la etapa
+`000_preproject`.
 
 ---
 
@@ -233,6 +251,45 @@ empezarla.
 - **Siguiente paso concreto:** recibir del usuario el alcance y el objetivo del proyecto (T-004)
   para poder cerrar la etapa `000_preproject`, entrar en `Descubrimiento` y diseñar la fase
   Prototipo (D-027) antes de empezarla.
+
+---
+
+### S-006 - La guia transversal `_global/guide.md` se analiza y se ajustan sus primeros cuatro puntos
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-28 |
+| Etapa | 000_preproject |
+
+- **Etapa del proyecto:** `000_preproject` — sexta jornada del repositorio, sobre el commit
+  `e9216f6` (S-005).
+- **Que quedo hecho:** la sesion se dedico integramente a `_global/guide.md` (recetario
+  transversal, 834 lineas, llego sin trackear). Se analizo entero contra un listado de nueve
+  puntos y se aplicaron los primeros cuatro:
+  - **D-028** — copia por proyecto con sello de version (`VERSION 1`), `_global/changelog.md`
+    nuevo, y la regla de que en la copia se borra y se añade, nunca se reescribe. Se retira la
+    pareja `lessons-global.md` (no se crea).
+  - **D-029** — la fuente se congela en `_global/sources/GUIDE.md` (snapshot de
+    `Edu_TripleS/GUIDE.md`, con regla de precedencia), y las trece flechas `↳ GUIDE §N` se anclan
+    tambien por titulo. Verificada contra secretos antes de subir (apto). Fuera de alcance, por
+    decision del usuario: `Proyectos_TripleS/_global/guide.md` y
+    `Proyectos_TripleS/RandomAI/_guide/GUIDE.md`, que el borra por su cuenta.
+  - **D-030** — dos ejes independientes deciden que aplica (quien construye / si el producto
+    llama a un modelo en produccion); el Anexo A se parte en A (construccion) y B (producto);
+    Windows pasa a Anexo C; `RR-008` se queda en el cuerpo sin marca.
+  - **C-005** — `_global/sources/GUIDE.md` es de solo lectura. **A-004** — el sello de version
+    aun no se ha ejercitado (no existe ninguna copia todavia).
+  - **L-003** — un indice a mano necesita defensa explicita contra los generadores de TOC.
+    **L-004** — un archivo duplicado sin marca hace que se edite el equivocado (paso durante esta
+    misma sesion: `_global/` existia dos veces).
+  - Se propone **DT-003** (pendiente de confirmar): `_global/` no tiene `.gitignore` propio ni
+    esta declarada en `PROJECT.md`.
+- **Lo que quedo pendiente, a proposito:** los puntos 5 a 9 del analisis de nueve — nivel de
+  concrecion de `RR-003`, regla de asignacion de codigos `RR-NNN`, huecos de cobertura del
+  recetario, fechas huerfanas de cabecera, y la contradiccion menor del §1 — quedan registrados
+  como **T-020** a **T-024** para la proxima sesion, con contexto completo.
+- **Sin auditoria pendiente de responder:** el tablero del auditor sigue con su tabla vacia.
+  `_audit/index.md` mantiene S-002 a S-005 en `Pendiente`; se anade S-006 en el mismo estado.
+- **Siguiente paso concreto:** retomar T-020 a T-024, en ese orden.
 
 ---
 
