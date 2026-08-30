@@ -30,6 +30,7 @@
 | [S-004](#s-004---los-datos-propios-del-proyecto-se-extraen-a-projectmd) | Los datos propios del proyecto se extraen a `PROJECT.md` | 2026-08-28 | 000_preproject |
 | [S-005](#s-005---el-metodo-vertical-se-incorpora-y-se-ajusta-al-vocabulario-propio) | El metodo VERTICAL se incorpora y se ajusta al vocabulario propio | 2026-08-28 | 000_preproject |
 | [S-006](#s-006---la-guia-transversal-_globalguidemd-se-analiza-y-se-ajustan-sus-primeros-cuatro-puntos) | La guia transversal `_global/guide.md` se analiza y se ajustan sus primeros cuatro puntos | 2026-08-28 | 000_preproject |
+| [S-007](#s-007---_global-se-declara-en-projectmd-y-se-cierra-dt-003) | `_global/` se declara en `PROJECT.md` y se cierra DT-003 | 2026-08-30 | 000_preproject |
 
 ---
 
@@ -38,45 +39,28 @@
 | Campo | Valor |
 |---|---|
 | Etapa actual | `000_preproject` |
-| Ultima actualizacion | 2026-08-28 |
+| Ultima actualizacion | 2026-08-30 |
 | Salud | En marcha |
-| Avance de la etapa | Metodo de trabajo, persistencia, repositorio, ciclo completo inicio/cierre, canal de vuelta con la auditoria, datos propios del proyecto en `PROJECT.md`, el metodo VERTICAL incorporado y ajustado, y ahora la guia transversal `_global/guide.md` incorporada al repositorio y con sus primeros cuatro puntos de ajuste resueltos (D-028, D-029, D-030); quedan cinco puntos del mismo analisis para la proxima sesion (T-020 a T-024) y alcance del proyecto pendiente |
+| Avance de la etapa | Metodo de trabajo, persistencia, repositorio, ciclo completo inicio/cierre, canal de vuelta con la auditoria, datos propios del proyecto en `PROJECT.md`, el metodo VERTICAL incorporado y ajustado, la guia transversal `_global/guide.md` incorporada con sus primeros cuatro puntos de ajuste resueltos, y ahora `_global/` declarada en la tabla «Carpetas propias» de `PROJECT.md` (D-031), con DT-003 pagada entera; quedan cinco puntos del analisis de la guia para la proxima sesion (T-020 a T-024) y alcance del proyecto pendiente |
 | Bloqueos activos | Alcance y objetivo del proyecto sin definir (T-004); bloquea a su vez T-016 y el diseño de la fase Prototipo |
 
 ---
 
 ## 2. Ultimo realizado
 
-Se incorporo al repositorio `_global/guide.md` (recetario transversal de desarrollo de software,
-834 lineas), analizado entero contra un listado de nueve puntos y se aplicaron los primeros
-cuatro:
+Sesion corta dedicada a preparar el arranque de la auditoria pendiente (informes `S-002` a
+`S-006`, todos `Pendiente`). Se detecto que `PROJECT.md` no declaraba `_global/` en su tabla
+«Carpetas propias» pese a que `S-006` la incorporo al repositorio — la deuda ya estaba anotada
+como **DT-003**, propuesta y sin confirmar. El usuario confirmo cerrarla:
 
-- **D-028** — la guia se sigue copiando por proyecto, pero ahora con sello de version (`VERSION
-  1`), `_global/changelog.md` (una linea por version) y la regla de que en la copia se borra y se
-  añade, nunca se reescribe. Se retira la pareja `lessons-global.md`, que no se va a crear.
-- **D-029** — la fuente del recetario se congela en `_global/sources/GUIDE.md` (snapshot intacto
-  de `Edu_TripleS/GUIDE.md`, con regla de precedencia si discrepa de `guide.md`), y las trece
-  flechas `↳ GUIDE §N` se anclan por titulo ademas de por numero. Se verifico la fuente contra
-  secretos antes de subirla (cero claves, cero correos, dos rutas de usuario genericas — apto).
-  Quedan fuera de alcance dos archivos que el usuario borrara por su cuenta:
-  `Proyectos_TripleS/_global/guide.md` y `Proyectos_TripleS/RandomAI/_guide/GUIDE.md`.
-- **D-030** — lo que aplica de la guia se decide con dos ejes independientes (quien construye:
-  persona / IA sola / orquestador+workers; que se construye: llama a un modelo en produccion o
-  no), marcados 🅰️/🅱️/💻. El Anexo A se parte en Anexo A (construccion) y Anexo B (producto); Windows
-  pasa a Anexo C. `RR-008` se queda en el cuerpo sin marca (aplica siempre que quien teclea es una
-  IA); `RR-009` y `RR-010` llevan 🅰️.
-- **Ademas**, `C-005` fija que `_global/sources/GUIDE.md` es de solo lectura, y `A-004` deja
-  registrado que el mecanismo del sello de version no se ha ejercitado ni una vez (no existe
-  ninguna copia todavia).
+- **D-031** — `_global/` entra en la tabla «Carpetas propias» de `PROJECT.md`, con tres notas: se
+  copia por proyecto con sello de version y no se comparte (D-028), `sources/GUIDE.md` es de solo
+  lectura (C-005), y se versiona entera, sin ninguna exclusion en `.gitignore`.
+- **DT-003** pasa a `Implementada` (pagada el 2026-08-30, S-007), con las dos mitades resueltas:
+  la fila en `PROJECT.md` (edicion), y la comprobacion de si hacia falta alguna exclusion en
+  `.gitignore` (verificacion: no hacia falta ninguna, los tres archivos son registro del proyecto).
 
-Dos lecciones nuevas: **L-003** (un indice a mano en un `.md` con editor de TOC automatico
-necesita jerarquia de encabezados correcta mas un comentario de aviso, o el generador lo destroza
-en silencio) y **L-004** (un archivo duplicado sin marca — `_global/` existia dos veces, dentro y
-fuera de `AIzar_App/` — hace que se edite el equivocado; ya habia pasado antes de detectar el
-problema).
-
-**Quedan cinco puntos del mismo analisis de nueve para la proxima sesion**, registrados como
-T-020 a T-024 con contexto completo para retomarlos sin releer nada.
+No hubo construccion de producto ni cambios de codigo.
 
 ---
 
@@ -87,7 +71,8 @@ Retomar los puntos 5 a 9 del analisis de `_global/guide.md`, en el orden del lis
 (huecos de cobertura del recetario — decidir que entra y que se poda), **T-023** (fechas
 huerfanas en la cabecera) y **T-024** (contradiccion menor del §1). En paralelo sigue pendiente
 recibir del usuario el alcance y el objetivo del proyecto (T-004) para poder cerrar la etapa
-`000_preproject`.
+`000_preproject`, y sigue abierto todo el ciclo de auditoria: `_audit/index.md` mantiene S-002 a
+S-006 en `Pendiente`, sin ninguna auditoria entregada todavia por el auditor.
 
 ---
 
@@ -290,6 +275,42 @@ recibir del usuario el alcance y el objetivo del proyecto (T-004) para poder cer
 - **Sin auditoria pendiente de responder:** el tablero del auditor sigue con su tabla vacia.
   `_audit/index.md` mantiene S-002 a S-005 en `Pendiente`; se anade S-006 en el mismo estado.
 - **Siguiente paso concreto:** retomar T-020 a T-024, en ese orden.
+
+---
+
+### S-007 - `_global/` se declara en `PROJECT.md` y se cierra DT-003
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Etapa | 000_preproject |
+
+- **Etapa del proyecto:** `000_preproject` — septima jornada del repositorio, sobre el commit
+  `eb17b6e` (S-006).
+- **Que quedo hecho:** sesion corta, dedicada a preparar el arranque de la auditoria pendiente
+  (informes `S-002` a `S-006`, todos `Pendiente`). Se confirmo que la infraestructura de auditoria
+  esta completa por ambos lados. Al revisar los informes contra lo registrado se detecto que
+  `PROJECT.md` no declaraba `_global/` en su tabla «Carpetas propias» pese a que `S-006` la
+  incorporo al repositorio; era **DT-003**, propuesta y sin confirmar. El usuario confirmo
+  cerrarla:
+  - **D-031** — `_global/` entra en la tabla «Carpetas propias» de `PROJECT.md`, con tres notas:
+    se copia por proyecto con sello de version y no se comparte (D-028), `sources/GUIDE.md` es de
+    solo lectura (C-005), y se versiona entera sin exclusiones en `.gitignore`.
+  - **DT-003** pasa a `Implementada`, pagada el 2026-08-30. Sus dos mitades se cerraron por vias
+    distintas: la fila en `PROJECT.md`, por edicion; la pregunta de si hacia falta alguna exclusion
+    en `.gitignore`, por verificacion — no hacia falta ninguna, y la comprobacion queda escrita en
+    `PROJECT.md` para que no se repita la duda.
+- **Sin construccion de producto:** no hubo cambios de codigo en esta sesion.
+- **Sin auditoria pendiente de responder:** el tablero del auditor (`AIzar_Auditor/_review/index.md`)
+  sigue con su tabla vacia. `_audit/index.md` mantiene S-002 a S-006 en `Pendiente`; se anade S-007
+  en el mismo estado.
+- **Discrepancia detectada, no del diff propio sino del repositorio del auditor:** su
+  `_persistence/progress.md` (linea 16-17) ya registra el `HEAD` del ejecutor como `eb17b6e`
+  (S-006) y su delta sin auditar como los cinco commits S-002 a S-006; su `tasks.md` (V-003) ya
+  nombra los cinco informes. No se encontro el desfase a `31e2ff7` que se esperaba encontrar segun
+  el traspaso recibido al abrir el cierre — se deja constancia porque el traspaso y la evidencia
+  discreparon, y manda la evidencia.
+- **Siguiente paso concreto:** retomar T-020 a T-024 (puntos 5 a 9 del analisis de
+  `_global/guide.md`), y sigue bloqueada T-004 (alcance y objetivo del proyecto).
 
 ---
 

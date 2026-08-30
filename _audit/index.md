@@ -63,5 +63,6 @@ dejaria de servir para lo unico que sirve.
 | `S-004.md` | S-004 | 2026-08-28 | Pendiente | - | - |
 | `S-005.md` | S-005 | 2026-08-28 | Pendiente | - | - |
 | `S-006.md` | S-006 | 2026-08-28 | Pendiente | - | - |
+| `S-007.md` | S-007 | 2026-08-30 | Pendiente | - | - |
 
 > `S-001` cerro antes de que existiera este mecanismo (D-016), asi que no tiene informe.

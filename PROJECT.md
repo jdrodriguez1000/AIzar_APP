@@ -133,10 +133,22 @@ una decision, y `decisions.md` ya tiene la forma que necesita.
 | Carpeta | Que es |
 |---|---|
 | `_methodology/` | **Como** se construye: el metodo VERTICAL (agnostico) mas `phases/`, su aplicacion aqui |
+| `_global/` | **Como** se hace lo que se hace en cualquier proyecto: el recetario transversal `guide.md`, su `changelog.md` y su fuente. Agnostico: se copia a otros proyectos |
 | `_product/` | **Que** se construye: necesidades, Baseline, slices. *Se crea al entrar en Descubrimiento* |
 | `_persistence/` | **Como va** el trabajo: siete archivos, indice arriba y detalle debajo |
 | `_audit/` | Informes que entregamos a la auditoria, mas su `index.md` |
 | `temporal/` | Area de trabajo del usuario. **Fuera del repositorio** (D-015) y fuera del registro |
+
+⚠️ **`_global/` se copia, no se comparte.** Cada proyecto tiene su copia con **sello de version**
+(D-028); lo que cambia en una no llega a las demas hasta que se recopia. La version de la copia y
+que trajo cada una estan en `_global/changelog.md`.
+
+🚨 **`_global/sources/GUIDE.md` es de solo lectura** (restriccion C-005), igual que
+`_methodology/sources/`: es la fuente de la que se destilo el recetario, se conserva intacta al
+lado. Lo que se edita es `guide.md`.
+
+📌 **Se versiona entera.** No lleva exclusiones en `.gitignore`: los tres archivos —recetario,
+changelog y fuente— son registro del proyecto, no material en transito.
 
 ## Codigos
 

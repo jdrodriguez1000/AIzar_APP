@@ -12,7 +12,7 @@
 |---|---|---|---|---|
 | [DT-001](#dt-001---duplicidad-de-datos-entre-contractmd-y-projectmd) | Duplicidad de datos entre `contract.md` y `PROJECT.md` | No implementada | Media | No bloqueante |
 | [DT-002](#dt-002---_methodology-mezcla-contenido-agnostico-y-propio-en-phases) | `_methodology/` mezcla contenido agnostico y propio en `phases/` | No implementada | Baja | No bloqueante |
-| [DT-003](#dt-003---_global-no-tiene-gitignore-propio-ni-esta-declarada-en-projectmd) | `_global/` no tiene `.gitignore` propio ni esta declarada en `PROJECT.md` | No implementada | Baja | No bloqueante |
+| [DT-003](#dt-003---_global-no-tiene-gitignore-propio-ni-esta-declarada-en-projectmd) | `_global/` no tiene `.gitignore` propio ni esta declarada en `PROJECT.md` | Implementada | Baja | No bloqueante |
 
 ---
 
@@ -102,12 +102,13 @@ Plantilla:
 ### DT-003 - `_global/` no tiene `.gitignore` propio ni esta declarada en `PROJECT.md`
 | Campo | Valor |
 |---|---|
-| Estado | No implementada |
+| Estado | **Implementada** |
 | Importancia | Baja |
 | Urgencia | No bloqueante |
 | Etapa | 000_preproject |
-| Origen | executor (PROPUESTA — pendiente de confirmar) |
+| Origen | executor (confirmada por el usuario el 2026-08-30) |
 | Fecha | 2026-08-28 |
+| Pagada | 2026-08-30 (S-007) |
 
 - **Que se hizo:** en esta sesion se incorporo `_global/` al repositorio (`guide.md`,
   `changelog.md`, `sources/GUIDE.md`), analizada entera y ajustada en cuatro decisiones (D-028,
@@ -125,3 +126,12 @@ Plantilla:
   `_global/` (recetario transversal, agnostico, se copia a otros proyectos) y confirmar si hace
   falta alguna exclusion especifica en `.gitignore` para esa carpeta (hoy ninguna receta lo exige,
   pero no se verifico explicitamente).
+- **Como se pago (2026-08-30, S-007):** las dos mitades, por separado.
+  1. **`PROJECT.md`** — `_global/` entra en la tabla «Carpetas propias» junto a `_methodology/`,
+     con tres notas debajo: se copia y no se comparte (sello de version, D-028), `sources/GUIDE.md`
+     es de solo lectura (C-005), y se versiona entera.
+  2. **`.gitignore`** — se verifico y **no hace falta ninguna exclusion**: los tres archivos de la
+     carpeta (`guide.md`, `changelog.md`, `sources/GUIDE.md`) estan versionados y deben estarlo,
+     porque son registro del proyecto y no material en transito como `temporal/`. Esa mitad se
+     cierra **por verificacion, no por edicion**: se comprobo que no habia nada que excluir, y
+     queda escrito en `PROJECT.md` para que la proxima lectura no vuelva a abrir la duda.

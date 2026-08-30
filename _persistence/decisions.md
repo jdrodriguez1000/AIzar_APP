@@ -39,6 +39,7 @@
 | [D-028](#d-028---la-guia-transversal-se-copia-por-proyecto-con-sello-de-version) | La guia transversal se copia por proyecto, con sello de version | 2026-08-28 | Vigente |
 | [D-029](#d-029---la-fuente-de-la-guia-se-congela-en-_globalsources-y-las-flechas-se-anclan-por-titulo) | La fuente de la guia se congela en `_global/sources/`, y las flechas se anclan por titulo | 2026-08-28 | Vigente |
 | [D-030](#d-030---lo-que-aplica-de-la-guia-se-decide-con-dos-ejes-quien-construye-y-si-el-producto-llama-a-un-modelo) | Lo que aplica de la guia se decide con dos ejes: quien construye, y si el producto llama a un modelo | 2026-08-28 | Vigente |
+| [D-031](#d-031---_global-se-declara-en-projectmd-y-se-versiona-entera-sin-exclusiones) | `_global/` se declara en `PROJECT.md` y se versiona entera, sin exclusiones | 2026-08-30 | Vigente |
 
 ---
 
@@ -953,3 +954,42 @@
     aplica siempre.
   - **Dejar el Anexo A entero y solo aclarar su titulo:** no basta. El problema no es el titulo, es
     que dentro conviven dos conjuntos que se borran en momentos distintos.
+
+
+---
+
+### D-031 - `_global/` se declara en `PROJECT.md` y se versiona entera, sin exclusiones
+
+- **Fecha:** 2026-08-30
+- **Contexto:** al preparar el arranque de la auditoria pendiente (informes `S-002` a `S-006`) se
+  reviso que afirma cada informe frente a lo que hay registrado. `S-006` describe la incorporacion
+  de `_global/` —`guide.md`, `changelog.md` y `sources/GUIDE.md`, 3.438 lineas en el commit
+  `eb17b6e`— pero la tabla «Carpetas propias» de `PROJECT.md` seguia listando cinco carpetas sin
+  ella. Estaba anotado como **DT-003**, propuesto y sin confirmar. Quien leyera solo `PROJECT.md`
+  —que es el registro estable, y lo unico que se lee al llevar el metodo a otro proyecto— no sabria
+  que `_global/` existe. El usuario zanjo: declararla y cerrar la deuda.
+- **Decision:** `_global/` entra en la tabla «Carpetas propias» de `PROJECT.md`, junto a
+  `_methodology/`, con tres notas que fijan sus reglas propias: se copia por proyecto con sello de
+  version y no se comparte (D-028), `sources/GUIDE.md` es de solo lectura (C-005), y **se versiona
+  entera, sin ninguna exclusion en `.gitignore`**.
+- **Por que se declara en `PROJECT.md` y no basta con `decisions.md`:** las reglas de la carpeta
+  existian desde S-006, pero solo en `decisions.md` y `constraints.md` — archivos de historia, que
+  se leen para saber **como se llego aqui**. `PROJECT.md` es el registro de **lo que hay**, y es el
+  unico archivo que se copia y edita al llevar el metodo a otro proyecto. Una carpeta de primer
+  nivel que no figura ahi es invisible para ese uso.
+- **Por que ninguna exclusion en `.gitignore`:** la segunda mitad de DT-003 preguntaba si hacia
+  falta alguna. Se verifico y **no**: los tres archivos son registro del proyecto, no material en
+  transito. El contraste es `temporal/`, que si se excluye (D-015) precisamente porque es area de
+  trabajo del usuario. Esa mitad de la deuda **se cierra por verificacion, no por edicion** — y por
+  eso se deja escrito en `PROJECT.md`, para que la proxima lectura no vuelva a abrir la duda. Una
+  comprobacion que no queda escrita se repite.
+- **Alternativas descartadas:**
+  - **Dejar DT-003 abierta hasta que tocara `_global/` otra vez:** era la posicion por defecto
+    —deuda `Baja` y `No bloqueante`—, pero el coste de pagarla resulto ser de minutos, y el de no
+    pagarla era concreto e inminente: un hallazgo casi seguro en la auditoria de `S-006`, que
+    obliga a una vuelta completa del ciclo (hallazgo → `T-XXX` → correccion → verificacion sobre un
+    commit posterior) para lo que aqui es una fila de tabla.
+  - **Anadir `_global/sources/` al `.gitignore` por ser fuente congelada:** se descarto. Congelada
+    significa de solo lectura (C-005), no fuera del registro. Excluirla haria que la copia de otro
+    proyecto llegara sin la fuente de la que se destilo el recetario, que es justo lo que D-029
+    quiso conservar.
