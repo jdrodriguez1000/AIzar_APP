@@ -34,6 +34,7 @@
 | [T-023](#t-023---revisar-rastros-de-fecha-huerfana-en-la-cabecera-de-guidemd) | Revisar rastros de fecha huerfana en la cabecera de `guide.md` | Implementada | Baja | No bloqueante |
 | [T-024](#t-024---resolver-la-contradiccion-menor-del-1-de-guidemd) | Resolver la contradiccion menor del §1 de `guide.md` | Implementada | Baja | No bloqueante |
 | [T-025](#t-025---juzgar-las-cuatro-candidatas-aplazadas-del-recetario) | Juzgar las cuatro candidatas aplazadas del recetario | No implementada | Media | No bloqueante |
+| [T-026](#t-026---disenar-la-fase-descubrimiento-antes-de-entrar-en-ella) | Disenar la fase `Descubrimiento` antes de entrar en ella | No implementada | Alta | Bloqueante |
 
 ---
 
@@ -521,3 +522,36 @@ Cuando llegue el alcance, cada una se pasa por los cuatro filtros del criterio d
 `guide.md`, «Que merece ser una receta»). Aviso ya anotado: la convencion de commits **suspende el
 filtro 2** —falla a la vista de todos y se arregla al momento—, asi que su entrada tendria que
 justificarse por otra via o descartarse.
+
+---
+
+### T-026 - Disenar la fase `Descubrimiento` antes de entrar en ella
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Alta |
+| Urgencia | Bloqueante |
+| Etapa | 000_preproject |
+| Origen | executor |
+| Fecha | - |
+
+**La carpeta `_methodology/phases/` no existe todavia**, y con ella no existe la definicion de
+ninguna fase. `PROJECT.md` la declara como el sitio donde vive cada una, con su esqueleto fijo de
+ocho secciones, y **D-027** exige que la fase N se disene al cerrar la fase N-1 — antes de entrar,
+nunca desde dentro.
+
+El problema de secuencia: **D-026 dice que al cerrarse T-004 se entra en `Descubrimiento`**. Si esa
+transicion ocurre sin la definicion escrita, la fase quedaria disenada desde dentro, que es
+exactamente lo que `CLAUDE.md` prohibe: «diseñada desde dentro, una fase no define lo que se exige:
+describe lo que salio».
+
+Falta escribir `_methodology/phases/001_descubrimiento.md` con las ocho secciones del esqueleto
+(pregunta, entradas, salidas, proceso, agentes, flujo, criterio de cierre, y la fecha con su
+`S-XXX` como prueba de que se escribio antes). Las **salidas** las fija el metodo en su §14 —
+registro de necesidades `N-xxx`, actores, interesados, hipotesis a validar, y la decision de
+alcance del prototipo con su justificacion escrita (A.11)—, asi que no se inventan: se aterrizan a
+este proyecto.
+
+**Depende de T-004** en el contenido, no en la forma: el esqueleto y las salidas del metodo se
+pueden escribir sin alcance, pero aterrizarlas —quienes son los actores, que hipotesis— exige
+saber que se construye. **Debe estar terminada antes de declarar la entrada en `Descubrimiento`.**
