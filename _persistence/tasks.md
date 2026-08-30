@@ -28,11 +28,12 @@
 | [T-017](#t-017---extraer-los-datos-del-proyecto-a-projectmd) | Extraer los datos del proyecto a `PROJECT.md` | Implementada | Alta | No bloqueante |
 | [T-018](#t-018---resolver-la-circularidad-del-criterio-6-del-gate-1) | Resolver la circularidad del criterio 6 del Gate 1 | No implementada | Media | No bloqueante |
 | [T-019](#t-019---enunciar-una-sola-vez-el-principio-de-declarar-antes) | Enunciar una sola vez el principio de «declarar antes» | No implementada | Baja | No bloqueante |
-| [T-020](#t-020---decidir-el-nivel-de-concrecion-de-rr-003-auditar-el-historial) | Decidir el nivel de concrecion de `RR-003` («Auditar el historial») | No implementada | Media | No bloqueante |
-| [T-021](#t-021---fijar-la-regla-de-asignacion-de-los-codigos-rr-nnn) | Fijar la regla de asignacion de los codigos `RR-NNN` | No implementada | Media | No bloqueante |
-| [T-022](#t-022---decidir-los-huecos-de-cobertura-del-recetario-que-entran-y-que-se-poda) | Decidir los huecos de cobertura del recetario (que entra y que se poda) | No implementada | Media | No bloqueante |
-| [T-023](#t-023---revisar-rastros-de-fecha-huerfana-en-la-cabecera-de-guidemd) | Revisar rastros de fecha huerfana en la cabecera de `guide.md` | No implementada | Baja | No bloqueante |
-| [T-024](#t-024---resolver-la-contradiccion-menor-del-1-de-guidemd) | Resolver la contradiccion menor del §1 de `guide.md` | No implementada | Baja | No bloqueante |
+| [T-020](#t-020---decidir-el-nivel-de-concrecion-de-rr-003-auditar-el-historial) | Decidir el nivel de concrecion de `RR-003` («Auditar el historial») | Implementada | Media | No bloqueante |
+| [T-021](#t-021---fijar-la-regla-de-asignacion-de-los-codigos-rr-nnn) | Fijar la regla de asignacion de los codigos `RR-NNN` | Implementada | Media | No bloqueante |
+| [T-022](#t-022---decidir-los-huecos-de-cobertura-del-recetario-que-entran-y-que-se-poda) | Decidir los huecos de cobertura del recetario (que entra y que se poda) | Implementada | Media | No bloqueante |
+| [T-023](#t-023---revisar-rastros-de-fecha-huerfana-en-la-cabecera-de-guidemd) | Revisar rastros de fecha huerfana en la cabecera de `guide.md` | Implementada | Baja | No bloqueante |
+| [T-024](#t-024---resolver-la-contradiccion-menor-del-1-de-guidemd) | Resolver la contradiccion menor del §1 de `guide.md` | Implementada | Baja | No bloqueante |
+| [T-025](#t-025---juzgar-las-cuatro-candidatas-aplazadas-del-recetario) | Juzgar las cuatro candidatas aplazadas del recetario | No implementada | Media | No bloqueante |
 
 ---
 
@@ -369,12 +370,12 @@ redaccion del canonico, sin consecuencia sobre el diseño del producto. Aparcada
 ### T-020 - Decidir el nivel de concrecion de `RR-003` («Auditar el historial»)
 | Campo | Valor |
 |---|---|
-| Estado | No implementada |
+| Estado | Implementada |
 | Importancia | Media |
 | Urgencia | No bloqueante |
 | Etapa | 000_preproject |
 | Origen | executor |
-| Fecha | - |
+| Fecha | 2026-08-30 |
 
 `_global/guide.md` se declara «procedimientos, ordenes concretas, formatos» y lo cumple en
 `RR-005` (formato literal de salida), `RR-011` (plantillas pegables) y `RR-004` (forma del
@@ -387,17 +388,21 @@ Decidir con el usuario si esos comandos bajan al recetario o si el agnosticismo 
 justifica dejarlo en prosa — teniendo en cuenta que `RR-003` ya asume git en todo su cuerpo, asi
 que el agnosticismo ya esta roto en la practica. Punto 5 del analisis de nueve de la sesion S-006.
 
+**Resuelta el 2026-08-30 (D-032):** bajan a la receta los patrones ya anclados de los tres
+barridos, el porque de cada anclaje y un aviso 💻 sobre la sensibilidad a mayusculas; **no bajan
+los comandos de shell**. `_global/guide.md` sube a VERSION 2 con su linea en `changelog.md`.
+
 ---
 
 ### T-021 - Fijar la regla de asignacion de los codigos `RR-NNN`
 | Campo | Valor |
 |---|---|
-| Estado | No implementada |
+| Estado | Implementada |
 | Importancia | Media |
 | Urgencia | No bloqueante |
 | Etapa | 000_preproject |
 | Origen | executor |
-| Fecha | - |
+| Fecha | 2026-08-30 |
 
 `_global/guide.md` no dice si los codigos `RR-NNN` son estables. Si un proyecto poda `RR-005` y
 renumera lo que sigue, su `RR-007` deja de ser el `RR-007` de los demas proyectos, y la propia
@@ -409,17 +414,23 @@ nunca se renumeran, y un hueco (`RR-005` ausente) es informacion, no un error a 
 con la doctrina de trazabilidad de `CLAUDE.md` (cada codigo es estable una vez asignado). Punto 6
 del analisis de nueve de la sesion S-006.
 
+**Resuelta el 2026-08-30 (D-033):** §1 de `guide.md` gana la subseccion «Los codigos son
+estables, y un hueco es informacion». Los `RR-NNN` los asigna solo la global, no se renumeran ni
+se reutilizan, y un hueco es informacion. Se cerro ademas el hueco que la tarea no cubria —si una
+copia puede **crear** un codigo nuevo: no puede, y se fijaron sus tres destinos. `guide.md` sube a
+VERSION 3.
+
 ---
 
 ### T-022 - Decidir los huecos de cobertura del recetario (que entra y que se poda)
 | Campo | Valor |
 |---|---|
-| Estado | No implementada |
+| Estado | Implementada |
 | Importancia | Media |
 | Urgencia | No bloqueante |
 | Etapa | 000_preproject |
 | Origen | executor |
-| Fecha | - |
+| Fecha | 2026-08-30 |
 
 Para servir a «todo proyecto de desarrollo de software», `_global/guide.md` (834 lineas) tiene
 huecos de cobertura del **como** transversal: convencion de commits y ramas, como se revierte
@@ -431,17 +442,23 @@ tamano — «si deja de leerse el indice de un vistazo, se poda antes de anadir�
 lineas. La tarea es **decidir con el usuario que entra y que se poda a cambio**, receta por
 receta, no acumular. Punto 7 del analisis de nueve de la sesion S-006.
 
+**Resuelta el 2026-08-30 (D-034):** entra **una sola receta** —`RR-013`, «Como se deshace algo ya
+publicado»— y se escribe en §1 el criterio de admision que faltaba («Que merece ser una receta»:
+transversal, falla en silencio, hay procedimiento, no esta ya dicho). **No se poda nada:** el
+presupuesto es el indice, no el numero de recetas. Las otras cuatro candidatas se aplazan a
+**T-025**, que depende de T-004. `guide.md` sube a VERSION 4.
+
 ---
 
 ### T-023 - Revisar rastros de fecha huerfana en la cabecera de `guide.md`
 | Campo | Valor |
 |---|---|
-| Estado | No implementada |
+| Estado | Implementada |
 | Importancia | Baja |
 | Urgencia | No bloqueante |
 | Etapa | 000_preproject |
 | Origen | executor |
-| Fecha | - |
+| Fecha | 2026-08-30 |
 
 La cabecera de `_global/guide.md` sustituyo «Ultima revision» por el sello `VERSION 1` mas
 `_global/changelog.md` (D-028). Ese cambio de mecanismo puede haber dejado algun rastro suelto de
@@ -449,17 +466,23 @@ fecha de revision que ya no aplica bajo el esquema nuevo. Falta una revision esp
 hizo en la sesion S-006, solo se aplico el cambio de fondo— para confirmar que no quedo ningun
 resto huerfano. Punto 8 del analisis de nueve de la sesion S-006.
 
+**Resuelta el 2026-08-30 (D-035):** se encontraron **dos** rastros. (1) La cabecera llevaba
+`Creado: … · Actualizado: …` —introducido en esta misma sesion al subir a VERSION 2— duplicando lo
+que ya dice la linea del `changelog.md`; queda en `**VERSION N**` a secas, con la razon escrita.
+(2) La plantilla del sello de copia traia valores concretos (`versión 7` · `el 2026-08-28`) dentro
+de algo que se copia verbatim; pasa a marcadores `<N>` y `<AAAA-MM-DD>`.
+
 ---
 
 ### T-024 - Resolver la contradiccion menor del §1 de `guide.md`
 | Campo | Valor |
 |---|---|
-| Estado | No implementada |
+| Estado | Implementada |
 | Importancia | Baja |
 | Urgencia | No bloqueante |
 | Etapa | 000_preproject |
 | Origen | executor |
-| Fecha | - |
+| Fecha | 2026-08-30 |
 
 El §1 de `_global/guide.md` («Cuando se usa, y como se mantiene») dice que la guia «nunca se lee
 entera, y nunca de corrido». Pero el paso 3 del ritual de adaptacion —«borra lo que no aplica»—
@@ -467,3 +490,34 @@ exige exactamente una lectura completa para poder decidir que sobra. Es el unico
 la guia si se lee entera, y hoy queda como una contradiccion sin resolver en vez de una excepcion
 reconocida. Ajustar el §1 para que la nombre como la unica lectura completa prevista. Punto 9 del
 analisis de nueve de la sesion S-006.
+
+**Resuelta el 2026-08-30 (D-035):** §1 nombra la excepcion en vez de contradecirse — el dia que se
+copia si se lee entera, es la unica lectura completa prevista y ocurre una vez por proyecto. Se
+aprovecha para fijar **contra que se mide el tamano**: contra ese unico dia, no contra el uso
+diario. No se ablando la frase original: diluir el principio habria quitado la contradiccion junto
+con la regla.
+
+---
+
+### T-025 - Juzgar las cuatro candidatas aplazadas del recetario
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | executor |
+| Fecha | - |
+
+Cuatro huecos de cobertura de `_global/guide.md` quedaron aplazados en **D-034**, no descartados:
+**convencion de commits y ramas**, **como entra una dependencia nueva**, **copias de seguridad
+antes de una migracion**, y **que corre en CI**.
+
+Se aplazaron porque son recetas sobre un stack que todavia no existe: escritas hoy describirian lo
+imaginado, y habria que corregirlas cuando la guia ya se hubiera copiado. **Depende de T-004**
+(alcance del proyecto): sin saber que se construye no hay con que juzgarlas.
+
+Cuando llegue el alcance, cada una se pasa por los cuatro filtros del criterio de admision (§1 de
+`guide.md`, «Que merece ser una receta»). Aviso ya anotado: la convencion de commits **suspende el
+filtro 2** —falla a la vista de todos y se arregla al momento—, asi que su entrada tendria que
+justificarse por otra via o descartarse.

@@ -6,11 +6,16 @@
 > **El porqué va dentro.** Cada receta lleva pegada la razón por la que existe — qué falla cuando
 > no se sigue. No hay un archivo aparte para eso: una receta sin su porqué se salta.
 
-**VERSIÓN 1** · Creado: 2026-08-28
+**VERSIÓN 5**
 
 > 🔢 **Este número es lo único que dice si una copia está atrasada.** Sube en cada cambio de fondo,
 > y solo entonces. Qué cambió en cada versión está en `changelog.md`, una línea por versión. Cómo
 > se usa, en [Cómo se adapta a un proyecto nuevo](#cómo-se-adapta-a-un-proyecto-nuevo).
+>
+> 📌 **Aquí no va ninguna fecha, y es a propósito.** La de cada versión está en su línea del
+> `changelog.md`, que es donde se escribe al cambiar. Una fecha repetida en la cabecera se queda
+> vieja el primer día que alguien sube la versión y no la toca — y entonces hay dos respuestas a
+> «¿de cuándo es esto?».
 
 **De dónde sale cada receta.** Cada una abre con una flecha a su origen:
 
@@ -56,6 +61,8 @@ números de línea: **se desplazan y mienten sin avisar**. El título se puede b
 - [0. Para qué sirve, y qué no es](#0-para-qué-sirve-y-qué-no-es)
 - [Los dos ejes: qué aplica a este proyecto](#los-dos-ejes-qué-aplica-a-este-proyecto)
 - [1. Cuándo se usa, y cómo se mantiene](#1-cuándo-se-usa-y-cómo-se-mantiene)
+  - [Qué merece ser una receta](#qué-merece-ser-una-receta)
+  - [Los códigos son estables, y un hueco es información](#los-códigos-son-estables-y-un-hueco-es-información)
 
 **El recetario**
 - [`RR-001` · Arranque de un proyecto: el orden](#rr-001--arranque-de-un-proyecto-el-orden)
@@ -78,6 +85,7 @@ números de línea: **se desplazan y mienten sin avisar**. El título se puede b
 - [🅰️ `RR-010` · Evidencia, nunca veredicto](#-rr-010--evidencia-nunca-veredicto)
 - [`RR-011` · Cómo se entrega un hallazgo](#rr-011--cómo-se-entrega-un-hallazgo)
 - [`RR-012` · Cuando el defecto está en el criterio, no en el código](#rr-012--cuando-el-defecto-está-en-el-criterio-no-en-el-código)
+- [`RR-013` · Cómo se deshace algo ya publicado](#rr-013--cómo-se-deshace-algo-ya-publicado)
 
 **Anexos** — no aplican a todo proyecto
 - [🅰️ Anexo A — Si un modelo interviene en la CONSTRUCCIÓN](#-anexo-a--si-un-modelo-interviene-en-la-construcción)
@@ -158,7 +166,17 @@ anota allí.
 **Nunca se lee entero, y nunca de corrido.** Se abre por la receta que toca, en el momento de
 hacer esa tarea, y se cierra. Por eso tiene índice y por eso puede crecer sin estorbar.
 
-**Los cuatro momentos en que se abre:**
+⚠️ **Con una excepción, y es una sola: el día que se copia.** El paso 3 del ritual manda borrar
+lo que no aplica, y eso no se puede decidir sin haber visto lo que hay. **Esa es la única lectura
+completa prevista de este archivo**, ocurre una vez por proyecto, y termina con la guía podada y
+sellada.
+
+📌 **Por eso el tamaño se mide contra ese día, no contra el uso diario.** En el uso diario un
+archivo largo no estorba: se entra por el índice. Lo que un archivo largo encarece es **la única
+lectura entera que alguien va a hacer de él** — y encarecerla es la forma de que la poda se haga
+mal, o de que no se haga.
+
+**Los momentos en que se abre:**
 
 | Momento | Qué se abre |
 |---|---|
@@ -168,6 +186,7 @@ hacer esa tarea, y se cierra. Por eso tiene índice y por eso puede crecer sin e
 | Siempre que el que teclea no sea una persona | `RR-008` |
 | 🅰️ Cuando hay orquestador y workers, y alguien revisa a alguien | `RR-009`, `RR-010` |
 | Al entregar un hallazgo, o al sospechar que el defecto no está en el código | `RR-011`, `RR-012` |
+| Antes de deshacer algo que ya está publicado | `RR-013` |
 
 **Cómo se mantiene:**
 
@@ -184,6 +203,63 @@ y sin ese aviso la corrección se queda aquí en vez de llegar a las copias.
 ⚠️ **Este archivo tiene un enemigo y es su propio tamaño.** Una corrección exacta, bien escrita,
 mil líneas más abajo, no llega. Si deja de leerse el índice de un vistazo, se poda antes de
 añadir.
+
+### Qué merece ser una receta
+
+**Esta guía no aspira a cubrirlo todo, y es a propósito.** Una guía completa es una guía que ya
+no se abre. Lo que decide no es si el tema es importante — casi todos lo son — sino si pasa los
+cuatro filtros:
+
+| | La pregunta | Si la respuesta es «no», dónde va |
+|---|---|---|
+| 1 | **¿Es transversal?** ¿valdría igual en otro lenguaje, otro stack, otro dominio | a la documentación del proyecto |
+| 2 | **¿Falla en silencio?** ¿el que se equivoca se entera cuando ya es caro | a ningún sitio: si el error salta en tu cara al momento, el error ya es la receta |
+| 3 | **¿Hay un procedimiento que enseñar?** un formato, un orden, unos pasos | es una **regla**, no una receta, y las reglas viven en el `CLAUDE.md` del proyecto |
+| 4 | **¿No está ya dicho en otra receta?** | debajo de esa, como aterrizaje o como matiz |
+
+🚨 **El filtro 2 es el que descarta más candidatas, y el que más cuesta aplicar.** «Convención de
+mensajes de commit» es importante, transversal y tiene procedimiento — pero se falla a la vista
+de todos y se arregla al momento. `RR-003` existe por lo contrario: git no avisa de nada, y
+cuando avisa ya está publicado.
+
+⛔ **Y no se admite una receta sobre algo que el proyecto todavía no hace.** Escrita antes de que
+exista el stack que la juzgue, describe lo que uno imagina, no lo que muerde — y llegará el día
+de corregirla, cuando ya se haya copiado. Es el mismo argumento de siempre: **lo que se define sin
+el sujeto delante no es una definición.**
+
+📌 **El presupuesto no es el número de recetas: es el índice.** Mientras se lea de un vistazo,
+añadir una no obliga a podar otra — un canje 1:1 solo consigue borrar algo útil para pagar algo
+útil. El día que el índice deje de leerse de un vistazo, se poda **antes** de añadir, y se poda
+por el filtro 2: primero lo que falla ruidosamente, que es lo que menos falta hace aquí.
+
+### Los códigos son estables, y un hueco es información
+
+Los códigos `RR-NNN` **los asigna esta guía global, y solo ella.** Una vez puesto, un código no
+se reasigna, no se renumera y no se reutiliza aunque su receta se borre.
+
+🚨 **Por qué importa, si parece contabilidad:** el índice de aquí arriba enseña a navegar con
+`grep -n "RR-007" guide.md`, y el ritual de copia manda **borrar** las recetas que no aplican. Si
+al podar `RR-005` se renumera lo que va detrás, el `RR-007` de ese proyecto deja de ser el de los
+demás — y el `grep` no falla: **devuelve la receta equivocada con toda naturalidad.** Un puntero
+roto se ve; uno que apunta a otro sitio, no.
+
+📌 **Por eso un hueco en la numeración no es un error a corregir: es la única prueba de que se
+podó a propósito.** `RR-005` ausente dice «aquí no aplica, y está en la tabla de exclusiones».
+`RR-005` ocupado por otra receta no dice nada, y encima miente.
+
+**Y por eso una copia nunca escribe un código que la global no tenga.** Cuando en un proyecto
+aparece algo que merece receta, tiene tres destinos y ninguno es inventar un `RR-NNN`:
+
+| Lo que apareció | Dónde va |
+|---|---|
+| **Es transversal** — valdría en otro proyecto | **sube a la global**: se escribe aquí, sube la versión, se anota en `changelog.md` y se vuelve a copiar |
+| **Es propio de este proyecto** — su stack, su dominio, su despliegue | **no es del recetario**: va a la documentación del proyecto. Esta guía es agnóstica por definición |
+| **Matiza una receta que ya existe** | **aterrizaje marcado**, en un bloque debajo de ella (ritual, paso 5) |
+
+⚠️ **El destino que más se falla es el primero, y falla por comodidad.** Escribirlo en la copia
+cuesta un minuto y subirlo aquí cuesta cinco. Pero dos proyectos que inventan su `RR-013` la misma
+semana crean dos recetas distintas con el mismo nombre, y ya no hay forma de saber cuál es cuál
+sin abrir las dos.
 
 ---
 
@@ -257,18 +333,45 @@ ejemplo pequeño dentro de una lección que nadie revisó.**
 
 ### Auditar el historial
 
-Responde una sola pregunta: **¿entró alguna vez algo que no debía?** Tres barridos:
+Responde una sola pregunta: **¿entró alguna vez algo que no debía?** Tres barridos, y cada uno
+mira una cosa distinta:
 
-1. **¿Existió alguna vez un archivo prohibido?** Sobre los **nombres** de todo el historial.
-   Ancla al separador de rutas, no a la raíz: un archivo prohibido dentro de una subcarpeta se
-   escapa de un patrón anclado con `^`.
-2. **¿Entró alguna vez una credencial?** Sobre el **contenido** de todos los commits, anclando
-   al **formato** del secreto: prefijo, longitud, mayúsculas.
-3. **¿Entró un dato personal?** El patrón, nunca una dirección escrita en el propio comando.
+| # | La pregunta | Sobre qué mira |
+|---|---|---|
+| 1 | ¿Existió alguna vez un archivo prohibido? | los **nombres** de todo el historial |
+| 2 | ¿Entró alguna vez una credencial? | el **contenido** de todos los commits |
+| 3 | ¿Entró un dato personal? | el **contenido**, con el patrón del dato |
+
+**Los patrones, ya anclados** — se pegan en el buscador que use la máquina; la receta no elige
+herramienta, pero **el patrón no se improvisa**:
+
+```
+1.  (^|/)\.env$      (^|/)data/      \.pem$      \.key$
+
+2.  (AKIA|ASIA|AIDA|AROA)[0-9A-Z]{16}
+    sk-ant-[A-Za-z0-9_-]{20,}
+    ghp_[A-Za-z0-9]{36}
+    -----BEGIN [A-Z ]*PRIVATE KEY-----
+
+3.  [A-Za-z0-9._%+-]+@(gmail|hotmail|outlook)\.com
+```
+
+**Por qué cada uno está escrito así, que es lo que se traslada a un patrón nuevo:**
+
+- **El 1 ancla al separador de ruta, no a la raíz.** Con `^` solo, un archivo prohibido dentro de
+  una subcarpeta se escapa; por eso `(^|/)` y no `^`.
+- **El 2 ancla al formato del secreto** —prefijo, longitud, mayúsculas—, nunca a una palabra. Sin
+  la longitud, `ASIA` cae dentro de *dem·ASIA·do* y el detector se llena de basura; sin el
+  prefijo `sk-ant-`, una llave entera pasa sin verse.
+- **El 3 lleva el patrón del dato, nunca una dirección escrita en el propio comando.**
+
+💻 **El buscador tiene que ir en modo sensible a mayúsculas.** Si por defecto no lo está —y en
+PowerShell `Select-String` no lo está—, `asia` vale por `ASIA` y el barrido 2 se apaga solo el
+primer día.
 
 **Lo esperado es CERO en los tres.** Si alguno devuelve algo, el arreglo **no** es borrar el
 archivo: es **rotar la credencial**. Es más barato y más seguro que reescribir historia
-publicada.
+publicada → `RR-013`.
 
 > 🚨 **Un patrón flojo miente, y mentir mucho es peor que no mirar.** Un detector que grita
 > veinte veces y las veinte son falsas **es un detector que dejarás de mirar**. El día que haya
@@ -644,6 +747,47 @@ problema no es el parche — es que el criterio estaba mal partido.
 
 ---
 
+## `RR-013` · Cómo se deshace algo ya publicado
+
+↳ *GUIDE §2.b — «Auditar el historial de un repo público» · §3.a — «Dos shells en la misma máquina, dos gramáticas»*
+
+> **La pregunta es una sola: ¿lo que quiero deshacer ya lo tiene alguien más?**
+
+Son dos mundos distintos, y confundirlos es el fallo:
+
+| Dónde está lo que quieres deshacer | Qué se puede hacer |
+|---|---|
+| **Solo en tu máquina**, sin publicar | reescribir a gusto: rehacer el commit, reordenarlo, tirarlo |
+| **Ya publicado** | ❌ **no se reescribe.** Se deshace **hacia adelante**: un commit nuevo que revierte al anterior |
+
+🚨 **Por qué reescribir lo publicado no es «arreglar»: es romperle el repositorio a los demás.**
+Quien reescribe historia ya publicada **no ve el daño** — su copia queda perfecta. Lo ven los que
+ya tenían la versión vieja, y lo ven más tarde, con un conflicto que no explica de dónde sale. Es
+un fallo silencioso **y ajeno**: las dos condiciones que hacen que nadie lo relacione con su
+causa.
+
+**Y por eso deshacer hacia adelante deja cicatriz, que es exactamente lo que se quiere.** El
+commit malo sigue ahí y encima está el que lo revierte. Quien lo lea mañana ve **que pasó y que se
+corrigió**; con la historia reescrita vería un pasado limpio que nunca existió.
+
+**Qué arregla cada cosa, según lo que se publicó:**
+
+| Lo que se publicó | Lo que NO lo arregla | Lo que sí |
+|---|---|---|
+| Código o texto equivocado | borrarlo del historial | un commit que lo revierte |
+| Una credencial, una ruta, un dato de una persona | borrar el archivo — el historial lo conserva | **rotar la credencial** → `RR-003` |
+| Ruido cosmético: un mensaje de commit malformado | reescribir la historia por una errata | **nada: se deja.** El arreglo cuesta más que el ruido |
+
+📌 **La tercera fila es la que cuesta aceptar,** y es la más frecuente. Un mensaje de commit con
+un carácter de más se ve mal para siempre, y da igual: reescribir historia publicada por eso es
+pagar un riesgo real con moneda de vanidad.
+
+⚠️ **La excepción existe, y tiene una sola forma.** Reescribir lo publicado se hace **solo con
+acuerdo previo y explícito de todos los que ya tienen esa historia**, y anunciado **antes**, nunca
+después. Un aviso posterior no es un aviso: es un parte de daños.
+
+---
+
 # Anexos
 
 ## 🅰️ Anexo A — Si un modelo interviene en la CONSTRUCCIÓN
@@ -748,7 +892,7 @@ tres piezas — el **sello**, la **regla de no reescribir** y la **comprobación
 2. **Sella la copia y declara los dos ejes.** En su cabecera, la versión se sustituye por esto:
 
    ```markdown
-   > **Copiada de la guía global, versión 7** · el 2026-08-28
+   > **Copiada de la guía global, versión <N>** · el <AAAA-MM-DD>
    > **A. Quién construye:** orquestador + workers
    > **B. ¿El producto llama a un modelo en producción?:** no
    > Lo que se dejó fuera está en la tabla de exclusiones, al final.
@@ -793,6 +937,7 @@ tres piezas — el **sello**, la **regla de no reescribir** y la **comprobación
 | **Borrar** una receta entera que no aplica | ✅ es la razón de ser del ritual |
 | **Añadir** debajo el aterrizaje al proyecto | ✅ marcado, para que se distinga de lo copiado |
 | **Reescribir** el cuerpo de una receta que se queda | ❌ **nunca** |
+| **Crear** una receta con un código nuevo | ❌ **nunca** — los códigos los asigna la global ([§1](#los-códigos-son-estables-y-un-hueco-es-información)) |
 
 **Por qué lo tercero está prohibido, aunque parezca inofensivo.** Una frase distinta dentro de una
 receta puede ser tres cosas —una mejora tuya, una adaptación local, o texto viejo de una versión
@@ -806,6 +951,7 @@ Con la regla puesta, cada diferencia tiene una sola lectura posible:
 | falta una receta | se podó a propósito → está en la tabla de exclusiones |
 | hay texto extra debajo de una receta | es el aterrizaje a ese proyecto |
 | una receta dice algo distinto | **error**: o la copia está atrasada, o alguien la reescribió |
+| hay una receta que la global no tiene | **error**: un código inventado en la copia. O es transversal y sube aquí, o no era del recetario |
 
 > 🚨 **Y esto es lo que la regla compra de verdad.** Si trabajando descubres que una receta está
 > mal, **no la arreglas en tu copia**: la arreglas aquí, en la global, subes la versión, anotas su

@@ -10,7 +10,11 @@
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
-| **1** | 2026-08-28 | Punto de partida. 12 recetas (`RR-001`…`RR-012`), Anexo A (modelos de lenguaje) y Anexo B (Windows). Se retira la pareja `lessons-global.md`: el porqué va dentro de cada receta. Se añade el sello de versión, este registro, y la regla de que en la copia se borra y se añade pero nunca se reescribe. La fuente se congela en `sources/GUIDE.md` y las flechas `↳` se anclan por título además del número. |
+| **5** | 2026-08-30 | Cabecera — se le quitan las fechas: la de cada version vive en su linea de aqui y no se repite. El sello de la copia pasa a marcadores (`<N>`, `<AAAA-MM-DD>`). §1 — nombra su unica excepcion: el dia que se copia si se lee entera, y el tamano se mide contra ese dia |
+| **4** | 2026-08-30 | §1 — anadido el criterio de admision («Que merece ser una receta»: cuatro filtros, y el presupuesto es el indice, no el numero de recetas). Nueva `RR-013` — como se deshace algo ya publicado |
+| **3** | 2026-08-30 | §1 — anadida la regla de estabilidad de los codigos: los `RR-NNN` los asigna solo la global, no se renumeran ni se reutilizan, un hueco es informacion, y una copia nunca inventa un codigo nuevo |
+| **2** | 2026-08-30 | `RR-003` — la subseccion «Auditar el historial» baja los patrones ya anclados de los tres barridos, con el porque de cada anclaje y el aviso 💻 de sensibilidad a mayusculas. Los comandos de shell no bajan: la receta sigue sin elegir herramienta |
+| **1** | 2026-08-28 | Punto de partida. 12 recetas (`RR-001`…`RR-012`), Anexo A (modelos en la construccion), Anexo B (el producto llama a un modelo) y Anexo C (Windows). Se retira la pareja `lessons-global.md`: el porqué va dentro de cada receta. Se añade el sello de versión, este registro, y la regla de que en la copia se borra y se añade pero nunca se reescribe. La fuente se congela en `sources/GUIDE.md` y las flechas `↳` se anclan por título además del número. |
 
 ---
 

@@ -31,6 +31,7 @@
 | [S-005](#s-005---el-metodo-vertical-se-incorpora-y-se-ajusta-al-vocabulario-propio) | El metodo VERTICAL se incorpora y se ajusta al vocabulario propio | 2026-08-28 | 000_preproject |
 | [S-006](#s-006---la-guia-transversal-_globalguidemd-se-analiza-y-se-ajustan-sus-primeros-cuatro-puntos) | La guia transversal `_global/guide.md` se analiza y se ajustan sus primeros cuatro puntos | 2026-08-28 | 000_preproject |
 | [S-007](#s-007---_global-se-declara-en-projectmd-y-se-cierra-dt-003) | `_global/` se declara en `PROJECT.md` y se cierra DT-003 | 2026-08-30 | 000_preproject |
+| [S-008](#s-008---se-cierran-los-cinco-puntos-restantes-del-analisis-de-_globalguidemd) | Se cierran los cinco puntos restantes del analisis de `_global/guide.md` | 2026-08-30 | 000_preproject |
 
 ---
 
@@ -41,38 +42,51 @@
 | Etapa actual | `000_preproject` |
 | Ultima actualizacion | 2026-08-30 |
 | Salud | En marcha |
-| Avance de la etapa | Metodo de trabajo, persistencia, repositorio, ciclo completo inicio/cierre, canal de vuelta con la auditoria, datos propios del proyecto en `PROJECT.md`, el metodo VERTICAL incorporado y ajustado, la guia transversal `_global/guide.md` incorporada con sus primeros cuatro puntos de ajuste resueltos, y ahora `_global/` declarada en la tabla «Carpetas propias» de `PROJECT.md` (D-031), con DT-003 pagada entera; quedan cinco puntos del analisis de la guia para la proxima sesion (T-020 a T-024) y alcance del proyecto pendiente |
+| Avance de la etapa | Metodo de trabajo, persistencia, repositorio, ciclo completo inicio/cierre, canal de vuelta con la auditoria, datos propios del proyecto en `PROJECT.md`, el metodo VERTICAL incorporado y ajustado, y el analisis de nueve puntos de `_global/guide.md` **completo**: los nueve ajustes (T-016 a T-024) resueltos y `guide.md` en `VERSION 5`. Queda una tarea nueva aplazada (T-025, depende de T-004) y sigue pendiente el alcance del proyecto |
 | Bloqueos activos | Alcance y objetivo del proyecto sin definir (T-004); bloquea a su vez T-016 y el diseño de la fase Prototipo |
 
 ---
 
 ## 2. Ultimo realizado
 
-Sesion corta dedicada a preparar el arranque de la auditoria pendiente (informes `S-002` a
-`S-006`, todos `Pendiente`). Se detecto que `PROJECT.md` no declaraba `_global/` en su tabla
-«Carpetas propias» pese a que `S-006` la incorporo al repositorio — la deuda ya estaba anotada
-como **DT-003**, propuesta y sin confirmar. El usuario confirmo cerrarla:
+Se cerraron los cinco puntos que quedaban del analisis de nueve de `_global/guide.md` (T-020 a
+T-024), con cuatro decisiones registradas (D-032 a D-035). `guide.md` paso de `VERSION 1` a
+`VERSION 5`, con una linea de changelog por version:
 
-- **D-031** — `_global/` entra en la tabla «Carpetas propias» de `PROJECT.md`, con tres notas: se
-  copia por proyecto con sello de version y no se comparte (D-028), `sources/GUIDE.md` es de solo
-  lectura (C-005), y se versiona entera, sin ninguna exclusion en `.gitignore`.
-- **DT-003** pasa a `Implementada` (pagada el 2026-08-30, S-007), con las dos mitades resueltas:
-  la fila en `PROJECT.md` (edicion), y la comprobacion de si hacia falta alguna exclusion en
-  `.gitignore` (verificacion: no hacia falta ninguna, los tres archivos son registro del proyecto).
+- **D-032 (T-020)** — la subseccion «Auditar el historial» de `RR-003` baja los patrones ya
+  anclados de los tres barridos, el porque de cada anclaje y un aviso 💻 de sensibilidad a
+  mayusculas. Los comandos de shell no bajan. De paso se corrigio una errata en `changelog.md` v1
+  (decia «Anexo B (Windows)»; ahora nombra los tres anexos correctos) — no sube version por ser
+  correccion de una linea ya publicada, no cambio de fondo.
+- **D-033 (T-021)** — §1 gana la subseccion «Los codigos son estables, y un hueco es
+  informacion». Se cerro ademas un hueco que la tarea no cubria: una copia no puede crear codigos
+  `RR-NNN` nuevos, con sus tres destinos (sube a la global / va a la documentacion del proyecto /
+  aterrizaje marcado). Se completaron las dos tablas del ritual de copia que se leian completas
+  sin serlo.
+- **D-034 (T-022)** — §1 gana el criterio de admision «Que merece ser una receta» (cuatro
+  filtros), y entra una sola receta nueva, `RR-013` («Como se deshace algo ya publicado»). Las
+  otras cuatro candidatas (commits/ramas, dependencia nueva, backups pre-migracion, CI) se
+  aplazaron a **T-025**, que depende de T-004. No se podo nada: el presupuesto es el indice, no
+  el numero de recetas.
+- **D-035 (T-023 y T-024)** — dos rastros de fecha huerfana encontrados y corregidos: la cabecera
+  pierde las fechas (`**VERSION N**` a secas), y la plantilla del sello de copia pasa a
+  marcadores `<N>` / `<AAAA-MM-DD>`. §1 nombra su unica lectura completa prevista (el dia que se
+  copia) y fija contra que se mide el tamano de la guia.
 
-No hubo construccion de producto ni cambios de codigo.
+Los cuatro archivos del porque los escribio `executor` en el momento: `decisions.md` trae D-032 a
+D-035 completas, con sus alternativas descartadas. No hubo entradas nuevas en `assumptions.md`,
+`constraints.md` ni `lessons.md` — nada en el diff de esta sesion las exigia. No hubo construccion
+de producto ni cambios de codigo de aplicacion.
 
 ---
 
 ## 3. Siguiente paso
 
-Retomar los puntos 5 a 9 del analisis de `_global/guide.md`, en el orden del listado: **T-020**
-(nivel de concrecion de `RR-003`), **T-021** (regla de asignacion de codigos `RR-NNN`), **T-022**
-(huecos de cobertura del recetario — decidir que entra y que se poda), **T-023** (fechas
-huerfanas en la cabecera) y **T-024** (contradiccion menor del §1). En paralelo sigue pendiente
-recibir del usuario el alcance y el objetivo del proyecto (T-004) para poder cerrar la etapa
-`000_preproject`, y sigue abierto todo el ciclo de auditoria: `_audit/index.md` mantiene S-002 a
-S-006 en `Pendiente`, sin ninguna auditoria entregada todavia por el auditor.
+Recibir del usuario el alcance y el objetivo del proyecto (**T-004**), que sigue bloqueando la
+etapa `000_preproject` y, en consecuencia, **T-025** (juzgar las cuatro candidatas aplazadas del
+recetario). En paralelo sigue abierto todo el ciclo de auditoria: `_audit/index.md` mantiene
+S-002 a S-007 en `Pendiente`, mas la nueva `S-008.md`, sin ninguna auditoria entregada todavia por
+el auditor.
 
 ---
 
@@ -311,6 +325,36 @@ S-006 en `Pendiente`, sin ninguna auditoria entregada todavia por el auditor.
   discreparon, y manda la evidencia.
 - **Siguiente paso concreto:** retomar T-020 a T-024 (puntos 5 a 9 del analisis de
   `_global/guide.md`), y sigue bloqueada T-004 (alcance y objetivo del proyecto).
+
+---
+
+### S-008 - Se cierran los cinco puntos restantes del analisis de `_global/guide.md`
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Etapa | 000_preproject |
+
+- **Etapa del proyecto:** `000_preproject` — el analisis de nueve puntos de `_global/guide.md`
+  (abierto en S-006) queda completo: T-016 a T-024 resueltas. T-004 sigue siendo el unico bloqueo
+  para salir de la etapa.
+- **Que quedo hecho, segun el diff:** T-020 a T-024 pasan a `Implementada` en `tasks.md`, cada una
+  con su resultado escrito. `decisions.md` gana D-032, D-033, D-034 y D-035, cada una con sus
+  alternativas descartadas. `_global/guide.md` sube de `VERSION 1` a `VERSION 5` (una linea de
+  changelog por version en `_global/changelog.md`), con: la subseccion de `RR-003` con los
+  patrones anclados de los tres barridos (D-032); la subseccion de §1 sobre estabilidad de
+  codigos `RR-NNN` y los tres destinos de algo nuevo que aparece en una copia (D-033); el criterio
+  de admision de §1 y la receta nueva `RR-013` (D-034); y la cabecera sin fechas mas la excepcion
+  de lectura completa de §1 (D-035). Se anadio **T-025** («Juzgar las cuatro candidatas aplazadas
+  del recetario»), `No implementada`, dependiente de T-004. Tambien se corrigio una errata en la
+  linea v1 de `changelog.md` (nombraba solo «Anexo B (Windows)»; ahora nombra los tres anexos que
+  el archivo realmente tiene).
+- **Los cuatro archivos del porque:** `decisions.md` ya venia escrito con D-032 a D-035 al llegar
+  este cierre. No hubo entradas nuevas en `assumptions.md`, `constraints.md` ni `lessons.md`; el
+  diff de esta sesion no muestra ningun supuesto sin confirmar, ningun limite nuevo ni ninguna
+  leccion aprendida por error/acierto que exigiera una.
+- **Sin construccion de producto:** no hubo cambios de codigo de aplicacion.
+- **Siguiente paso concreto:** recibir del usuario el alcance y el objetivo del proyecto (T-004),
+  que desbloquea a su vez T-025.
 
 ---
 

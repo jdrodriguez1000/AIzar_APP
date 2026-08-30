@@ -40,6 +40,10 @@
 | [D-029](#d-029---la-fuente-de-la-guia-se-congela-en-_globalsources-y-las-flechas-se-anclan-por-titulo) | La fuente de la guia se congela en `_global/sources/`, y las flechas se anclan por titulo | 2026-08-28 | Vigente |
 | [D-030](#d-030---lo-que-aplica-de-la-guia-se-decide-con-dos-ejes-quien-construye-y-si-el-producto-llama-a-un-modelo) | Lo que aplica de la guia se decide con dos ejes: quien construye, y si el producto llama a un modelo | 2026-08-28 | Vigente |
 | [D-031](#d-031---_global-se-declara-en-projectmd-y-se-versiona-entera-sin-exclusiones) | `_global/` se declara en `PROJECT.md` y se versiona entera, sin exclusiones | 2026-08-30 | Vigente |
+| [D-032](#d-032---rr-003-baja-los-patrones-anclados-pero-no-los-comandos-de-shell) | `RR-003` baja los patrones anclados, pero no los comandos de shell | 2026-08-30 | Vigente |
+| [D-033](#d-033---los-codigos-rr-nnn-los-asigna-solo-la-guia-global-y-nunca-se-reasignan) | Los codigos `RR-NNN` los asigna solo la guia global, y nunca se reasignan | 2026-08-30 | Vigente |
+| [D-034](#d-034---el-recetario-no-aspira-a-cubrirlo-todo-se-le-pone-criterio-de-admision-y-entra-una-sola-receta) | El recetario no aspira a cubrirlo todo: criterio de admision y una sola receta nueva | 2026-08-30 | Vigente |
+| [D-035](#d-035---la-cabecera-de-guidemd-no-lleva-fechas-y-1-nombra-su-unica-lectura-completa) | La cabecera de `guide.md` no lleva fechas, y §1 nombra su unica lectura completa | 2026-08-30 | Vigente |
 
 ---
 
@@ -993,3 +997,201 @@
     significa de solo lectura (C-005), no fuera del registro. Excluirla haria que la copia de otro
     proyecto llegara sin la fuente de la que se destilo el recetario, que es justo lo que D-029
     quiso conservar.
+
+---
+
+### D-032 - `RR-003` baja los patrones anclados, pero no los comandos de shell
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Estado | Vigente |
+| Etapa | 000_preproject |
+| Origen | usuario |
+
+- **Contexto:** punto 5 del analisis de nueve de `_global/guide.md` (S-006), registrado como
+  **T-020**. La cabecera de la guia se declara «procedimientos, **ordenes concretas**, formatos», y
+  la subseccion «Auditar el historial» de `RR-003` era la unica pieza que describia un
+  procedimiento entero —tres barridos sobre el historial de git— **sin nada concreto que pegar**.
+  La fuente congelada `sources/GUIDE.md` §2.b si tiene los comandos reales, en PowerShell.
+- **Decision:** bajan a la receta **los patrones ya anclados** de los tres barridos, el porque de
+  cada anclaje, y un aviso 💻 sobre la sensibilidad a mayusculas. **No bajan los comandos de
+  shell.** `guide.md` sube a **VERSION 2** con su linea en `changelog.md`.
+- **Por que el patron si y el comando no:** el patron es lo concreto *y* lo agnostico a la vez —el
+  mismo regex vale en `grep`, en `Select-String` y en `rg`—, mientras que el comando ata la receta a
+  un shell. Y es lo que de verdad faltaba: la receta exigia «ancla al **formato** del secreto:
+  prefijo, longitud, mayusculas» sin ensenar ni un formato anclado. Nadie deriva
+  `sk-ant-[A-Za-z0-9_-]{20,}` de esa frase, que es justo el fallo contra el que la propia receta
+  avisa —un detector que no se sabe escribir no se escribe.
+- **Por que esto no rompe el agnosticismo, y donde si se rompe:** son dos agnosticismos distintos y
+  solo se toca uno. `RR-003` **ya asume git** en todo su cuerpo; lo que no asumia era **shell**, y
+  sigue sin asumirlo. Lo unico dependiente de herramienta —la sensibilidad a mayusculas de
+  `Select-String`— va marcado 💻, que es el marcador que la guia ya tiene para lo que depende de la
+  maquina y no del proyecto.
+- **Por que se edita el cuerpo de la receta, si eso esta prohibido:** la prohibicion de reescribir
+  («En la copia se borra y se anade — nunca se reescribe») aplica a **las copias**, y esta es la
+  **global maestra**. La guia manda justo lo contrario para este caso: una receta que deja de valer
+  se corrige aqui, sube la version y se vuelve a copiar. Una correccion que solo viviera en un
+  proyecto es una correccion que los demas nunca tendrian.
+- **Alternativas descartadas:**
+  - **Bajar el bloque de comandos literal de §2.b, marcado 💻:** maxima comodidad —se copia y se
+    pega—, pero convierte una receta **universal** en una dependiente de la maquina, y `RR-003` es
+    de las tres que se abren al montar cualquier proyecto. El marcador 💻 sobre la unica parte
+    operativa de la receta la haria borrable en el ritual de copia (paso 3) por trabajar en otro
+    sistema operativo, y con ella se iria la auditoria entera.
+  - **Dejarlo en prosa y cerrar T-020 como deuda reconocida:** era la lectura estricta del
+    agnosticismo, pero el agnosticismo que protegia ya estaba roto por git, y el coste de dejarlo
+    era el fallo concreto que la fuente documenta: patrones improvisados que mienten. Se descarto
+    porque no defendia nada real.
+  - **Traer la anecdota medida de la fuente —las 21 coincidencias de `dem·ASIA·do`—:** se descarto
+    por la regla de la propia guia: aqui no van numeros medidos en otra maquina. Se conserva solo el
+    mecanismo (`ASIA` cae dentro de una palabra normal), que es lo que se traslada.
+
+---
+
+### D-033 - Los codigos `RR-NNN` los asigna solo la guia global, y nunca se reasignan
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Estado | Vigente |
+| Etapa | 000_preproject |
+| Origen | usuario |
+
+- **Contexto:** punto 6 del analisis de nueve de `_global/guide.md` (S-006), registrado como
+  **T-021**. La guia no decia si los codigos `RR-NNN` son estables, y tenia dos piezas que juntas
+  formaban una trampa: el indice ensena a navegar con `grep -n "RR-007" guide.md`, y el ritual de
+  copia manda **borrar** las recetas que no aplican. Nada impedia que un proyecto podara `RR-005` y
+  renumerara lo que sigue.
+- **Decision:** se anade a §1 la subseccion «Los codigos son estables, y un hueco es informacion».
+  Los `RR-NNN` **los asigna la global y solo ella**; no se reasignan, no se renumeran, no se
+  reutilizan aunque su receta se borre; un hueco es informacion, no un error; y **una copia nunca
+  escribe un codigo que la global no tenga**. `guide.md` sube a **VERSION 3** con su linea en
+  `changelog.md`.
+- **Por que el fallo era peor que un enlace roto:** un `grep` renumerado no falla — **devuelve la
+  receta equivocada con toda naturalidad**. Un puntero roto se ve y se arregla; uno que apunta a
+  otro sitio se cree. Es el mismo argumento que la guia ya hace contra los numeros de linea en el
+  indice: se desplazan y mienten sin avisar.
+- **Por que un hueco es informacion y no un defecto:** `RR-005` ausente es la unica prueba de que
+  se podo a proposito, y remite a la tabla de exclusiones. `RR-005` ocupado por otra receta no
+  prueba nada y ademas miente. Renumerar borra la evidencia de la poda, que es justo lo que el paso
+  4 del ritual existe para conservar.
+- **El hueco que T-021 no cubria, y se cerro aqui:** la tarea pedia fijar la estabilidad, pero la
+  guia tampoco decia si una copia puede **crear** un codigo nuevo. El ritual contempla borrar y
+  anadir *aterrizaje* —un bloque marcado bajo una receta existente— y prohibe reescribir; una
+  receta sin padre no cabe en ninguna de las tres. Se cierra con tres destinos: transversal → sube
+  a la global; propio del proyecto → no es del recetario, va a la documentacion del proyecto;
+  matiz de una receta existente → aterrizaje marcado.
+- **Ademas se completaron las dos tablas de «En la copia se borra y se anade»,** que sin esas filas
+  se leian como completas y no lo eran: «**Crear** una receta con un codigo nuevo → ❌ nunca», y
+  «hay una receta que la global no tiene → **error**». Una tabla incompleta no avisa a medias:
+  tranquiliza — el mismo fallo que `RR-004` documenta con su tabla de archivos peligrosos.
+- **Alternativas descartadas:**
+  - **Rango propio reservado para la copia (`RR-P01`, `RR-P02`…):** no colisiona con la global y
+    permite alojar en `guide.md` algo con forma de receta pero no transversal. Se descarto porque
+    hace convivir dos espacios de nombres en el mismo archivo, y entonces comparar copia contra
+    global exige saber que rango se mira **antes** de juzgar la diferencia — justo lo que la regla
+    de «cada diferencia tiene una sola lectura posible» quiere evitar. Y el caso que resolvia no
+    existe: lo no transversal no pertenece a una guia que se declara agnostica.
+  - **Dejar que la copia continue la numeracion (`RR-013`, `RR-014`…):** es lo que pasaria solo si
+    no se dice nada, y reintroduce exactamente la colision que T-021 abrio para cerrar. Dos
+    proyectos inventando su `RR-013` la misma semana producen dos recetas distintas con el mismo
+    nombre, indistinguibles sin abrir las dos.
+
+---
+
+### D-034 - El recetario no aspira a cubrirlo todo: se le pone criterio de admision y entra una sola receta
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Estado | Vigente |
+| Etapa | 000_preproject |
+| Origen | usuario |
+
+- **Contexto:** punto 7 del analisis de nueve de `_global/guide.md` (S-006), registrado como
+  **T-022**. Para servir a «todo proyecto de desarrollo de software», el recetario tenia cinco
+  huecos de cobertura del *como* transversal: convencion de commits y ramas, deshacer algo ya
+  publicado, como entra una dependencia nueva, copias antes de una migracion, y que corre en CI.
+  La tarea no era anadirlas: era decidir que entra y que se poda a cambio.
+- **Verificacion previa:** se comprobo que los huecos **no venian de una destilacion infiel**. Lo
+  que `sources/GUIDE.md` tiene y no bajo —§3 errores de Python, §4 plantillas del SDK, §5 elegir
+  modelo, §13 TypeScript— esta fuera con razon: no es agnostico. Los cinco huecos salen de la
+  ambicion de la cabecera, no de un olvido.
+- **Decision:** entra **una sola receta**, `RR-013` («Como se deshace algo ya publicado»), y se
+  escribe en §1 el **criterio de admision** que no existia («Que merece ser una receta»). Las otras
+  cuatro quedan **aplazadas a T-004**, como candidatas. `guide.md` sube a **VERSION 4**.
+- **Por que solo `RR-013`, y por que esa:** es la unica de las cinco que **no es especulacion hoy**.
+  Este repositorio ya es publico y recibe un push por sesion, asi que el riesgo es vivo. Y `RR-003`
+  ya la invocaba sin tenerla —«es mas barato rotar la credencial que reescribir historia
+  publicada»— dejando una referencia colgante a un procedimiento inexistente; ahora esa frase
+  apunta a `RR-013`.
+- **Por que las otras cuatro se aplazan y no se descartan:** dependencias, migraciones y CI son
+  recetas sobre un stack que todavia no existe —`T-004` sigue bloqueante y no hay una linea de
+  producto escrita—. `CLAUDE.md` prohibe disenar lo lejano, y el propio metodo lo repite: lo que se
+  define sin el sujeto delante no es una definicion. Escritas hoy describirian lo que imaginamos, y
+  habria que corregirlas justo cuando ya se hubieran copiado a otros proyectos.
+- **Por que un criterio de admision y no una regla de canje 1:1:** T-022 daba por supuesto que cada
+  receta nueva se paga podando otra. Se descarto: un canje por numero obliga a **borrar algo util
+  para pagar algo util**. El presupuesto real es el **indice** —«si deja de leerse de un vistazo, se
+  poda antes de anadir»—, y lo que de verdad frena la acumulacion es un filtro de entrada, que la
+  guia no tenia. Sus cuatro preguntas: transversal, falla en silencio, hay procedimiento que
+  ensenar, y no esta ya dicho en otra receta.
+- **El filtro que hace el trabajo es el segundo,** y es el que descarta «convencion de mensajes de
+  commit»: importante, transversal y con procedimiento, pero **falla a la vista de todos y se
+  arregla al momento**. `RR-003` existe por lo contrario. Ese filtro es tambien el orden de poda el
+  dia que haya que podar: primero lo que falla ruidosamente.
+- **Erratas corregidas de paso:** la tabla de §1 anunciaba «los **cuatro** momentos en que se abre»
+  y listaba seis; se quita el numero y se anade el septimo (`RR-013`).
+- **Alternativas descartadas:**
+  - **Admitir las cinco ahora y podar lo que hiciera falta:** cerraba el hueco de una vez, pero
+    cuatro de ellas se escribirian sin saber que se construye, y la correccion posterior llegaria
+    con las copias ya repartidas — cada una con su subida de version. Se cambia trabajo barato de
+    hoy por trabajo caro y publico de manana.
+  - **Escribir solo el criterio y no admitir ninguna receta:** maxima contencion, pero dejaba viva
+    la referencia colgante de `RR-003` a un procedimiento que no existe. Un puntero que promete lo
+    que no cumple quema la confianza en los que si funcionan — argumento que la propia cabecera de
+    la guia usa para las flechas `↳`.
+
+---
+
+### D-035 - La cabecera de `guide.md` no lleva fechas, y §1 nombra su unica lectura completa
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Estado | Vigente |
+| Etapa | 000_preproject |
+| Origen | executor |
+
+- **Contexto:** puntos 8 y 9 del analisis de nueve de `_global/guide.md` (S-006), registrados como
+  **T-023** y **T-024**. El primero pedia buscar rastros de fecha huerfana que hubiera dejado el
+  cambio de «Ultima revision» al sello `VERSION N` + `changelog.md` (D-028). El segundo, resolver
+  que §1 diga «nunca se lee entera» mientras el paso 3 del ritual exige leerla entera para poder
+  podar.
+- **Decision (T-023):** la cabecera pierde las fechas y queda en `**VERSION N**` a secas, con una
+  nota que dice **por que** no lleva ninguna. Y el sello de la copia deja de traer valores
+  concretos: pasa a marcadores, `versión <N>` · `el <AAAA-MM-DD>`.
+- **Decision (T-024):** §1 nombra la excepcion en vez de contradecirse — **el dia que se copia si
+  se lee entera**, es la unica lectura completa prevista, ocurre una vez por proyecto y termina con
+  la guia podada y sellada.
+- **El primer rastro lo introdujo esta misma sesion.** Al subir a VERSION 2 (D-032) se escribio
+  `Creado: 2026-08-28 · Actualizado: 2026-08-30` en la cabecera. Eso es exactamente lo que T-023
+  buscaba: una fecha que **duplica** lo que la linea del `changelog.md` ya dice, y que se queda
+  vieja el primer dia que alguien sube la version y no la toca. Se detecto al hacer la revision
+  especifica que T-023 pedia, que es el argumento a favor de que estas revisiones se hagan aunque
+  parezcan de tramite.
+- **El segundo rastro es peor de lo que parecia:** la plantilla del sello de copia traia
+  `versión 7` · `el 2026-08-28`. La fecha era la de creacion de la guia pegada dentro de algo que
+  se copia **verbatim**, asi que cualquiera que sellara su copia otro dia pegaria una fecha falsa.
+  Y el `7` convivia con un numero de version real en la cabecera, invitando a confundirlos. La
+  guia ya usa marcadores en todas sus otras plantillas (`<ejecutar el módulo>` en `RR-004`); esta
+  era la excepcion, sin motivo.
+- **Por que T-024 no se arregla ablandando la frase:** «casi nunca se lee entera» habria quitado la
+  contradiccion y con ella la regla. La lectura de un vistazo es lo que hace utilizable el archivo;
+  lo correcto es **nombrar la excepcion**, no diluir el principio. Y nombrarla paga algo extra: fija
+  **contra que se mide el tamano** —contra ese unico dia, no contra el uso diario— que es
+  justamente el criterio que D-034 acababa de dejar sin anclar.
+- **Alternativas descartadas:**
+  - **Dejar `Creado:` en la cabecera y quitar solo `Actualizado:`:** parecia inofensivo, pero la
+    fecha de creacion tambien esta en el `changelog.md` — es la linea de la v1. Dos fuentes para el
+    mismo dato es el problema que se estaba arreglando, no una version suave de el.
+  - **Mover la excepcion de T-024 al ritual, junto al paso 3, en vez de a §1:** ahi la leeria solo
+    quien ya esta copiando. La contradiccion la ve quien lee §1, y es en §1 donde tiene que
+    resolverse.
