@@ -35,6 +35,15 @@
 | Estado | Confirmado |
 | Tarea relacionada | T-005 |
 
+♻️ **Reescrito en S-002.** El enunciado anterior de `A-001` era **«Sincronizacion via archivos de
+persistencia»**, y cubria **la ida y la vuelta** del ciclo: se suponia que tanto los informes que
+salen hacia el auditor como sus observaciones de vuelta viajarian por archivos en disco. D-016
+resolvio la ida —el informe entra en el commit que describe—, y el codigo se reutilizo en el sitio
+para lo unico que seguia abierto, la vuelta, contra la convencion de arriba (`A-XXX` **no se
+reutiliza**). Queda escrito aqui porque `D-011` y `T-005` se redactaron citando `A-001` con el
+significado **antiguo**: sin esta nota, quien las lea creeria estar leyendo el supuesto original.
+Corrige el hallazgo `F-002` de `R-002` (ver `T-028` y `D-036`).
+
 ✅ **Cerrado el 2026-08-28.** El auditor definio el canal de vuelta y se verifico que existe y es
 legible: `AIzar_Auditor/_review/`. Lo que era supuesto pasa a D-018. Se conserva la entrada para que
 se entienda que se creia mientras estuvo abierto.

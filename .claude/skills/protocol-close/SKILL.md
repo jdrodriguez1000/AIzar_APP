@@ -478,6 +478,37 @@ linea corta, y debajo lo que valga la pena. Termina siempre con:
 Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
 ```
 
+### 7b — Que el informe entro en el commit (obligatorio)
+
+**Ya hay un hash. Preguntale a git si el informe esta dentro de el:**
+
+```bash
+git show --stat --name-only HEAD -- _audit/S-XXX.md
+git show --stat --name-only HEAD -- _audit/index.md
+```
+
+Si el archivo aparece en la salida, entro. Si la salida esta vacia, **no entro**.
+
+🚨 **Esta comprobacion es la que sostiene el Paso 6b entero.** El anclaje del informe al commit es
+todo el valor de D-016: sin el, el auditor recibe un relato que no puede contrastar contra ningun
+estado. Un paso obligatorio cuyo cumplimiento nadie mira **no es obligatorio, es una intencion**.
+
+**Hay tres resultados, no dos** —los mismos que el Paso 2b, y por la misma razon:
+
+| Que sale | Que significa | Que haces |
+|---|---|---|
+| los dos archivos aparecen | el informe quedo anclado | sigue al push |
+| alguno falta | **el commit no lo lleva** | 🚨 **detente**: escribelo o anadelo y **haz un commit nuevo** que lo incluya, nunca un `--amend`. Dilo en el reporte |
+| el comando falla | **no lo comprobaste** | push igual, y a **Sin resolver** con `🚨 SIN COMPROBAR` |
+
+🚨 **La tercera fila otra vez.** «No pude comprobarlo» no es «esta bien». Y la segunda no se
+arregla reescribiendo el commit: los comandos de abajo siguen prohibidos, tambien aqui.
+
+⚠️ **Lo que salga de aqui es lo que se escribe en la linea del Paso 8**, con su resultado real. Esa
+linea era antes una afirmacion fija que se imprimia igual hubiera entrado el archivo o no; ahora
+tiene detras un comando que puede salir rojo. Sin el, un cierre que anclo y uno que no se leian
+identicos — que es exactamente el defecto que el Paso 2b ya tenia resuelto para los indices.
+
 ⛔ **Comandos prohibidos, sin excepcion:** `git commit --amend`, `git reset`, `git checkout --`,
 `git restore`, `git rebase`, `git clean`, `git push --force` y cualquier otra cosa con `--force`.
 El trabajo del cierre es **anadir** historia, nunca reescribir ni borrar la que hay. Si crees que
@@ -546,7 +577,7 @@ retransmite. Un reporte recortado se recorta dos veces.
 
 ### Commit
 Indices de `_persistence/` — <al dia | corregidos | 🚨 SIN COMPROBAR — <que fallo>>
-Informe de auditoria — `_audit/S-XXX.md`, incluido en el commit; fila anadida a `_audit/index.md` como `Pendiente`
+Informe de auditoria — <`_audit/S-XXX.md` y su fila en `_audit/index.md`, **comprobados en el commit** (Paso 7b) | 🚨 NO ENTRO — <que falto y en que commit nuevo entro> | 🚨 SIN COMPROBAR — <que fallo>>
 <hash corto> — <primera linea del mensaje>
 <"subido a origin, `git status -sb` sin ahead" | 🚨 "SIN SUBIR — <que fallo>">
 

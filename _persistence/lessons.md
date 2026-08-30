@@ -13,6 +13,7 @@
 | [L-002](#l-002---un-metodo-externo-se-contrasta-contra-el-vocabulario-propio-antes-de-adoptarlo) | Un metodo externo se contrasta contra el vocabulario propio antes de adoptarlo | 2026-08-28 | 000_preproject |
 | [L-003](#l-003---un-indice-escrito-a-mano-necesita-defensa-explicita-contra-los-generadores) | Un indice escrito a mano necesita defensa explicita contra los generadores | 2026-08-28 | 000_preproject |
 | [L-004](#l-004---un-archivo-duplicado-sin-marca-hace-que-se-edite-el-equivocado) | Un archivo duplicado sin marca hace que se edite el equivocado | 2026-08-28 | 000_preproject |
+| [L-005](#l-005---un-paso-obligatorio-cuyo-resultado-no-se-mira-es-una-intencion-no-una-obligacion) | Un paso obligatorio cuyo resultado no se mira es una intencion, no una obligacion | 2026-08-30 | 000_preproject |
 
 ---
 
@@ -162,3 +163,37 @@ Plantilla:
   `RR-003` hace con los commits —lo que no debe estar se decide **antes**, no despues— aplicado a
   carpetas. Y antes de editar un archivo que podria estar duplicado, un `find` por nombre cuesta un
   segundo. Ver D-029.
+
+---
+
+### L-005 - Un paso obligatorio cuyo resultado no se mira es una intencion, no una obligacion
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Etapa | 000_preproject |
+| Origen | auditor |
+
+- **Contexto:** primera auditoria entregada del proyecto, `R-002` sobre `_audit/S-002.md`. Su
+  hallazgo `F-001` no señala nada falso en el informe: señala que el **Paso 6b** de
+  `protocol-close` —obligatorio, y ancla de toda la auditabilidad segun D-016— no tenia detras
+  ninguna comprobacion que pudiera salir roja.
+- **Que ocurrio:** el reporte de pantalla llevaba la linea **fija** `Informe de auditoria —
+  _audit/S-XXX.md, incluido en el commit`, que se imprimia igual hubiera entrado el archivo o no.
+  Un cierre que anclo el informe y uno que no **se leian identicos**.
+- **Lo que lo hace una leccion y no un despiste:** la linea de justo encima, la de los indices del
+  Paso 2b, **ya tenia sus tres salidas** (`al dia | corregidos | 🚨 SIN COMPROBAR`), con su tabla y
+  su aviso de que «no pude comprobarlo» no es «esta bien». La regla correcta estaba escrita, a una
+  linea de distancia, y no se aplico al control nuevo. **No falto el criterio: falto extenderlo.**
+- **Leccion:** al añadir un paso obligatorio hay que añadir a la vez **como se sabe que se
+  cumplio**, y ese como tiene que poder **fallar**. Una afirmacion en el reporte no es evidencia de
+  nada: es la misma frase pase lo que pase. Y el fallo silencioso es el peor de los tres estados,
+  porque el desfase solo se descubre cuando alguien de fuera va a buscar lo que deberia estar —
+  aqui, sesiones despues y sin poder reconstruir que estado describia el informe perdido.
+- **Como aplicarla:** cuando el protocolo gane un paso obligatorio, preguntarse **que comando lo
+  desmentiria** y escribirlo junto al paso, con sus **tres** resultados —cumplido, roto, y **no
+  comprobado**, que nunca se colapsa con «cumplido»—. Si no existe tal comando, decirlo en el sitio
+  en vez de afirmar el cumplimiento: es lo que ya hace la seccion «Que NO se pudo contrastar» del
+  auditor. Aplicado en el **Paso 7b** (T-027).
+- **Y una segunda, sobre el metodo:** la auditoria encontro esto **sin ejecutar nada**, leyendo dos
+  lineas contiguas del mismo archivo. La revision externa no valio por saber mas, sino por leer sin
+  dar por supuesto lo que quien lo escribio ya daba por hecho.

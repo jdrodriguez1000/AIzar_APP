@@ -32,6 +32,7 @@
 | [S-006](#s-006---la-guia-transversal-_globalguidemd-se-analiza-y-se-ajustan-sus-primeros-cuatro-puntos) | La guia transversal `_global/guide.md` se analiza y se ajustan sus primeros cuatro puntos | 2026-08-28 | 000_preproject |
 | [S-007](#s-007---_global-se-declara-en-projectmd-y-se-cierra-dt-003) | `_global/` se declara en `PROJECT.md` y se cierra DT-003 | 2026-08-30 | 000_preproject |
 | [S-008](#s-008---se-cierran-los-cinco-puntos-restantes-del-analisis-de-_globalguidemd) | Se cierran los cinco puntos restantes del analisis de `_global/guide.md` | 2026-08-30 | 000_preproject |
+| [S-009](#s-009---primera-auditoria-recibida-r-002-los-dos-hallazgos-se-aceptan-e-implementan) | Primera auditoria recibida (R-002): los dos hallazgos se aceptan e implementan | 2026-08-30 | 000_preproject |
 
 ---
 
@@ -42,51 +43,65 @@
 | Etapa actual | `000_preproject` |
 | Ultima actualizacion | 2026-08-30 |
 | Salud | En marcha |
-| Avance de la etapa | Metodo de trabajo, persistencia, repositorio, ciclo completo inicio/cierre, canal de vuelta con la auditoria, datos propios del proyecto en `PROJECT.md`, el metodo VERTICAL incorporado y ajustado, y el analisis de nueve puntos de `_global/guide.md` **completo**: los nueve ajustes (T-016 a T-024) resueltos y `guide.md` en `VERSION 5`. Queda una tarea nueva aplazada (T-025, depende de T-004) y sigue pendiente el alcance del proyecto |
-| Bloqueos activos | Alcance y objetivo del proyecto sin definir (T-004); bloquea a su vez T-016 y el diseño de la fase Prototipo |
+| Avance de la etapa | Metodo de trabajo, persistencia, repositorio, ciclo completo inicio/cierre, canal de vuelta con la auditoria, datos propios del proyecto en `PROJECT.md`, el metodo VERTICAL incorporado y ajustado, y el analisis de nueve puntos de `_global/guide.md` completo (`guide.md` en `VERSION 5`). T-026 registra que falta disenar la fase `Descubrimiento` antes de entrar en ella (bloqueante). Llego la **primera auditoria del proyecto** (`R-002`, sobre `S-002`): 2 hallazgos, `Media`/`REVERSIBLE` ambos, evaluados, aceptados e **implementados** en esta sesion (T-027, T-028; D-036, L-005). Sigue pendiente el alcance del proyecto |
+| Bloqueos activos | Alcance y objetivo del proyecto sin definir (T-004); bloquea a su vez T-025 y el diseño de la fase Descubrimiento. **T-026** (disenar la fase `Descubrimiento` antes de entrar en ella) sin resolver y bloqueante por si misma |
 
 ---
 
 ## 2. Ultimo realizado
 
-Se cerraron los cinco puntos que quedaban del analisis de nueve de `_global/guide.md` (T-020 a
-T-024), con cuatro decisiones registradas (D-032 a D-035). `guide.md` paso de `VERSION 1` a
-`VERSION 5`, con una linea de changelog por version:
+**Llego `R-002`**, la primera auditoria entregada del proyecto (`..\AIzar_Auditor\_review\R-002.md`),
+auditando `_audit/S-002.md` sobre el commit `dced7b5`. Se verifico antes de tratarla: el hash que
+declara coincide con `git log -1 -- _audit/S-002.md`, los 10 archivos que dice auditar coinciden
+con `git show --stat dced7b5`, y la version de `contract.md` sigue en `1` en ambos lados — sin
+desfase. Acuse de recibo: la fila de `S-002` en `_audit/index.md` paso de `Pendiente` a
+`Con hallazgos`, con la ruta de `R-002.md`. Veredicto: **Con hallazgos (2)**, ambos `Media` /
+`REVERSIBLE`.
 
-- **D-032 (T-020)** — la subseccion «Auditar el historial» de `RR-003` baja los patrones ya
-  anclados de los tres barridos, el porque de cada anclaje y un aviso 💻 de sensibilidad a
-  mayusculas. Los comandos de shell no bajan. De paso se corrigio una errata en `changelog.md` v1
-  (decia «Anexo B (Windows)»; ahora nombra los tres anexos correctos) — no sube version por ser
-  correccion de una linea ya publicada, no cambio de fondo.
-- **D-033 (T-021)** — §1 gana la subseccion «Los codigos son estables, y un hueco es
-  informacion». Se cerro ademas un hueco que la tarea no cubria: una copia no puede crear codigos
-  `RR-NNN` nuevos, con sus tres destinos (sube a la global / va a la documentacion del proyecto /
-  aterrizaje marcado). Se completaron las dos tablas del ritual de copia que se leian completas
-  sin serlo.
-- **D-034 (T-022)** — §1 gana el criterio de admision «Que merece ser una receta» (cuatro
-  filtros), y entra una sola receta nueva, `RR-013` («Como se deshace algo ya publicado»). Las
-  otras cuatro candidatas (commits/ramas, dependencia nueva, backups pre-migracion, CI) se
-  aplazaron a **T-025**, que depende de T-004. No se podo nada: el presupuesto es el indice, no
-  el numero de recetas.
-- **D-035 (T-023 y T-024)** — dos rastros de fecha huerfana encontrados y corregidos: la cabecera
-  pierde las fechas (`**VERSION N**` a secas), y la plantilla del sello de copia pasa a
-  marcadores `<N>` / `<AAAA-MM-DD>`. §1 nombra su unica lectura completa prevista (el dia que se
-  copia) y fija contra que se mide el tamano de la guia.
+Los dos hallazgos se evaluaron (no en automatico, D-036) y se aceptaron e **implementaron** en la
+misma sesion:
 
-Los cuatro archivos del porque los escribio `executor` en el momento: `decisions.md` trae D-032 a
-D-035 completas, con sus alternativas descartadas. No hubo entradas nuevas en `assumptions.md`,
-`constraints.md` ni `lessons.md` — nada en el diff de esta sesion las exigia. No hubo construccion
-de producto ni cambios de codigo de aplicacion.
+- **F-001 -> T-027** — el Paso 6b de `protocol-close` no tenia comprobacion que pudiera salir roja
+  sobre el anclaje del informe al commit. Se anadio el **Paso 7b** a
+  `.claude/skills/protocol-close/SKILL.md` (despues del commit, antes del push):
+  `git show --stat --name-only HEAD -- _audit/S-XXX.md`, tabla de tres resultados
+  (entro / no entro / sin comprobar), y la linea fija del Paso 8 se sustituyo por una de tres
+  salidas. Propagado a `.claude/agents/session-closer.md`.
+- **F-002 -> T-028** — `A-001` se habia reescrito en el sitio en S-002, reutilizando el codigo
+  contra la convencion del propio archivo (`A-XXX` no se reutiliza). Se anadio a la entrada de
+  `A-001` en `_persistence/assumptions.md` un bloque `♻️ Reescrito en S-002` con el enunciado
+  anterior literal, para que sea recuperable sin ir al `git log`.
+
+`D-036` registra la evaluacion completa de ambos hallazgos y, para F-002, las tres alternativas de
+remedio descartadas. `L-005` deja la leccion: un paso obligatorio sin comando que pueda fallar es
+una intencion, no una obligacion.
+
+**Desfase corregido en este cierre:** el commit `3228ca1` (fuera de sesion de cierre, registro
+T-026 en `tasks.md` — "el diseno de la fase `Descubrimiento`, pendiente y bloqueante") no traia
+actualizacion de `progress.md`; el archivo quedo congelado en `S-008`. Esta entrada `S-009` pone al
+dia el `Estado general` con T-026 y con el trabajo de esta sesion junto.
+
+Los cuatro archivos del porque los escribio `executor` en el momento: `decisions.md` trae `D-036`
+completa, con las alternativas descartadas de `F-002`; `lessons.md` trae `L-005`. No hubo entradas
+nuevas en `constraints.md`; `assumptions.md` no gano codigo nuevo — solo la nota de reescritura
+sobre `A-001`, que la propia tarea (T-028) pedia. No hubo construccion de producto ni cambios de
+codigo de aplicacion.
 
 ---
 
 ## 3. Siguiente paso
 
-Recibir del usuario el alcance y el objetivo del proyecto (**T-004**), que sigue bloqueando la
-etapa `000_preproject` y, en consecuencia, **T-025** (juzgar las cuatro candidatas aplazadas del
-recetario). En paralelo sigue abierto todo el ciclo de auditoria: `_audit/index.md` mantiene
-S-002 a S-007 en `Pendiente`, mas la nueva `S-008.md`, sin ninguna auditoria entregada todavia por
-el auditor.
+Dos frentes, ninguno bloqueado por el otro:
+
+1. **T-026** — disenar la fase `Descubrimiento` (`_methodology/phases/001_descubrimiento.md`) antes
+   de entrar en ella. Bloqueante en si misma, aunque su contenido final depende de T-004.
+2. Recibir del usuario el alcance y el objetivo del proyecto (**T-004**), que sigue bloqueando la
+   etapa `000_preproject` y, en consecuencia, **T-025** (juzgar las cuatro candidatas aplazadas del
+   recetario).
+
+En paralelo sigue abierto el ciclo de auditoria: `_audit/index.md` mantiene S-003 a S-008 en
+`Pendiente` (S-002 ya paso a `Con hallazgos`, respondida en esta misma `S-009`), mas la nueva
+`S-009.md` que este cierre añade.
 
 ---
 
@@ -355,6 +370,51 @@ el auditor.
 - **Sin construccion de producto:** no hubo cambios de codigo de aplicacion.
 - **Siguiente paso concreto:** recibir del usuario el alcance y el objetivo del proyecto (T-004),
   que desbloquea a su vez T-025.
+
+---
+
+### S-009 - Primera auditoria recibida (R-002): los dos hallazgos se aceptan e implementan
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Etapa | 000_preproject |
+
+- **Etapa del proyecto:** `000_preproject` — sobre el commit `3228ca1` (registro suelto de T-026,
+  posterior al cierre de S-008). T-004 sigue siendo el unico bloqueo de fondo de la etapa; T-026
+  se suma como bloqueo propio, sin depender de T-004 para existir.
+- **Desfase encontrado al abrir esta sesion, corregido aqui:** el commit `3228ca1` registro
+  **T-026** («Disenar la fase `Descubrimiento` antes de entrar en ella», `No implementada` ·
+  `Alta` · `Bloqueante`) en `tasks.md`, pero no traia actualizacion de `progress.md` — su propio
+  mensaje de commit lo advierte («Registro posterior al cierre de S-008 ... quedara descrita en el
+  informe de la sesion que la ejecute»). El archivo quedo con `Estado general` y bitacora
+  congelados en `S-008`. Esta entrada pone `progress.md` al dia con T-026 y con el trabajo de esta
+  sesion, junto.
+- **Que quedo hecho, segun el diff:** llego `R-002`, la **primera auditoria entregada del
+  proyecto** (`..\AIzar_Auditor\_review\R-002.md`), auditando `_audit/S-002.md` sobre el commit
+  `dced7b5`. Verificada antes de tratarla: el hash coincide con
+  `git log -1 -- _audit/S-002.md`, los 10 archivos auditados coinciden con
+  `git show --stat dced7b5`, y `contract.md` sigue en version `1` en ambos lados. Acuse de recibo:
+  la fila de `S-002` en `_audit/index.md` paso de `Pendiente` a `Con hallazgos`, con la ruta del
+  informe. Veredicto: **Con hallazgos (2)**, ambos `Media` / `REVERSIBLE`. Los dos se evaluaron
+  (D-036) — no en automatico— y se aceptaron e **implementaron** en esta misma sesion:
+  - **F-001 -> T-027** — el Paso 6b de `protocol-close` no tenia comprobacion que pudiera salir
+    roja sobre el anclaje del informe al commit. Se anadio el **Paso 7b** a
+    `.claude/skills/protocol-close/SKILL.md` (despues del commit, antes del push), con
+    `git show --stat --name-only HEAD -- _audit/S-XXX.md` y la misma consulta para
+    `_audit/index.md`, tabla de tres resultados, y la linea fija del Paso 8 sustituida por una de
+    tres salidas. Propagado a `.claude/agents/session-closer.md`.
+  - **F-002 -> T-028** — `A-001` se habia reescrito en el sitio en S-002, reutilizando el codigo
+    contra la convencion del propio archivo (`A-XXX` no se reutiliza). Se anadio a la entrada de
+    `A-001` en `assumptions.md` un bloque `♻️ Reescrito en S-002` con el enunciado anterior
+    literal, para que quede recuperable sin ir al `git log`.
+- **Los cuatro archivos del porque:** `decisions.md` gana `D-036` (evaluacion completa de ambos
+  hallazgos, con las tres alternativas descartadas de `F-002`); `lessons.md` gana `L-005` (un paso
+  obligatorio sin comando que pueda fallar es una intencion, no una obligacion). Sin entradas
+  nuevas en `constraints.md`. `assumptions.md` no gana codigo nuevo — `A-001` sigue `Confirmado`;
+  solo recibio la nota de reescritura que pedia T-028.
+- **Sin construccion de producto:** no hubo cambios de codigo de aplicacion.
+- **Siguiente paso concreto:** **T-026** (disenar `_methodology/phases/001_descubrimiento.md`) y,
+  en paralelo, recibir del usuario el alcance y el objetivo del proyecto (**T-004**).
 
 ---
 

@@ -35,6 +35,8 @@
 | [T-024](#t-024---resolver-la-contradiccion-menor-del-1-de-guidemd) | Resolver la contradiccion menor del §1 de `guide.md` | Implementada | Baja | No bloqueante |
 | [T-025](#t-025---juzgar-las-cuatro-candidatas-aplazadas-del-recetario) | Juzgar las cuatro candidatas aplazadas del recetario | No implementada | Media | No bloqueante |
 | [T-026](#t-026---disenar-la-fase-descubrimiento-antes-de-entrar-en-ella) | Disenar la fase `Descubrimiento` antes de entrar en ella | No implementada | Alta | Bloqueante |
+| [T-027](#t-027---dar-comprobacion-roja-al-anclaje-del-informe-de-auditoria-en-el-commit) | Dar comprobacion roja al anclaje del informe de auditoria en el commit | Implementada | Alta | No bloqueante |
+| [T-028](#t-028---dejar-recuperable-el-enunciado-anterior-de-a-001-desde-el-propio-archivo) | Dejar recuperable el enunciado anterior de `A-001` desde el propio archivo | Implementada | Media | No bloqueante |
 
 ---
 
@@ -555,3 +557,93 @@ este proyecto.
 **Depende de T-004** en el contenido, no en la forma: el esqueleto y las salidas del metodo se
 pueden escribir sin alcance, pero aterrizarlas —quienes son los actores, que hipotesis— exige
 saber que se construye. **Debe estar terminada antes de declarar la entrada en `Descubrimiento`.**
+
+---
+
+### T-027 - Dar comprobacion roja al anclaje del informe de auditoria en el commit
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Alta |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-30 |
+
+**Hallazgo `F-001` de `R-002`** (severidad `Media`, `REVERSIBLE`). Evaluado y **aceptado**: el
+hallazgo se sostiene, y se verifico que **persiste en `HEAD`**.
+
+Lo observado: el Paso 6b de `protocol-close` obliga a que `_audit/S-XXX.md` entre en el mismo
+commit que describe —es el ancla entera de D-016—, pero **ninguna comprobacion puede salir roja**:
+
+- el bucle del **Paso 2b** recorre los siete archivos de `_persistence/` y **no incluye `_audit/`**
+  (`.claude/skills/protocol-close/SKILL.md`, bloque del Paso 2b);
+- el **Paso 7** solo mira secretos antes del `git add -A`;
+- la plantilla del **Paso 8** lleva la linea **fija** `Informe de auditoria — _audit/S-XXX.md,
+  incluido en el commit` (`SKILL.md:551`), que se escribe igual haya entrado el archivo o no —
+  mientras su linea hermana justo encima, la de los indices, si tiene tres salidas
+  (`al dia | corregidos | 🚨 SIN COMPROBAR`).
+
+Por que importa: si el informe no entra, el reporte de pantalla **afirmara que entro**, y el
+desfase solo se descubre cuando el auditor no lo encuentre, sesiones despues y sin poder
+reconstruir que estado describia.
+
+Que hacer: anclar esa linea a un comando que pueda fallar —`git diff --cached --name-only | grep -qx
+"_audit/S-XXX.md"` antes del commit, o `git show --stat --name-only HEAD -- _audit/S-XXX.md`
+despues— y darle las mismas tres salidas que la de los indices, con `🚨 SIN COMPROBAR` cuando el
+comando no se pueda correr.
+
+Evidencia que la cierra: un diff de `.claude/skills/protocol-close/SKILL.md` con el comando de
+verificacion en el Paso 6b o el Paso 7, y la plantilla del Paso 8 con la linea de tres salidas.
+
+**Como quedo (2026-08-30):** se anadio el **Paso 7b** a `protocol-close`, despues del `git commit` y
+antes del `git push`, con `git show --stat --name-only HEAD -- _audit/S-XXX.md` y la misma consulta
+para `_audit/index.md`. Se eligio comprobar **despues del commit** y no antes del `git add` porque
+lo que la linea del reporte afirma es que el archivo *entro en el commit*, y eso solo el commit lo
+prueba; hacerlo sobre el area de staging comprobaria una cosa distinta de la que se dice. Lleva la
+tabla de tres resultados calcada del Paso 2b, con la salida rota explicita —si no entro, **commit
+nuevo, nunca `--amend`**, que sigue prohibido tambien aqui— y `🚨 SIN COMPROBAR` cuando el comando
+falle. La linea fija del Paso 8 se sustituyo por una de tres salidas. Propagado al agente en
+`.claude/agents/session-closer.md`.
+
+---
+
+### T-028 - Dejar recuperable el enunciado anterior de `A-001` desde el propio archivo
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-30 |
+
+**Hallazgo `F-002` de `R-002`** (severidad `Media`, `REVERSIBLE`). Evaluado y **aceptado**: el
+hallazgo se sostiene, y **persiste en `HEAD` en su parte de fondo**.
+
+Lo observado: en S-002 `A-001` se reescribio en el sitio, de «Sincronizacion via archivos de
+persistencia» a «El canal de vuelta de la auditoria», conservando codigo, fecha y estado, contra la
+convencion que el propio archivo declara doce lineas mas arriba
+(`_persistence/assumptions.md`: «`A-XXX`, correlativo, **no se reutiliza**»).
+
+Que cambio desde el commit auditado (`dced7b5`): `A-001` ya esta `Confirmado` y con su nota de
+cierre, asi que la mitad del problema se resolvio sola. **Lo que sigue faltando es lo esencial del
+hallazgo**: el enunciado anterior no es recuperable desde `assumptions.md`. Solo consta en
+`_persistence/progress.md:140` y en el `git log`. `D-011` (`decisions.md:262`) y `T-005`
+(`tasks.md:129`) citan `A-001` con su significado **antiguo**, y quien las lea dentro de seis
+sesiones creera estar leyendo el supuesto original.
+
+Que hacer — de las dos vias que propone el auditor se elige la segunda, y por una razon: `A-001` ya
+esta cerrado, y abrirle ahora un codigo nuevo reescribiria un historico ya asentado en vez de
+documentarlo. Basta **anadir a la entrada de `A-001` una linea de reescritura**: «reescrito en
+S-002; el enunciado anterior era *Sincronizacion via archivos de persistencia*, que cubria la ida y
+la vuelta del ciclo».
+
+Evidencia que la cierra: un diff de `_persistence/assumptions.md` donde el enunciado anterior de
+`A-001` se lea **desde el propio archivo**, sin ir al `git log`.
+
+**Como quedo (2026-08-30):** se anadio a la entrada de `A-001` un bloque `♻️ Reescrito en S-002`
+delante del bloque de cierre, con el enunciado anterior literal —«Sincronizacion via archivos de
+persistencia»—, que abarcaba **ida y vuelta**, por que se reutilizo el codigo, y el aviso de que
+`D-011` y `T-005` lo citan con el significado antiguo. El estado y el codigo no se tocan: `A-001`
+sigue `Confirmado`, segun D-036.

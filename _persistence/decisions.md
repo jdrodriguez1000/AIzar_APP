@@ -44,6 +44,7 @@
 | [D-033](#d-033---los-codigos-rr-nnn-los-asigna-solo-la-guia-global-y-nunca-se-reasignan) | Los codigos `RR-NNN` los asigna solo la guia global, y nunca se reasignan | 2026-08-30 | Vigente |
 | [D-034](#d-034---el-recetario-no-aspira-a-cubrirlo-todo-se-le-pone-criterio-de-admision-y-entra-una-sola-receta) | El recetario no aspira a cubrirlo todo: criterio de admision y una sola receta nueva | 2026-08-30 | Vigente |
 | [D-035](#d-035---la-cabecera-de-guidemd-no-lleva-fechas-y-1-nombra-su-unica-lectura-completa) | La cabecera de `guide.md` no lleva fechas, y §1 nombra su unica lectura completa | 2026-08-30 | Vigente |
+| [D-036](#d-036---los-dos-hallazgos-de-r-002-se-aceptan-y-f-002-se-corrige-con-nota-de-reescritura-no-con-codigo-nuevo) | Los dos hallazgos de `R-002` se aceptan, y `F-002` se corrige con nota de reescritura, no con codigo nuevo | 2026-08-30 | Vigente |
 
 ---
 
@@ -1195,3 +1196,43 @@
   - **Mover la excepcion de T-024 al ritual, junto al paso 3, en vez de a §1:** ahi la leeria solo
     quien ya esta copiando. La contradiccion la ve quien lee §1, y es en §1 donde tiene que
     resolverse.
+
+---
+
+### D-036 - Los dos hallazgos de `R-002` se aceptan, y `F-002` se corrige con nota de reescritura, no con codigo nuevo
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Estado | Vigente |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Decidido por | executor |
+
+- **Contexto:** primera auditoria entregada del proyecto, `R-002` sobre `_audit/S-002.md`
+  (commit auditado `dced7b5`). Veredicto `Con hallazgos (2)`, ambos de severidad `Media` y
+  `REVERSIBLE`. `CLAUDE.md` obliga a evaluar antes de implementar: no se aceptan en automatico.
+- **Evaluacion de `F-001`** (el anclaje del informe en el commit no tiene comprobacion que pueda
+  salir roja): **se acepta**. Se verifico sobre `HEAD` (`3228ca1`) y persiste: el bucle del Paso 2b
+  recorre solo `_persistence/`, el Paso 7 solo mira secretos, y la linea del Paso 8 es una
+  afirmacion fija mientras su hermana de justo encima ya tiene tres salidas. Va a **T-027**.
+- **Evaluacion de `F-002`** (`A-001` reescrito en el sitio contra la convencion del propio
+  archivo): **se acepta**. Parte del hallazgo caduco sola —`A-001` ya esta `Confirmado` con nota de
+  cierre—, pero el fondo sigue: el enunciado anterior no se puede recuperar sin ir al `git log`,
+  y `D-011` y `T-005` lo citan con el significado antiguo. Va a **T-028**.
+- **La eleccion real, dentro de `F-002`:** el auditor ofrece dos remedios. Se elige el segundo
+  —anadir a `A-001` la linea «reescrito en S-002; el enunciado anterior era X»— **porque `A-001` ya
+  esta cerrado**. Partirlo ahora en `A-001` `Confirmado` + un codigo nuevo para lo que quedaba
+  abierto describiria un estado que ya no existe: lo que quedaba abierto se cerro en `ec8e982`. La
+  nota documenta el historico; el codigo nuevo lo reescribiria por segunda vez, que es el defecto
+  que el hallazgo denuncia.
+- **Alternativas descartadas:**
+  - **Abrir `A-005` para la mitad que estuvo abierta y apuntar `T-005` ahi:** es la via que el
+    auditor pone primera, y era la correcta **en `dced7b5`**. Hoy crearia un supuesto que nace
+    cerrado, y obligaria a tocar `D-011` y `T-005`, dos entradas ya asentadas, para arreglar un
+    problema de legibilidad que una linea resuelve.
+  - **Rechazar `F-002` alegando que `A-001` ya esta `Confirmado`:** es cierto y es irrelevante. El
+    hallazgo no es sobre el estado del supuesto, sino sobre que su enunciado anterior desaparecio
+    del archivo que lleva los supuestos. Confirmarlo no lo devuelve.
+  - **Corregir las dos cosas ahora mismo, sin pasar por tarea:** se descarta para que el auditor
+    pueda cerrar cada hallazgo sobre un commit posterior identificable, con la evidencia que el
+    mismo declaro en `R-002`.

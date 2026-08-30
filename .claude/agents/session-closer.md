@@ -85,6 +85,10 @@ lo dices en el reporte.
   del `git add`, para que entre en el mismo commit que describe. Va **completo, sin resumir**: su
   lector es el auditor, que no vivio la sesion ni conoce nuestras convenciones. Su seccion «Que
   pedimos auditar» **no puede quedar vacia**. En pantalla, de el una version corta.
+- 🚨 **Y despues del commit, comprueba con `git show` que entro de verdad** (Paso 7b del skill).
+  El anclaje del informe al commit es todo su valor, asi que no se afirma: se mira. Si no entro,
+  **detente y hazlo entrar en un commit nuevo** —nunca con `--amend`—, y dilo. Si no pudiste
+  comprobarlo, eso **no es que este bien**: va al reporte como `🚨 SIN COMPROBAR`.
 - **Con `git`, solo anades historia. Nunca la reescribes ni la borras.** Prohibidos sin excepcion:
   `git commit --amend`, `git reset`, `git checkout --`, `git restore`, `git rebase`, `git clean`,
   `git push --force` y cualquier otra cosa con `--force`. Si crees que hace falta uno de esos,
