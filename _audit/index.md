@@ -59,12 +59,13 @@ dejaria de servir para lo unico que sirve.
 | Informe | Sesion | Fecha | Estado | Observaciones | Respondida en |
 |---|---|---|---|---|---|
 | `S-002.md` | S-002 | 2026-08-28 | Con hallazgos | [`..\AIzar_Auditor\_review\R-002.md`](../../AIzar_Auditor/_review/R-002.md) — 2 hallazgos (F-001, F-002) | S-009 |
-| `S-003.md` | S-003 | 2026-08-28 | Pendiente | - | - |
+| `S-003.md` | S-003 | 2026-08-28 | Con hallazgos | [`..\AIzar_Auditor\_review\R-003.md`](../../AIzar_Auditor/_review/R-003.md) - 3 hallazgos (F-003, F-004, F-005) | S-010 |
 | `S-004.md` | S-004 | 2026-08-28 | Pendiente | - | - |
 | `S-005.md` | S-005 | 2026-08-28 | Pendiente | - | - |
 | `S-006.md` | S-006 | 2026-08-28 | Pendiente | - | - |
 | `S-007.md` | S-007 | 2026-08-30 | Pendiente | - | - |
 | `S-008.md` | S-008 | 2026-08-30 | Pendiente | - | - |
 | `S-009.md` | S-009 | 2026-08-30 | Pendiente | - | - |
+| `S-010.md` | S-010 | 2026-08-30 | Pendiente | - | - |
 
 > `S-001` cerro antes de que existiera este mecanismo (D-016), asi que no tiene informe.

@@ -37,6 +37,9 @@
 | [T-026](#t-026---disenar-la-fase-descubrimiento-antes-de-entrar-en-ella) | Disenar la fase `Descubrimiento` antes de entrar en ella | No implementada | Alta | Bloqueante |
 | [T-027](#t-027---dar-comprobacion-roja-al-anclaje-del-informe-de-auditoria-en-el-commit) | Dar comprobacion roja al anclaje del informe de auditoria en el commit | Implementada | Alta | No bloqueante |
 | [T-028](#t-028---dejar-recuperable-el-enunciado-anterior-de-a-001-desde-el-propio-archivo) | Dejar recuperable el enunciado anterior de `A-001` desde el propio archivo | Implementada | Media | No bloqueante |
+| [T-029](#t-029---declarar-en-claudemd-que-el-eje-reversibleirreversible-se-aplica-a-criterio) | Declarar en `CLAUDE.md` que el eje reversible/irreversible se aplica a criterio | No implementada | Alta | No bloqueante |
+| [T-030](#t-030---corregir-la-referencia-de-d-020-es-t-016-no-t-015) | Corregir la referencia de D-020: es T-016, no T-015 | No implementada | Baja | No bloqueante |
+| [T-031](#t-031---exigir-comando-y-salida-cruda-en-las-decisiones-que-verifican-antes-de-aceptar) | Exigir comando y salida cruda en las decisiones que verifican antes de aceptar | No implementada | Media | No bloqueante |
 
 ---
 
@@ -647,3 +650,105 @@ delante del bloque de cierre, con el enunciado anterior literal —«Sincronizac
 persistencia»—, que abarcaba **ida y vuelta**, por que se reutilizo el codigo, y el aviso de que
 `D-011` y `T-005` lo citan con el significado antiguo. El estado y el codigo no se tocan: `A-001`
 sigue `Confirmado`, segun D-036.
+
+---
+
+### T-029 - Declarar en `CLAUDE.md` que el eje reversible/irreversible se aplica a criterio
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Alta |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | - |
+
+**Hallazgo `F-003` de `R-003`** (severidad `Media`, `REVERSIBLE`). Evaluado y **aceptado**;
+verificado que **persiste en `HEAD`**.
+
+Lo observado: **D-020** decide que el eje reversible/irreversible se aplique «a criterio,
+diciendolo explicitamente cada vez que se use, en vez de presentarlo como la lectura de una tabla
+que no existe». El documento donde el eje se aplica de verdad —`CLAUDE.md:64`— lo presenta **sin esa
+salvedad** y con una lista de ejemplos entre parentesis: «**irreversible** (borrar datos, publicar,
+migrar, gastar) → se escala al usuario». Comprobado en `HEAD`: `git grep -l D-020` devuelve
+`_audit/S-003.md`, `decisions.md`, `progress.md` y `tasks.md` — **ningun archivo operativo**.
+
+Por que importa: el parentesis con cuatro ejemplos **se lee como la tabla que D-020 dice que no
+existe**. Quien lea `CLAUDE.md` en la primera discrepancia real clasificara el asunto sin declarar
+que lo hizo a criterio, que es la unica obligacion que D-020 impuso. El riesgo que el propio
+informe S-003 declaro, materializable justo en el documento que se lee cuando llega el caso.
+
+Que hacer: anadir junto a la vinieta del desempate de `CLAUDE.md` una linea que cite `D-020` y
+exija que **la clasificacion se declare en la propia respuesta** mientras T-016 no cierre. Y la
+misma linea en el Paso 6b de `protocol-close`, donde se redacta el rechazo, porque `session-closer`
+no lee `decisions.md` entero.
+
+Evidencia que la cierra: un diff donde `CLAUDE.md` (o el Paso 6b de `protocol-close`) cite `D-020`
+y exija declarar la clasificacion al usar el eje.
+
+---
+
+### T-030 - Corregir la referencia de D-020: es T-016, no T-015
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | - |
+
+**Hallazgo `F-004` de `R-003`** (severidad `Baja`, `REVERSIBLE`). Evaluado y **aceptado**;
+verificado que **persiste en `HEAD`**.
+
+Lo observado: el cuerpo de `D-020` dice «Se crea **T-015** para poblar nuestro lado del inventario
+cuando T-004 se cierre». `T-015` es «Escribir en `protocol-close` las reglas de la seccion 0», y
+esta **`Implementada`**. La tarea del inventario es **`T-016`**, `No implementada`, que ademas cita
+correctamente «Ver D-020». El error esta **solo en `decisions.md`**: el informe `_audit/S-003.md`
+si dice «Consecuencia: T-016».
+
+Por que importa: el enlace decision→tarea es lo que impide que un aplazamiento se pierda. Quien
+llegue a D-020 dentro de seis sesiones para saber que queda pendiente abrira T-015, la vera
+`Implementada`, y **concluira que el inventario ya se poblo**. La referencia equivocada no daña por
+mentir: daña porque **resuelve la duda del lector en la direccion de no mirar**.
+
+Que hacer: corregir la referencia a `T-016` en el cuerpo de D-020, sin tocar nada mas.
+
+Evidencia que la cierra: `git show <hash>:_persistence/decisions.md` con `T-016` en esa linea.
+
+---
+
+### T-031 - Exigir comando y salida cruda en las decisiones que verifican antes de aceptar
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | - |
+
+**Hallazgo `F-005` de `R-003`** (severidad `Baja`, `REVERSIBLE`). Evaluado y **aceptado**.
+
+Lo observado: `D-018` registra la aplicacion de D-003 asi: «**Verificado antes de aceptar:** la
+carpeta `_review/` existe, es legible desde este repositorio, y su `index.md` esta creado y vacio
+[…] No se acepto sobre el relato: **se comprobo**». No consta **el comando, ni su salida**, ni el
+estado del repositorio ajeno sobre el que se miro. El resultado era correcto —el auditor lo
+confirmo desde su lado con dos hashes y sus horas—, pero **esa comprobacion la hizo el auditor
+ahora, no nuestro registro de entonces**.
+
+Por que importa: «se comprobo» es un **veredicto**; lo que alimenta una auditoria es «**corri esto,
+salio esto**». La evidencia existia, pero fuera de nuestro registro: verificarla obligo a alguien
+externo a reconstruirla. Con dos lineas de salida cruda, la entrada habria sido autoverificable.
+
+⚠️ **Esta no se corrige reescribiendo `D-018`**, y el auditor lo dice en su evidencia de cierre:
+«una decision **futura** con `Origen: auditor` cuyo bloque de verificacion contenga la orden
+ejecutada y su salida literal». Es una regla de forma hacia adelante, no un parche al historico —
+editar `D-018` para que parezca que registro lo que no registro seria justo lo contrario de lo que
+el hallazgo pide.
+
+Que hacer: escribir la regla donde se lee —`CLAUDE.md`, junto al tratamiento de lo entregado por
+`auditor`, y el Paso 6 de `protocol-close`— y **aplicarla ya** en la decision que evalua `R-003`.
+
+Evidencia que la cierra: una decision con `Origen: auditor` cuyo bloque de verificacion contenga la
+orden ejecutada y su salida literal.

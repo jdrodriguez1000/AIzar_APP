@@ -14,6 +14,7 @@
 | [L-003](#l-003---un-indice-escrito-a-mano-necesita-defensa-explicita-contra-los-generadores) | Un indice escrito a mano necesita defensa explicita contra los generadores | 2026-08-28 | 000_preproject |
 | [L-004](#l-004---un-archivo-duplicado-sin-marca-hace-que-se-edite-el-equivocado) | Un archivo duplicado sin marca hace que se edite el equivocado | 2026-08-28 | 000_preproject |
 | [L-005](#l-005---un-paso-obligatorio-cuyo-resultado-no-se-mira-es-una-intencion-no-una-obligacion) | Un paso obligatorio cuyo resultado no se mira es una intencion, no una obligacion | 2026-08-30 | 000_preproject |
+| [L-006](#l-006---una-regla-decidida-y-no-llevada-al-archivo-operativo-no-rige-descansa-donde-nadie-la-lee-al-aplicarla) | Una regla decidida y no llevada al archivo operativo no rige: descansa donde nadie la lee al aplicarla | 2026-08-30 | 000_preproject |
 
 ---
 
@@ -197,3 +198,35 @@ Plantilla:
 - **Y una segunda, sobre el metodo:** la auditoria encontro esto **sin ejecutar nada**, leyendo dos
   lineas contiguas del mismo archivo. La revision externa no valio por saber mas, sino por leer sin
   dar por supuesto lo que quien lo escribio ya daba por hecho.
+
+---
+
+### L-006 - Una regla decidida y no llevada al archivo operativo no rige: descansa donde nadie la lee al aplicarla
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Etapa | 000_preproject |
+| Origen | auditor |
+
+- **Contexto:** hallazgo `F-003` de `R-003`. `D-020` habia decidido que el eje
+  reversible/irreversible se aplicase «a criterio, **diciendolo explicitamente cada vez que se
+  use**». La decision estaba bien tomada y bien escrita.
+- **Que ocurrio:** `git grep -l "D-020"` devuelve `_audit/S-003.md`, `decisions.md`, `progress.md`
+  y `tasks.md` — **ningun archivo operativo**. Y `CLAUDE.md:64`, que es donde el eje se usa de
+  verdad, lo presenta con un parentesis de cuatro ejemplos: «(borrar datos, publicar, migrar,
+  gastar)». Ese parentesis **es** la tabla que D-020 prohibio, escrita en prosa.
+- **Leccion:** una regla vive donde se **aplica**, no donde se **acordo**. `decisions.md` guarda el
+  **porque** de una regla; no la ejecuta nadie. Si la regla no llega al archivo que se lee en el
+  momento de usarla —`CLAUDE.md`, la skill, el agente—, en la practica **no existe**: quien actua
+  no la va a encontrar, porque no va a ir a buscarla. Y peor que su ausencia es lo que suele quedar
+  en su lugar: la version simplificada y anterior, que se lee como si fuera la regla vigente.
+- **Como aplicarla:** al cerrar una decision que **cambia como se actua** (no las que solo
+  registran un porque), preguntarse **quien la va a leer en el momento de usarla** y escribirla ahi
+  tambien, citando su `D-XXX`. Un `git grep D-XXX` que solo devuelva archivos de `_persistence/` es
+  la señal de que la decision se quedo en el acta. Vale para los agentes con doble motivo:
+  `session-closer` **no lee `decisions.md` entero**, asi que una regla que le afecte y no este en su
+  skill no le llega nunca.
+- **Parentesco:** es `L-005` en el otro eje. `L-005` dice que un paso obligatorio sin comprobacion
+  que pueda fallar es una intencion; esta dice que una regla sin sitio donde se lea es un acta.
+  Las dos son la misma familia de error — **confundir haberlo escrito con que ocurra**— y las dos
+  las encontro la revision externa leyendo lo que nosotros ya dabamos por hecho.

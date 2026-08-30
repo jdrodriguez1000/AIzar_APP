@@ -45,6 +45,7 @@
 | [D-034](#d-034---el-recetario-no-aspira-a-cubrirlo-todo-se-le-pone-criterio-de-admision-y-entra-una-sola-receta) | El recetario no aspira a cubrirlo todo: criterio de admision y una sola receta nueva | 2026-08-30 | Vigente |
 | [D-035](#d-035---la-cabecera-de-guidemd-no-lleva-fechas-y-1-nombra-su-unica-lectura-completa) | La cabecera de `guide.md` no lleva fechas, y §1 nombra su unica lectura completa | 2026-08-30 | Vigente |
 | [D-036](#d-036---los-dos-hallazgos-de-r-002-se-aceptan-y-f-002-se-corrige-con-nota-de-reescritura-no-con-codigo-nuevo) | Los dos hallazgos de `R-002` se aceptan, y `F-002` se corrige con nota de reescritura, no con codigo nuevo | 2026-08-30 | Vigente |
+| [D-037](#d-037---los-tres-hallazgos-de-r-003-se-aceptan-y-f-005-se-corrige-hacia-adelante-no-reescribiendo-d-018) | Los tres hallazgos de `R-003` se aceptan, y `F-005` se corrige hacia adelante, no reescribiendo `D-018` | 2026-08-30 | Vigente |
 
 ---
 
@@ -1236,3 +1237,87 @@
   - **Corregir las dos cosas ahora mismo, sin pasar por tarea:** se descarta para que el auditor
     pueda cerrar cada hallazgo sobre un commit posterior identificable, con la evidencia que el
     mismo declaro en `R-002`.
+
+---
+
+### D-037 - Los tres hallazgos de `R-003` se aceptan, y `F-005` se corrige hacia adelante, no reescribiendo `D-018`
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Estado | Vigente |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Decidido por | executor |
+
+- **Contexto:** segunda auditoria entregada, `R-003` sobre `_audit/S-003.md` (commit auditado
+  `ec8e982`). Veredicto `Con hallazgos (3)`: `F-003` `Media`, `F-004` y `F-005` `Baja`, los tres
+  `REVERSIBLE`. Ninguna afirmacion del informe S-003 resulto falsa; los tres hallazgos son de
+  **coherencia interna**.
+
+- **Verificado antes de aceptar** — comando y salida, no la conclusion. Esta entrada **aplica ya la
+  regla que `F-005` pide** (T-031), en la misma decision que la acepta:
+
+  ```
+  $ git log -1 --format="%H %ad" --date=iso -- _audit/S-003.md
+  ec8e982238b992c18c7eecb9814a977951a6aba8 2026-08-28 11:58:07 -0500
+  ```
+  → el hash que `R-003` declara auditar **es** el que contiene nuestro informe. La auditoria juzga
+  el estado que dice juzgar.
+
+  ```
+  $ git grep -l "D-020" -- .
+  _audit/S-003.md
+  _persistence/decisions.md
+  _persistence/progress.md
+  _persistence/tasks.md
+  ```
+  → `F-003` se sostiene en `HEAD`: **ningun archivo operativo** (`CLAUDE.md`, ninguna skill,
+  ningun agente) cita `D-020`. La salvedad vive solo donde no se lee al aplicarla.
+
+  ```
+  $ git grep -n "Se crea T-015" -- _persistence/decisions.md
+  _persistence/decisions.md:504:  existe. Se crea T-015 para poblar nuestro lado del inventario cuando T-004 se cierre.
+  ```
+  → `F-004` se sostiene en `HEAD`. Y `T-015` figura `Implementada` en el indice
+  (`_persistence/tasks.md:26`), que es lo que convierte el error de referencia en una respuesta
+  falsa para el lector futuro.
+
+  ```
+  $ cd ../AIzar_Auditor && git log -1 --format="%H %ad" --date=iso -- _review/R-003.md
+  7abbe3c02d5b932f53f13166ce6edce62acfdd06 2026-08-30 17:24:46 -0500
+  ```
+  → el informe existe y esta commiteado en el repositorio del auditor, no es un archivo suelto.
+
+- **`F-003` se acepta** → **T-029**. El hallazgo señala algo que ya nos habiamos dicho a nosotros
+  mismos y no llevamos al sitio donde se usa. El parentesis «(borrar datos, publicar, migrar,
+  gastar)» de `CLAUDE.md:64` **es** la tabla que D-020 prohibio, escrita en prosa.
+
+- **`F-004` se acepta** → **T-030**. Trivial de arreglar y peor de lo que su severidad `Baja`
+  sugiere en un aspecto: no manda al lector a un sitio vacio, lo manda a una tarea `Implementada`,
+  y por tanto **le responde que si** a la pregunta que fue a hacer.
+
+- **`F-005` se acepta** → **T-031**, con una precision sobre el **como**, que es la eleccion real de
+  esta decision: **no se reescribe `D-018`**. El auditor lo formula en su evidencia de cierre —«una
+  decision **futura** […] cuyo bloque de verificacion contenga la orden ejecutada y su salida
+  literal»— y es lo correcto: editar `D-018` para que exhiba un comando que en su dia no se anoto
+  seria fabricar la evidencia que el hallazgo echa en falta. El registro diria «se comprobo asi»
+  cuando lo unico cierto es «se comprobo». La regla se escribe donde se lee y se aplica desde hoy.
+
+- **Alternativas descartadas:**
+  - **Anadir a `D-018` el comando reconstruido a posteriori:** lo mas tentador, porque el resultado
+    era correcto y hoy se puede recrear. Se descarta por lo de arriba: un bloque de verificacion
+    que no se ejecuto cuando dice haberse ejecutado es peor que su ausencia — el hallazgo pasaria
+    de «falta evidencia» a «hay evidencia falsa», y esta vez sin nadie que lo note.
+  - **Cerrar `F-003` solo en `CLAUDE.md`, sin tocar `protocol-close`:** es la mitad barata. Se
+    descarta porque quien redacta materialmente un rechazo es `session-closer` en el Paso 6b, y ese
+    agente **no lee `decisions.md` entero**: la regla tiene que estar en el archivo que el si lee.
+  - **Rechazar `F-004` por trivial:** se descarta. La severidad `Baja` mide el daño, no la
+    prioridad de arreglarlo; cuesta una palabra y el rechazo costaria una entrada en `debt_tec.md`
+    mas larga que la correccion.
+
+- **Sobre el aviso del auditor (renombrado `CANAL.md` → `channel.md`):** no es hallazgo y no
+  requiere accion, pero **conviene devolverselo**: ya lo detectamos por nuestra cuenta en S-005 y lo
+  resolvimos con `D-023`, dejando las menciones historicas intactas **a proposito**
+  (`_persistence/decisions.md:622`, `_persistence/progress.md:245-246`, y `PROJECT.md:47` declara el
+  renombrado). El auditor lo anota «para que exista fuera de esta conversacion»; existe desde hace
+  cuatro sesiones, y decirselo le ahorra volver a levantarlo.
