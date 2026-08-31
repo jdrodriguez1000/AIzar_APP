@@ -17,6 +17,7 @@
 | [L-006](#l-006---una-regla-decidida-y-no-llevada-al-archivo-operativo-no-rige-descansa-donde-nadie-la-lee-al-aplicarla) | Una regla decidida y no llevada al archivo operativo no rige: descansa donde nadie la lee al aplicarla | 2026-08-30 | 000_preproject |
 | [L-007](#l-007---al-corregir-un-codigo-mal-escrito-la-salida-cruda-que-lo-cita-no-se-toca) | Al corregir un codigo mal escrito, la salida cruda que lo cita no se toca | 2026-08-30 | 000_preproject |
 | [L-008](#l-008---corregir-un-hallazgo-puede-romper-la-decision-que-lo-genero-corre-el-control-despues-de-arreglar-no-solo-antes) | Corregir un hallazgo puede romper la decision que lo genero: corre el control despues de arreglar, no solo antes | 2026-08-30 | 000_preproject |
+| [L-009](#l-009---un-grep-sobre-el-registro-vivo-cuenta-la-evidencia-citada-como-si-fuera-estado) | Un grep sobre el registro vivo cuenta la evidencia citada como si fuera estado | 2026-08-30 | 000_preproject |
 
 ---
 
@@ -296,3 +297,34 @@ Plantilla:
   mismo dia, hecha para cerrar un hallazgo**. Tambien explica por que `D-039` documenta la ventaja
   de la opcion descartada en vez de ocultarla: la opcion (a) fallaba ruidosamente al copiar el
   metodo a otro proyecto, y eso es una perdida real que se acepto a cambio de no revertir `D-021`.
+
+---
+
+### L-009 - Un grep sobre el registro vivo cuenta la evidencia citada como si fuera estado
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Etapa | 000_preproject |
+| Origen | executor |
+
+- **Contexto:** arranque de la sesion posterior a `S-012`. El agente `session-starter` reporto un
+  desfase: una entrada huerfana `### C-002` en `_persistence/tasks.md:983`, ausente del indice de
+  ese archivo, y recomendo eliminarla por pertenecer solo a `constraints.md`.
+- **Que ocurrio:** la linea 983 no es una entrada: esta **dentro de un bloque de codigo cercado**
+  (fences en 981 y 989) y forma parte de la salida cruda de `sed -n '45,60p'
+  _persistence/constraints.md`, registrada en `T-036` como verificacion del hallazgo `F-010`.
+  Comprobado con `awk 'NR>=975 && NR<=995'` sobre `tasks.md`, que muestra las dos fences alrededor.
+  Haber seguido la recomendacion habria borrado evidencia de auditoria — el mismo error que `L-007`
+  evita desde el lado de los reemplazos.
+- **Leccion:** `T-031` nos obliga a pegar salida cruda dentro de `_persistence/`, y esa salida
+  contiene encabezados, codigos y rutas identicos a los del registro real. Desde `T-031`, **todo
+  `grep` estructural sobre estos archivos produce falsos positivos por diseno**: la herramienta no
+  distingue «esto es el estado» de «esto es una cita de como estaba el estado». No es un fallo del
+  starter, es una consecuencia de una regla que adoptamos a proposito.
+- **Como aplicarla:** ningun hallazgo estructural derivado de un `grep -n` sobre `_persistence/` se
+  acepta sin **mirar el contexto de la linea** (`awk`/`sed` con margen) y confirmar que no cae
+  dentro de un bloque cercado. Vale tanto para el arranque como para el cierre y para las
+  auditorias. Y antes de borrar cualquier linea de `_persistence/` que reproduzca un encabezado,
+  buscar primero si pertenece a un bloque de verificacion: si lo es, es historia y no se toca.
+- **Parentesco:** cara de lectura de `L-007`, que cubre la misma colision al escribir. Juntas
+  delimitan `T-031`: la salida cruda es inmune a los reemplazos **y** invisible para los conteos.

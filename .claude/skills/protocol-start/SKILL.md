@@ -120,6 +120,40 @@ nuestro son las tareas, decisiones y deuda que salgan de ellos. **No espejes su 
 ⚠️ Si la carpeta no existe o no se puede leer, **dilo en el reporte** y sigue. No supongas que no
 hay auditorias.
 
+### 1d. Y la version del contrato
+
+Mismo mecanismo que el Paso 1c, otra fila. Toma de la tabla **Rutas** de `PROJECT.md` el valor del
+campo **«Contrato entre las dos terminales»** y pegalo tal cual:
+
+```bash
+head -20 <Contrato entre las dos terminales> | grep -i "^> Version:"
+```
+
+Compara lo que devuelve con el campo **«Version leida y verificada»** de la tabla del contrato en
+`PROJECT.md`. **Este paso tiene dos salidas, y las dos van al reporte:**
+
+| Lo que ves | Que significa | Que haces |
+|---|---|---|
+| las dos versiones **coinciden** | el contrato no ha cambiado desde la ultima lectura | una linea en el reporte: *«contrato en version N, coincide»* |
+| **no** coinciden, o el contrato no la declara | el contrato cambio y **nadie de este lado lo ha leido** | 🚨 **desfase**: reportalo arriba, con las dos versiones. Es lo primero de la jornada |
+
+🚨 **Decir «coincide» tambien es obligatorio.** Un detector solo informa si habla en los dos casos:
+si solo se menciona cuando falla, el silencio es ambiguo —¿coincidio, o no se miro?— y entonces el
+paso no se puede auditar desde el reporte. Es el mismo fallo silencioso que el Paso 1c (`F-007`).
+
+⚠️ **Detectar no es resolver.** El arranque es de solo lectura: **no actualices `PROJECT.md`**
+aunque veas la version nueva. Poner ahi un numero sin haber leido el contrato convertiria el
+detector en un sello automatico, y el campo dice «leida **y verificada**». Quien lee, contrasta y
+actualiza es `executor`, despues.
+
+⚠️ Si el contrato no existe o no se puede leer, **dilo en el reporte** y sigue.
+
+> **Por que este paso existe:** `PROJECT.md` afirma que la version es el mecanismo de deteccion de
+> divergencia entre las dos terminales. Hasta el hallazgo `F-013` de `R-005` nadie lo corria: un
+> detector que nadie mira no detecta. El desfase no aparecia como desfase — aparecia como un
+> reproche en un informe, con las dos partes citando reglas distintas y ambas convencidas de tener
+> la vigente (T-040).
+
 ### Por que el `git` va primero
 
 > 🔑 **`progress.md` es lo que alguien escribio que paso. `git log` es lo que paso.**
@@ -281,7 +315,7 @@ senal se aprende a ignorar.
 
 Una entrada cerrada **conserva su texto a proposito**, para que se entienda que se creia y por que
 dejo de valer. **Ese texto esta ahi para explicar, no para reportarlo como vigente.** Si hace
-falta mencionarla, se dice *«`DT-003`, cancelada»* — nunca lo que decia cuando estaba abierta.
+falta mencionarla, se dice *«`DT-NNN`, cancelada»* — nunca lo que decia cuando estaba abierta.
 
 ### 🚨 Y el caso mas traicionero: la decision revocada
 

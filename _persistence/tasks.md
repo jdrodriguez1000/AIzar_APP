@@ -46,6 +46,12 @@
 | [T-035](#t-035---corregir-en-d-021-la-enumeracion-de-archivos-y-anexar-el-control-fechado) | Corregir en `D-021` la enumeracion de archivos y anexar el control fechado | Implementada | Baja | No bloqueante |
 | [T-036](#t-036---vaciar-c-002-de-rutas-literales-y-remitirlo-a-projectmd) | Vaciar `C-002` de rutas literales y remitirlo a `PROJECT.md` | Implementada | Baja | No bloqueante |
 | [T-037](#t-037---escribir-el-control-de-regresion-de-d-021-con-su-patron-y-su-ambito) | Escribir el control de regresion de `D-021` con su patron y su ambito | Implementada | Media | No bloqueante |
+| [T-038](#t-038---admitir-en-la-convencion-de-origen-los-valores-que-las-tareas-ya-usan) | Admitir en la convencion de `Origen` los valores que las tareas ya usan | Implementada | Media | No bloqueante |
+| [T-039](#t-039---acordar-con-el-auditor-la-forma-de-entrega-del-dictamen-de-gate) | Acordar con el auditor la forma de entrega del dictamen de Gate | No implementada | Media | No bloqueante |
+| [T-040](#t-040---dar-momento-y-dueno-a-la-comparacion-de-version-de-contractmd) | Dar momento y dueno a la comparacion de version de `contract.md` | Implementada | Alta | No bloqueante |
+| [T-041](#t-041---separar-si-es-deuda-de-si-esta-pagada-en-debt_tecmd) | Separar «si es deuda» de «si esta pagada» en `debt_tec.md` | Implementada | Baja | No bloqueante |
+| [T-042](#t-042---generalizar-el-ultimo-ejemplo-ilustrativo-con-codigo-vivo-de-protocol-start) | Generalizar el ultimo ejemplo ilustrativo con codigo vivo de `protocol-start` | Implementada | Baja | No bloqueante |
+| [T-043](#t-043---poner-la-advertencia-de-no-copiar-phases-dentro-de-_methodology) | Poner la advertencia de no copiar `phases/` dentro de `_methodology/` | No implementada | Baja | No bloqueante |
 
 ---
 
@@ -57,7 +63,30 @@
 | Estado | `Implementada` / `No implementada` / `Cancelada` / `Suspendida` |
 | Importancia | `Alta` / `Media` / `Baja` |
 | Urgencia | `Bloqueante` / `No bloqueante` |
-| Origen | `usuario` / `executor` / `auditor` |
+| Origen | `VS-XXX` / `usuario` / `executor` / `auditor` / `metodo` |
+
+**`Origen` es obligatorio y su valor sale de esta lista** (D-022). Que significa cada uno:
+
+| Valor | La tarea nace de… |
+|---|---|
+| `VS-XXX` | un Vertical Slice del producto. Es el codigo concreto, no la palabra: `VS-004`, no `VS-XXX` |
+| `usuario` | una peticion o una decision del usuario |
+| `executor` | iniciativa propia al ejecutar |
+| `auditor` | un hallazgo `F-NNN` de una auditoria |
+| `metodo` | una inconsistencia del canonico `_methodology/000_method.md`, no del producto |
+
+🔑 **`VS-XXX` es la unica forma de origen del producto.** Los otros cuatro son los origenes
+**no-producto**: trabajo sobre el andamio —metodo, registro, canal, herramientas— que no cuelga de
+ninguna necesidad. La distincion importa porque §47 del canonico exige que todo elemento del
+producto declare a su padre; una tarea de andamio no tiene padre en el producto, y decirlo con un
+valor propio es lo que impide que parezca huerfana.
+
+🚨 **Anadir un valor nuevo es una decision, no una improvisacion.** El criterio es uno solo:
+**nombra un origen de demanda que ninguno de los cinco ya cubre**. Un matiz de un origen existente
+—«usuario, pero por escrito», «auditor, pero de otra terminal»— no es un valor nuevo: va en el
+cuerpo de la tarea. Si el criterio se cumple, el valor entra **en esta tabla en la misma pasada** en
+que se escribe la primera tarea que lo usa, con su `D-XXX`. Un valor que aparece en una tarea antes
+que en esta tabla es exactamente el desfase que abrio el hallazgo `F-011` (T-038).
 
 Regla: una tarea con origen `auditor` solo pasa a ejecutarse despues de que `executor`
 evalue la recomendacion y la considere correcta.
@@ -1050,3 +1079,295 @@ reescribe.
 
 Evidencia que la cierra: el control escrito en un archivo operativo, con su patron literal y su
 ambito, y su primera ejecucion registrada con salida cruda.
+
+---
+
+### T-038 - Admitir en la convencion de `Origen` los valores que las tareas ya usan
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-30 |
+
+**Hallazgo `F-011` de `R-005`** (severidad `Media`, `REVERSIBLE`). Evaluado y **aceptado**;
+verificado que **persiste en `HEAD`**.
+
+Verificacion — ordenes ejecutadas y salida cruda:
+
+```
+$ awk '/^## Convenciones/,/^## Tareas/' _persistence/tasks.md | grep "Origen"
+| Origen | `usuario` / `executor` / `auditor` |
+--- exit: 0 ---
+```
+
+```
+$ grep -h "^| Origen |" _persistence/tasks.md | sort | uniq -c
+      1 | Origen | `usuario` / `executor` / `auditor` |
+     12 | Origen | auditor |
+     11 | Origen | executor |
+      2 | Origen | metodo |
+     12 | Origen | usuario |
+--- exit: 0 ---
+```
+
+Lo observado: `D-022` declara `Origen` **obligatorio** y admite `VS-XXX` cuando la tarea nace del
+producto; `PROJECT.md` lo recoge en la tabla de codigos. La tabla de Convenciones de `tasks.md` no
+se toco: enumeraba tres valores, dos tareas usaban un cuarto (`metodo`) y `VS-XXX` no aparecia.
+
+Por que importa: el argumento entero de `D-022` es que el origen convierte §47 de norma en «un campo
+que esta o no esta», comprobable mirando. Esa comprobacion necesita saber **que valores son
+validos**. Quien abriera `tasks.md` dentro de tres sesiones leeria la lista vieja en el sitio de mas
+autoridad —la tabla de convenciones, arriba— y no la regla nueva, que vive en otro archivo.
+
+Que se hizo: la tabla admite los cinco valores reales y cada uno se explica en una tabla propia. Se
+anadio ademas lo que el hallazgo no pedia y hacia falta igual: **el criterio para admitir un valor
+nuevo** —nombrar un origen de demanda que ninguno de los cinco cubra— y la regla de que el valor
+entra en la tabla **en la misma pasada** que la primera tarea que lo usa. Sin criterio, la lista
+vuelve a quedarse corta al siguiente caso, que es como llego este hallazgo.
+
+Evidencia que la cierra: la tabla de Convenciones de `tasks.md` enumera `VS-XXX` y `metodo`, y
+ninguna tarea usa un valor fuera de esa lista.
+
+---
+
+### T-039 - Acordar con el auditor la forma de entrega del dictamen de Gate
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-30 |
+
+**Hallazgo `F-012` de `R-005`** (severidad `Media`, `REVERSIBLE`). Evaluado y **aceptado**;
+verificado que **persiste en `HEAD`**.
+
+Verificacion — ordenes ejecutadas y salida cruda:
+
+```
+$ grep -rn "dictamen" _persistence/
+_persistence/decisions.md:705:  parar; pedirle esa decision seria pedirle una opinion disfrazada de dictamen. En cambio un dictamen
+_persistence/progress.md:244:    dictamen (`auditor`), veredicto (**el usuario**). Escrito en `PROJECT.md` y `CLAUDE.md`; el
+_persistence/progress.md:270:  - El dictamen del Gate que exige D-024 no tiene forma definida en `contract.md` §4, que solo
+_persistence/tasks.md:354:prohibe. Propuesta a evaluar: declarar que los criterios **1-5 y 7 son materia del dictamen** y el
+--- exit: 0 ---
+```
+
+```
+$ grep -rn "contract.md" _persistence/tasks.md _persistence/assumptions.md
+_persistence/tasks.md:789:| Contrato entre las dos terminales | `..\AIzar_Auditor\contract.md` |
+_persistence/tasks.md:1000:de `contract.md`). La excepcion vivia solo en `_audit/S-004.md`, un documento ya entregado que por
+--- exit: 0 ---
+```
+
+Lo observado: ningun `A-XXX` ni `T-XXX` recogia el asunto. Las dos menciones de `progress.md` son
+bloques historicos de sesion —el sitio que justamente deja de leerse—, y `tasks.md:354` es `T-018`,
+que trata **otra cosa**: la circularidad del criterio 6 del Gate 1, no la ausencia de forma de
+entrega en `contract.md` §4. Se comprobo expresamente porque era la unica candidata a cubrirlo.
+
+Por que importa: el disparador de este riesgo —el primer Gate— esta a varias fases de distancia, que
+es justo el horizonte en el que un asunto que solo vive en un informe deja de leerse. Es el argumento
+de `D-027`: lo aplazado sin momento no se retoma, se olvida.
+
+Que se hizo, y por que en dos sitios: el **supuesto** se registro como **`A-005`** —porque `D-024` se
+construyo encima de algo no confirmado, y eso es literalmente lo que `assumptions.md` existe para
+llevar— y **esta tarea** carga la accion y el disparador, porque la validacion **no depende de
+nosotros**: el acto 2 asigna al auditor una funcion que su contrato no le da, y un contrato bilateral
+no se cambia por un lado. Un supuesto sin tarea no se resuelve solo; una tarea sin supuesto pierde el
+registro de que estamos construyendo sobre arena.
+
+**Disparador:** al disenar la fase Prototipo, cuando el Gate 1 entra en el horizonte (`D-027`).
+Adelantarlo seria la especulacion que `D-027` prohibe. Ver `A-005` y `D-042`.
+
+Evidencia que la cierra: `contract.md`, en version posterior a la 1, declara una segunda forma de
+entrega para el dictamen o dice explicitamente que usa la misma.
+
+---
+
+### T-040 - Dar momento y dueno a la comparacion de version de `contract.md`
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Alta |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-30 |
+
+**Hallazgo `F-013` de `R-005`** (severidad `Media`, `REVERSIBLE`). Evaluado y **aceptado**;
+verificado que **persiste en `HEAD`**. Se le sube la importancia a `Alta` respecto de la severidad
+del hallazgo, por lo que se dice mas abajo.
+
+Verificacion — orden ejecutada y salida cruda:
+
+```
+$ git grep -in "contract" -- .claude
+--- exit: 1 ---
+```
+
+Cero lineas: ninguna skill ni agente abria el contrato ni comparaba su version, en ningun momento
+del ciclo — ni arranque, ni cierre, ni respuesta a la auditoria.
+
+Por que importa, y por que sube a `Alta`: un detector que nadie corre no detecta. `PROJECT.md`
+afirma que la version **es** el mecanismo de deteccion; si el contrato sube a 2, la fila seguira
+diciendo `1` y la discrepancia solo sera visible para quien ya sospeche que existe. El desfase no
+aparecera como desfase: aparecera como un reproche en un informe, con las dos partes citando reglas
+distintas y ambas convencidas de tener la vigente. Es lo que `D-023` decia querer evitar. Sube a
+`Alta` porque es la **unica** defensa contra la divergencia del unico documento que obliga a las dos
+terminales, y porque cierra tambien el frente que abrio la respuesta del auditor a nuestra pregunta 2
+(`D-043`).
+
+Que se hizo: **Paso 1d de `protocol-start`**, con la misma indireccion que el Paso 1c —el valor se
+toma del campo «Contrato entre las dos terminales» de `PROJECT.md`, no se escribe la ruta—, de forma
+que `D-021` sigue cumpliendose. Dos salidas explicitas, y **las dos obligatorias en el reporte**:
+callar cuando coincide dejaria el silencio ambiguo —¿coincidio, o no se miro?— y el paso no seria
+auditable desde el reporte. Se declara ademas que **detectar no es resolver**: el arranque es de solo
+lectura y no actualiza `PROJECT.md`, porque poner ahi un numero sin haber leido el contrato
+convertiria el detector en un sello automatico y el campo dice «leida **y verificada**».
+
+Comprobado que la orden corre y que hoy no hay desfase:
+
+```
+$ head -20 ../AIzar_Auditor/contract.md | grep -i "^> Version:"
+> Version: 1 · 2026-08-28
+--- exit: 0 ---
+```
+
+```
+$ grep -n "Version leida y verificada" PROJECT.md
+52:| Version leida y verificada | **1** (2026-08-28) |
+--- exit: 0 ---
+```
+
+Control de regresion de `D-021` corrido **despues** de tocar `.claude/`, por `L-008`:
+
+```
+$ git grep -nE "AIzar|Company_TripleS|github\.com" -- .claude CLAUDE.md
+--- exit: 1 ---
+```
+
+Evidencia que la cierra: un protocolo del ejecutor lee la version de `contract.md` y la contrasta
+con la registrada, con dos salidas posibles.
+
+---
+
+### T-041 - Separar «si es deuda» de «si esta pagada» en `debt_tec.md`
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-30 |
+
+**Hallazgo `F-014` de `R-005`** (severidad `Baja`, `REVERSIBLE`). Evaluado y **aceptado**;
+verificado que **persiste en `HEAD`**.
+
+Verificacion — orden ejecutada y salida cruda:
+
+```
+$ grep -n "PROPUESTA\|^| Origen |" _persistence/debt_tec.md
+27:| Origen | `usuario` / `executor` / `auditor` |
+61:| Origen | executor (PROPUESTA — pendiente de confirmar) |
+85:| Origen | executor (PROPUESTA — pendiente de confirmar) |
+109:| Origen | executor (confirmada por el usuario el 2026-08-30) |
+--- exit: 0 ---
+```
+
+Lo observado: el hallazgo senala `DT-001` y `DT-002`, y la salida trae **un tercer caso que el
+auditor no vio**: `DT-003` resolvio el mismo problema por la otra punta —«confirmada por el
+usuario»— metiendo tambien en `Origen` un dato que ese campo no lleva. Tres entradas de tres
+improvisando dentro del mismo campo es la prueba de que el eje faltaba, no de que hubiera dos
+descuidos.
+
+Por que importa: el caracter provisional estaba en el detalle y desaparecia en el indice, que es lo
+que se lee. Una entrada `Propuesta` indistinguible de una confirmada es, en la practica, una
+confirmada.
+
+Que se hizo: **campo propio `Confirmacion`**, con columna en el indice, y `Origen` devuelto a sus
+tres valores. Se declara que los dos ejes son distintos —`Estado` dice si **se pago**, `Confirmacion`
+si **es deuda**— y que `Propuesta` **lleva dueno dentro del valor siempre**, porque una propuesta sin
+dueno no espera: se queda propuesta para siempre. Las tres entradas quedan `Confirmada`: `DT-001` y
+`DT-002` por el propio auditor en `R-005` §5.2 y §5.1, `DT-003` por el usuario.
+
+Evidencia que la cierra: el `Origen` de `DT-001` y `DT-002` usa un valor de la convencion, y el
+caracter provisional —cuando lo haya— es visible en el indice.
+
+---
+
+### T-042 - Generalizar el ultimo ejemplo ilustrativo con codigo vivo de `protocol-start`
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | executor |
+| Fecha | 2026-08-30 |
+
+**No es un hallazgo del auditor.** Salio de correr el control de `T-034` despues de tocar `.claude/`
+por `T-040`, que es lo que `L-008` manda hacer.
+
+Verificacion — orden ejecutada y salida cruda (fragmento relevante):
+
+```
+$ git grep -nE "T-[0-9]{3}|D-[0-9]{3}" -- .claude
+.claude/skills/protocol-start/SKILL.md:318:falta mencionarla, se dice *«`DT-003`, cancelada»* — nunca lo que decia cuando estaba abierta.
+--- exit: 0 ---
+```
+
+Lo observado: `T-034` corrigio cuatro lineas con codigos vivos usados como ejemplo ilustrativo y
+dejo esta. Su criterio de cierre admite «codigos genericos o citas de decisiones estructurales» y
+excluye «ejemplos ilustrativos con codigos vivos» — y esto es exactamente lo segundo. Agravante: el
+ejemplo era ademas **falso**, porque `DT-003` esta `Implementada`, no `Cancelada`. Al copiar el
+metodo a otro proyecto, `DT-003` alli no existiria o seria otra cosa.
+
+Que se hizo: `DT-003` pasa a `DT-NNN`. La linea del Paso 1d que cita su propio origen (`T-040`)
+**no** se generaliza: es una cita de por que existe la regla, la misma forma que el Paso 1c ya usa
+con «hallazgo `F-007`, T-033» y que el criterio de `T-034` admite expresamente.
+
+Comprobado despues:
+
+```
+$ git grep -nE "DT-[0-9]{3}" -- .claude
+--- exit: 1 ---
+```
+
+---
+
+### T-043 - Poner la advertencia de no copiar `phases/` dentro de `_methodology/`
+| Campo | Valor |
+|---|---|
+| Estado | No implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-30 |
+
+**No es un hallazgo:** es la recomendacion de `R-005` §5.1, respondiendo a nuestra pregunta 1.
+Evaluada y **aceptada en el fondo**, aplazada en el momento — y el motivo del aplazamiento se
+explica abajo, porque no es el de siempre.
+
+Lo observado: la exclusion de `phases/` al copiar `_methodology/` la sostiene hoy una advertencia en
+prosa dentro de `PROJECT.md:73-75`. El argumento del auditor es correcto y es de los que no se
+discuten: **quien copie la carpeta no leera `PROJECT.md`; leera la carpeta.** La advertencia no esta
+donde ocurre la accion.
+
+Por que **no** se implementa hoy, y no es por coste: escribir esa marca obliga a decidir donde va
+—cabecera del canonico, archivo dentro de `phases/`, `README.md` en la raiz de `_methodology/`— y
+cada una de las tres **presupone la regla agnostico/propio que `DT-002` declara sin decidir**. Poner
+la marca ahora fijaria esa regla por la puerta de atras, que es justo lo que `DT-002` existe para
+impedir y lo que `D-027` prohibe. Ademas `phases/` **no existe todavia** en el arbol, asi que la
+mitad de las opciones ni siquiera son escribibles.
+
+**Disparador:** el mismo que `DT-002` — al cerrar `T-004` y **antes** de escribir la primera fase.
+En ese momento la regla ya estara decidida y la marca sera su consecuencia, no su sustituto.
+
+Evidencia que la cierra: una marca dentro de `_methodology/` que diga que `phases/` no se copia,
+puesta despues de decidir `DT-002` y coherente con esa decision.

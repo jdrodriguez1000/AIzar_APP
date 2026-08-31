@@ -8,11 +8,11 @@
 
 ## Indice
 
-| Codigo | Deuda tecnica | Estado | Importancia | Urgencia |
-|---|---|---|---|---|
-| [DT-001](#dt-001---duplicidad-de-datos-entre-contractmd-y-projectmd) | Duplicidad de datos entre `contract.md` y `PROJECT.md` | No implementada | Media | No bloqueante |
-| [DT-002](#dt-002---_methodology-mezcla-contenido-agnostico-y-propio-en-phases) | `_methodology/` mezcla contenido agnostico y propio en `phases/` | No implementada | Baja | No bloqueante |
-| [DT-003](#dt-003---_global-no-tiene-gitignore-propio-ni-esta-declarada-en-projectmd) | `_global/` no tiene `.gitignore` propio ni esta declarada en `PROJECT.md` | Implementada | Baja | No bloqueante |
+| Codigo | Deuda tecnica | Estado | Confirmacion | Importancia | Urgencia |
+|---|---|---|---|---|---|
+| [DT-001](#dt-001---duplicidad-de-datos-entre-contractmd-y-projectmd) | Duplicidad de datos entre `contract.md` y `PROJECT.md` | No implementada | Confirmada | Media | No bloqueante |
+| [DT-002](#dt-002---_methodology-mezcla-contenido-agnostico-y-propio-en-phases) | `_methodology/` mezcla contenido agnostico y propio en `phases/` | No implementada | Confirmada | Baja | No bloqueante |
+| [DT-003](#dt-003---_global-no-tiene-gitignore-propio-ni-esta-declarada-en-projectmd) | `_global/` no tiene `.gitignore` propio ni esta declarada en `PROJECT.md` | Implementada | Confirmada | Baja | No bloqueante |
 
 ---
 
@@ -25,8 +25,24 @@
 | Importancia | `Alta` / `Media` / `Baja` |
 | Urgencia | `Bloqueante` / `No bloqueante` |
 | Origen | `usuario` / `executor` / `auditor` |
+| Confirmacion | `Confirmada` / `Propuesta (pendiente de <quien>)` |
 
 `Implementada` = la deuda ya fue pagada (corregida). `No implementada` = sigue pendiente de pago.
+
+🚨 **`Confirmacion` y `Estado` son ejes distintos, y por eso son dos campos.** `Estado` dice si la
+deuda **se pago**; `Confirmacion` dice si **es deuda**. Una entrada puede estar confirmada y sin
+pagar —lo normal— pero tambien propuesta y sin confirmar: alguien la detecto y nadie ha dicho
+todavia que el atajo fuera un atajo.
+
+🚨 **`Propuesta` lleva dueño dentro del valor, siempre.** No existe `Propuesta` a secas: quien
+confirma va escrito (`Propuesta (pendiente del usuario)`), porque una propuesta sin dueño no espera
+—se queda propuesta para siempre—. Si no sabes quien confirma, entonces lo que falta no es la
+confirmacion: es saber de quien es la decision, y eso es una `T-XXX`.
+
+⚠️ **El caracter provisional va en el indice, no solo en el detalle.** El ojo entra por la tabla de
+arriba; una entrada `Propuesta` que en el indice se ve igual que una confirmada es, en la practica,
+una confirmada (hallazgo `F-014`, T-041). Antes de este campo el matiz vivia metido dentro de
+`Origen`, un campo cuya convencion no lo admitia.
 
 ---
 
@@ -39,6 +55,7 @@ Plantilla:
 | Campo | Valor |
 |---|---|
 | Estado | No implementada |
+| Confirmacion | |
 | Importancia | |
 | Urgencia | |
 | Etapa | |
@@ -55,10 +72,11 @@ Plantilla:
 | Campo | Valor |
 |---|---|
 | Estado | No implementada |
+| Confirmacion | Confirmada (2026-08-30, por el propio auditor en `R-005` §5.2) |
 | Importancia | Media |
 | Urgencia | No bloqueante |
 | Etapa | 000_preproject |
-| Origen | executor (PROPUESTA — pendiente de confirmar) |
+| Origen | executor |
 | Fecha | 2026-08-28 |
 
 - **Que se hizo:** al adoptar `contract.md` (D-023) se detecto que sus secciones 1 y 8 repiten
@@ -69,9 +87,17 @@ Plantilla:
 - **Costo de no pagarla:** dos copias de la misma realidad en repositorios distintos pueden
   divergir sin que nada lo señale — el mismo riesgo que D-021 existia para evitar dentro de este
   repositorio.
-- **Como pagarla:** acordar con el auditor que `contract.md` cite `PROJECT.md` en vez de repetir
-  sus valores, o aceptar la duplicacion con un mecanismo de deteccion (version, como ya existe
-  para el contrato completo).
+- **Como pagarla:** ⚠️ **reescrito el 2026-08-30 (D-043).** La primera de las dos vias que se
+  proponian aqui —«acordar con el auditor que `contract.md` cite `PROJECT.md` en vez de repetir sus
+  valores»— fue **evaluada y rechazada por el auditor** en `R-005` §5.2, y el rechazo se acepto: haria
+  que un contrato bilateral colgase de un archivo que solo una de las dos partes controla y puede
+  cambiar sin avisar, y obligaria a leer el repositorio del otro para resolverlo. Queda **solo la
+  segunda via**: aceptar la duplicacion como deliberada —cada lado necesita las reglas comunes a
+  mano— y construir la deteccion de divergencia. Esa deteccion es el hallazgo `F-013`, y su trabajo
+  concreto es **T-040**.
+- **Disparador:** ya disparada. Se paga cuando T-040 este implementada; lo que quede despues de
+  T-040 no es esta deuda, sino la parte bilateral que decide el usuario con la sesion principal del
+  auditor (D-042).
 
 ---
 
@@ -79,10 +105,11 @@ Plantilla:
 | Campo | Valor |
 |---|---|
 | Estado | No implementada |
+| Confirmacion | Confirmada (2026-08-30, por el propio auditor en `R-005` §5.1) |
 | Importancia | Baja |
 | Urgencia | No bloqueante |
 | Etapa | 000_preproject |
-| Origen | executor (PROPUESTA — pendiente de confirmar) |
+| Origen | executor |
 | Fecha | 2026-08-28 |
 
 - **Que se hizo:** D-027 ubica la definicion de cada fase en `_methodology/phases/NNN_<fase>.md`,
@@ -96,6 +123,11 @@ Plantilla:
   `PROJECT.md`.
 - **Como pagarla:** decidir la regla general agnostico/propio (posiblemente separando `phases/` a
   otra carpeta de primer nivel) y aplicarla de una vez, en vez de resolverla carpeta por carpeta.
+- **Disparador:** ⚠️ **anadido el 2026-08-30 (D-044).** Se paga **al cerrar T-004 y antes de
+  escribir la primera fase en `_methodology/phases/`**. Antes de ese momento la decision seria la
+  especulacion que D-027 prohibe, y despues seria tarde: la regla se habria fijado por el primer
+  archivo escrito en vez de por una decision. El auditor lo confirma en `R-005` §5.1: el parche es
+  aceptable mientras nada obligue a decidir, y hoy nada obliga.
 
 ---
 
@@ -103,10 +135,11 @@ Plantilla:
 | Campo | Valor |
 |---|---|
 | Estado | **Implementada** |
+| Confirmacion | Confirmada (2026-08-30, por el usuario) |
 | Importancia | Baja |
 | Urgencia | No bloqueante |
 | Etapa | 000_preproject |
-| Origen | executor (confirmada por el usuario el 2026-08-30) |
+| Origen | executor |
 | Fecha | 2026-08-28 |
 | Pagada | 2026-08-30 (S-007) |
 

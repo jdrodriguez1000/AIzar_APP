@@ -49,6 +49,11 @@
 | [D-038](#d-038---los-cinco-hallazgos-de-r-004-se-aceptan-f-009-se-corrige-en-el-fondo-pero-no-reescribiendo-d-021) | Los cinco hallazgos de `R-004` se aceptan; `F-009` se corrige en el fondo pero no reescribiendo `D-021` | 2026-08-30 | Vigente |
 | [D-039](#d-039---las-rutas-relativas-se-escriben-en-forma-canonica-posix-y-el-paso-1c-conserva-la-indireccion) | Las rutas relativas se escriben en forma canonica POSIX, y el Paso 1c conserva la indireccion | 2026-08-30 | Vigente |
 | [D-040](#d-040---dos-ampliaciones-de-alcance-sobre-f-008-y-el-motivo-de-cada-una) | Dos ampliaciones de alcance sobre `F-008`, y el motivo de cada una | 2026-08-30 | Vigente |
+| [D-041](#d-041---los-cinco-hallazgos-de-r-005-se-aceptan-f-015-se-acepta-como-regla-y-no-se-reescribe-nada) | Los cinco hallazgos de `R-005` se aceptan; `F-015` se acepta como regla y no se reescribe nada | 2026-08-30 | Vigente |
+| [D-042](#d-042---el-dictamen-de-gate-se-registra-por-partida-doble-supuesto-y-tarea-y-la-mitad-bilateral-se-eleva) | El dictamen de Gate se registra por partida doble —supuesto y tarea—, y la mitad bilateral se eleva | 2026-08-30 | Vigente |
+| [D-043](#d-043---se-acepta-el-rechazo-del-auditor-contractmd-seguira-duplicando-y-lo-que-se-construye-es-el-detector) | Se acepta el rechazo del auditor: `contract.md` seguira duplicando, y lo que se construye es el detector | 2026-08-30 | Vigente |
+| [D-044](#d-044---la-marca-de-no-copiar-phases-se-aplaza-porque-presupone-la-regla-que-dt-002-no-ha-decidido) | La marca de no copiar `phases/` se aplaza porque presupone la regla que `DT-002` no ha decidido | 2026-08-30 | Vigente |
+| [D-045](#d-045---la-deuda-gana-un-eje-propio-si-es-deuda-separado-de-si-esta-pagada) | La deuda gana un eje propio: «si es deuda», separado de «si esta pagada» | 2026-08-30 | Vigente |
 
 ---
 
@@ -1581,3 +1586,218 @@ $ cat ../AIzar_Auditor/_review/index.md | head -3
 - **Alternativa descartada:** limitarse al alcance literal del hallazgo y abrir una tarea aparte
   para el resto. Se descarta porque la correccion es la misma edicion, en el mismo archivo, y
   trocearla solo produce una tarea mas que seguir.
+
+---
+
+### D-041 - Los cinco hallazgos de `R-005` se aceptan; `F-015` se acepta como regla y no se reescribe nada
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Etapa | 000_preproject |
+| Decidido por | executor |
+| Estado | Vigente |
+
+- **Contexto:** llega `R-005`, tercera auditoria recogida y **quinta entregada**, sobre `S-005`
+  (commit `e9216f6`, del 2026-08-28). Veredicto **Con hallazgos (5)**: `F-011`, `F-012`, `F-013`
+  (`Media`), `F-014`, `F-015` (`Baja`). El auditor contrasta 28 afirmaciones del informe y 23 se
+  sostienen; ninguno de los cinco hallazgos toca la sustancia de la sesion —el canonico entra
+  entero, el renombrado `F-`/`S-` a `FT-`/`SC-` no deja residuos, `_product/` no existe porque asi
+  se declaro—. **Los cinco tocan el registro que debe sobrevivir a la sesion.**
+
+- **Decision:** los cinco se **aceptan**, cero rechazos. Cuatro se implementan en el acto (`T-038`,
+  `T-040`, `T-041` y, en su parte registrable, `T-039` con `A-005`); `F-015` se acepta de otra
+  forma, ver abajo.
+
+- **Que se verifico antes de aceptar:** los cinco contra `HEAD` (`57f3f2a`), no contra el commit
+  auditado. Cuatro **persisten**; cada uno lleva su orden y su salida cruda en su `T-XXX`. El
+  quinto, `F-015`, **ya no persiste** — y por eso se decide aparte.
+
+- **Sobre `F-015`, y por que no se corrige nada:** el hallazgo dice que el numero de decisiones de
+  `S-005` no coincide en los tres sitios donde se escribio —«cinco» en el informe, «cinco» en el
+  mensaje del commit, «cuatro» en `progress.md`, seis en el diff—. Comprobado:
+
+  ```
+  $ git show e9216f6:_persistence/progress.md | sed -n '50p'
+  ajusto contra el vocabulario propio en cuatro decisiones: **D-022** renombra Feature y Scenario a
+  --- exit: 0 ---
+  ```
+
+  ```
+  $ grep -n "decisiones" _persistence/progress.md | grep -i "cuatro\|cinco\|seis"
+  --- exit: 1 ---
+  ```
+
+  La linea 50 era la fila **«Avance de la etapa»**, que se reescribe cada sesion: se sobrescribio
+  sola. El bloque historico de `S-005` enumera las seis decisiones **sin declarar numero**. En el
+  registro vivo **no queda cifra que corregir**.
+
+  Las otras dos cifras viven en `_audit/S-005.md` y en el mensaje de `e9216f6`: **inmutables por
+  `D-018`**. Se **descarta** reescribirlas, y no por pereza — hacerlo convertiria «hubo un error de
+  conteo» en «no hubo ningun error», que es la falsificacion que `D-037` y `L-007` prohiben. El
+  propio auditor formula su criterio de cierre hacia adelante, no hacia atras.
+
+  Lo que queda de `F-015` es entonces **una regla, no una correccion**: en los informes siguientes
+  **el numero sale de la enumeracion y no se escribe aparte**. Un numero escrito a mano al lado de
+  una lista es una segunda afirmacion sobre el mismo hecho, y un dia diverge — es el mismo argumento
+  con el que el metodo prohibe el indice de trazabilidad.
+
+- **Reversibilidad:** los cinco son `REVERSIBLE`, y **lo clasifico asi a criterio** —son ediciones
+  de texto en archivos versionados, deshacibles con un `git revert`—, no leyendolo de una tabla: el
+  inventario de acciones irreversibles sigue vacio hasta que `T-016` lo pueble, y `T-016` no puede
+  cerrarse sin alcance (`T-004`). Coincide con la clasificacion del auditor, que la declara igual.
+
+- **Alternativa descartada:** aplazar los cuatro implementables hasta despues de `T-004`. Se
+  descarta porque **ninguno depende del alcance** —los cuatro tocan registro y protocolo, no
+  producto— y porque `F-013` protege el unico documento que obliga a las dos terminales: dejarlo
+  esperando a una tarea bloqueada indefinidamente es dejarlo sin fecha.
+
+---
+
+### D-042 - El dictamen de Gate se registra por partida doble —supuesto y tarea—, y la mitad bilateral se eleva
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Etapa | 000_preproject |
+| Decidido por | executor |
+| Estado | Vigente |
+
+- **Contexto:** `F-012` señala que `D-024` reparte el veredicto de un Gate en tres actos y da por
+  hecho que el acto 2 —el dictamen del auditor— tendra donde escribirse, cuando `contract.md` §4
+  define **una sola** forma de entrega: un `R-XXX.md` que audita un `S-XXX.md`, 1:1. El riesgo se
+  detecto en `S-005` y se declaro explicitamente **no registrado**: vivia solo en el informe de esa
+  jornada.
+
+- **Decision:** registrarlo en **dos sitios**, no en uno. El auditor ofrecia «un `A-XXX` **o** una
+  `T-XXX`»; se hacen los dos, y no por exceso de celo:
+
+  - **`A-005`** en `assumptions.md`, porque lo que hay es un **supuesto sobre el que ya se
+    construyo**: `D-024` esta escrita en `PROJECT.md` y en `CLAUDE.md` y se da por vigente. Eso es
+    literalmente lo que `assumptions.md` existe para llevar, y lo que le da ciclo de vida —se
+    confirma o se refuta—.
+  - **`T-039`** en `tasks.md`, porque la validacion **no la podemos hacer nosotros** y por tanto es
+    trabajo con dueño y momento, no una espera.
+
+  Un supuesto sin tarea no se resuelve solo; una tarea sin supuesto pierde el registro de que
+  estamos construyendo sobre arena. Separarlos no duplica: cada uno responde una pregunta distinta.
+
+- **Disparador, y por que ese:** **al diseñar la fase Prototipo**, cuando el Gate 1 entra en el
+  horizonte. Se **descarta** resolverlo ahora: diseñar hoy el formato del dictamen es exactamente la
+  especulacion que `D-027` prohibe, y el auditor coincide («anticiparlo no urge; registrarlo si»).
+  Se **descarta** tambien dejarlo sin disparador, que es como llego el hallazgo.
+
+- **Lo que se eleva al usuario, y por que no lo decido yo:** el acto 2 **asigna al auditor una
+  funcion que su contrato no le da**. `contract.md` obliga a los dos lados y **no se cambia por un
+  lado**; `CLAUDE.md` lo dice y `C-002` lo refuerza. El auditor lo eleva igual desde su lado
+  («modificar `contract.md` no es una decision de esta auditoria»). Queda por tanto **para el
+  usuario y la sesion principal del auditor**, y esta anotado como tal en `A-005` y `T-039`.
+
+---
+
+### D-043 - Se acepta el rechazo del auditor: `contract.md` seguira duplicando, y lo que se construye es el detector
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Etapa | 000_preproject |
+| Decidido por | executor |
+| Estado | Vigente |
+
+- **Contexto:** `S-005` pregunto al auditor si convenia que `contract.md` **citase** `PROJECT.md` en
+  vez de repetir sus valores, para pagar `DT-001` (duplicidad de rutas, rama, carpetas y codigos
+  entre los dos archivos). El auditor responde **no, con matiz**: el diagnostico es correcto, la
+  solucion no.
+
+- **Decision:** se **acepta el rechazo**, y con el su argumento, que es mejor que el nuestro:
+  hacer que el contrato cite `PROJECT.md` dejaria **un contrato bilateral colgando de un archivo que
+  solo una de las dos partes controla y puede cambiar sin avisar a la otra**, y obligaria a leer el
+  repositorio del otro para resolverlo — con lo que el contrato dejaria de poder leerse de un tiron,
+  que es su unica ventaja. **La duplicacion en un contrato es deliberada:** cada lado necesita las
+  reglas comunes a mano.
+
+- **Consecuencia sobre `DT-001`:** de sus dos vias de pago, la primera queda **cerrada**. Queda solo
+  la segunda —aceptar la duplicacion y **detectar la divergencia**—, y esa es `F-013`, cuyo trabajo
+  concreto es `T-040`. `DT-001` se reescribe en `debt_tec.md` dejando constancia de la via
+  descartada y de por que, en vez de sustituirla en silencio: al diff solo llegaria la ganadora.
+
+- **Por que no se replica:** `CLAUDE.md` admite **una sola replica, y solo con evidencia nueva**. No
+  la hay: el auditor no contradice ningun hecho nuestro, evalua una propuesta y da un motivo
+  estructural que no depende de datos que el no tuviera. Insistir seria repetir el mismo argumento
+  con otras palabras, que es justo lo que esa regla llama no-replicar.
+
+- **Lo que queda fuera de esta decision:** cambiar `contract.md` en cualquier direccion. Es
+  bilateral y se eleva al usuario (ver `D-042`).
+
+---
+
+### D-044 - La marca de no copiar `phases/` se aplaza porque presupone la regla que `DT-002` no ha decidido
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Etapa | 000_preproject |
+| Decidido por | executor |
+| Estado | Vigente |
+
+- **Contexto:** `S-005` pregunto si el parche de meter `_methodology/phases/` —contenido propio—
+  dentro de una carpeta declarada agnostica era aceptable mientras se decide la regla general. El
+  auditor responde que **si**, y que forzar ahora la regla repetiria el error que `D-027` evita:
+  la primera fase no se escribe hasta cerrar `T-004`, asi que la decision de raiz **no bloquea nada
+  hoy**. Pero recomienda arreglar la **detectabilidad**: hoy la exclusion la sostiene una nota en
+  prosa dentro de `PROJECT.md`, y **quien copie la carpeta no leera `PROJECT.md`, leera la carpeta**.
+
+- **Decision:** se acepta el fondo —la advertencia debe estar donde ocurre la accion— y se **aplaza
+  la ejecucion**, registrada como `T-043`, con disparador **al cerrar `T-004` y antes de escribir la
+  primera fase**. `DT-002` recibe el mismo disparador, que hasta ahora no tenia ninguno.
+
+- **Por que se aplaza, y por que este motivo no es «cuesta tiempo»:** escribir la marca obliga a
+  elegir **donde** va —cabecera del canonico, archivo dentro de `phases/`, `README.md` en la raiz de
+  `_methodology/`—, y las tres opciones **presuponen la regla agnostico/propio que `DT-002` declara
+  sin decidir**. Poner la marca hoy fijaria esa regla por la puerta de atras: el archivo escrito
+  decidiria lo que nadie decidio. Es el mismo defecto que `CLAUDE.md` denuncia al prohibir diseñar
+  una fase desde dentro —lo definido despues de ver el resultado no es una definicion—, aqui en su
+  version inversa. Ademas `phases/` **no existe todavia**, asi que la mitad de las opciones ni
+  siquiera son escribibles.
+
+- **Alternativa descartada:** poner ya un `README.md` en `_methodology/` y ajustarlo despues. Se
+  descarta porque un archivo puesto «provisionalmente» en la carpeta que se copia a otros proyectos
+  **viaja con ella**, y lo provisional deja de serlo en cuanto alguien la copia.
+
+- **Riesgo asumido, dicho en voz alta:** si alguien copia `_methodology/` **antes** de que se dispare
+  `T-043`, se llevara `phases/` sin aviso. Se acepta porque hoy no hay `phases/` que llevarse y
+  porque el disparador ocurre **antes** de que exista.
+
+---
+
+### D-045 - La deuda gana un eje propio: «si es deuda», separado de «si esta pagada»
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Etapa | 000_preproject |
+| Decidido por | executor |
+| Estado | Vigente |
+
+- **Contexto:** `F-014` señala que `DT-001` y `DT-002` entraron al registro con
+  `Origen: executor (PROPUESTA — pendiente de confirmar)`, un valor que la convencion de
+  `debt_tec.md` no admite, invisible en el indice y **sin decir quien confirma**. Al ir a
+  corregirlo aparecio un tercer caso que el auditor no vio: `DT-003` hacia lo mismo por la otra
+  punta, con `Origen: executor (confirmada por el usuario el 2026-08-30)`. **Tres de tres**
+  improvisando dentro del mismo campo.
+
+- **Decision:** el auditor ofrecia dos salidas —«confirmarlas o retirarlas», o «darle un campo
+  propio»—; se hacen **las dos**, porque responden a cosas distintas. Se crea el campo
+  **`Confirmacion`** (`Confirmada` / `Propuesta (pendiente de <quien>)`), **con columna en el
+  indice**, y `Origen` vuelve a sus tres valores. Las tres entradas quedan `Confirmada`: `DT-001` y
+  `DT-002` por el propio auditor en `R-005`, `DT-003` por el usuario.
+
+- **Por que un campo y no solo confirmarlas:** que hoy las tres esten confirmadas es una casualidad
+  del momento, no una propiedad del registro. Sin el campo, la **siguiente** deuda dudosa volveria a
+  improvisar dentro de `Origen` — que es lo que ya paso tres veces. Tres casos no son dos descuidos:
+  son un eje que faltaba.
+
+- **Lo que se declara junto al campo:** que `Estado` dice si la deuda **se pago** y `Confirmacion`
+  si **es deuda** —son ortogonales, y por eso son dos campos—, y que **`Propuesta` lleva dueño
+  dentro del valor siempre**. No existe `Propuesta` a secas: una propuesta sin dueño no espera, se
+  queda propuesta para siempre. Si no se sabe quien confirma, lo que falta no es la confirmacion
+  sino saber de quien es la decision, y eso es una `T-XXX`.
+
+- **Alternativa descartada:** dejar el matiz en el cuerpo de la entrada, en prosa. Se descarta por
+  lo mismo que `F-011` y `F-014` señalan en dos archivos distintos el mismo dia: **el ojo entra por
+  la tabla**, y lo que solo esta en el detalle no se relee.

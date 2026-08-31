@@ -14,6 +14,7 @@
 | [A-002](#a-002---un-unico-proyecto-por-directorio) | Un unico proyecto por directorio | 2026-08-28 | Abierto |
 | [A-003](#a-003---el-proyecto-arranca-desde-cero) | El proyecto arranca desde cero | 2026-08-28 | Abierto |
 | [A-004](#a-004---la-comprobacion-del-desfase-de-la-guia-tendra-dueno-cuando-se-copie) | La comprobacion del desfase de la guia tendra dueno cuando se copie | 2026-08-28 | Abierto |
+| [A-005](#a-005---el-dictamen-de-un-gate-cabe-en-la-forma-de-entrega-que-contractmd-4-ya-define) | El dictamen de un Gate cabe en la forma de entrega que `contract.md` §4 ya define | 2026-08-30 | Abierto |
 
 ---
 
@@ -105,3 +106,34 @@ se entienda que se creia mientras estuvo abierto.
   del ritual fija un momento concreto para la comparacion, y que ese momento se ejecuta al menos una
   vez. Si al hacer la primera copia nadie fija el momento, el supuesto queda **refutado** y hay que
   llevar la comprobacion al arranque de sesion, que es el unico sitio con dueno garantizado.
+
+---
+
+### A-005 - El dictamen de un Gate cabe en la forma de entrega que `contract.md` §4 ya define
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Estado | Abierto |
+| Tarea relacionada | T-039 |
+
+- **Que se supone:** **D-024** reparte el veredicto de un Gate en tres actos —evidencia
+  (`executor`), dictamen (`auditor`), veredicto (**el usuario**)— y da por hecho, sin haberlo
+  comprobado ni acordado, que el acto 2 tendra donde escribirse cuando llegue el momento.
+- **Por que no esta confirmado:** `contract.md` §4 define **una sola** forma de entrega del auditor:
+  un `R-XXX.md` que audita un informe de sesion `S-XXX.md`, en emparejamiento 1:1. Un dictamen de
+  Gate no es eso — no audita una sesion, verifica siete criterios contra evidencia acumulada de
+  varias— y hoy **no tiene codigo, ni plantilla, ni sitio en el indice** del auditor.
+- **Sobre que se ha construido encima:** D-024 esta escrita en `PROJECT.md` y en `CLAUDE.md`, y el
+  reparto de los tres actos se da ya por vigente. Si el supuesto se refuta, el acto 2 se queda sin
+  soporte y **el Gate 1 no se puede emitir tal como esta escrito**.
+- **Quien lo puede refutar, y por que no lo decidimos nosotros:** el acto 2 **asigna una funcion al
+  auditor que su contrato no le da**. Se decidio por un lado solo y el contrato es de dos: sin la
+  otra mitad, el dia del Gate 1 `executor` esperara un dictamen que ninguna skill del auditor sabe
+  producir. Lo confirma el propio auditor en `R-005` §5.3, y lo eleva como asunto bilateral.
+- **Como validarlo:** `contract.md` §4 declara —en una version posterior a la 1— **una segunda
+  forma de entrega para el dictamen, o que el dictamen usa la misma**. Cualquiera de las dos cierra
+  el supuesto; el silencio no.
+- **Disparador:** **al diseñar la fase Prototipo**, que es cuando el Gate 1 entra en el horizonte
+  segun D-027. Antes seria la especulacion que D-027 prohibe. El trabajo concreto es **T-039**.
+- **Origen:** hallazgo `F-012` de `R-005`. El riesgo estaba detectado desde S-005 y **declarado
+  explicitamente como no registrado**: vivia solo en `_audit/S-005.md`, un informe de un dia.
