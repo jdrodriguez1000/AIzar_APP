@@ -49,11 +49,16 @@
 | Origen | usuario |
 | Estado | Vigente |
 
-- **Restriccion:** `executor` opera en
-  `C:\Users\USUARIO\Documents\Company_TripleS\Proyectos_TripleS\AIzar_App`;
-  `auditor` opera en
-  `C:\Users\USUARIO\Documents\Company_TripleS\Proyectos_TripleS\AIzar_Auditor`.
+- **Restriccion:** cada terminal opera en **su propio repositorio, y solo en el**. Cual es cada uno
+  esta en la tabla **Rutas** de `PROJECT.md` (campos «Repositorio del proyecto» y «Repositorio del
+  auditor»); aqui no se repiten.
 - **Implicacion:** `executor` no modifica archivos dentro del directorio del auditor.
+- **Por que sin las rutas escritas** (2026-08-30, `T-036`, hallazgo `F-010` de `R-004`): las llevaba
+  literales, duplicando lo que `D-021` acababa de centralizar en `PROJECT.md`. La restriccion **no
+  las necesita para cumplir su funcion** —lo que obliga es «no escribes en el repositorio del otro»,
+  y esa frase no cambia si las rutas se leen de otro sitio—. Con el duplicado, cambiar una ruta
+  obligaba a acordarse de este archivo; si no se acordaba, dos sitios decian cosas distintas y habia
+  que decidir cual mentia.
 
 ---
 

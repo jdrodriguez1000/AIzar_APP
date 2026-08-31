@@ -16,6 +16,7 @@
 | [L-005](#l-005---un-paso-obligatorio-cuyo-resultado-no-se-mira-es-una-intencion-no-una-obligacion) | Un paso obligatorio cuyo resultado no se mira es una intencion, no una obligacion | 2026-08-30 | 000_preproject |
 | [L-006](#l-006---una-regla-decidida-y-no-llevada-al-archivo-operativo-no-rige-descansa-donde-nadie-la-lee-al-aplicarla) | Una regla decidida y no llevada al archivo operativo no rige: descansa donde nadie la lee al aplicarla | 2026-08-30 | 000_preproject |
 | [L-007](#l-007---al-corregir-un-codigo-mal-escrito-la-salida-cruda-que-lo-cita-no-se-toca) | Al corregir un codigo mal escrito, la salida cruda que lo cita no se toca | 2026-08-30 | 000_preproject |
+| [L-008](#l-008---corregir-un-hallazgo-puede-romper-la-decision-que-lo-genero-corre-el-control-despues-de-arreglar-no-solo-antes) | Corregir un hallazgo puede romper la decision que lo genero: corre el control despues de arreglar, no solo antes | 2026-08-30 | 000_preproject |
 
 ---
 
@@ -263,3 +264,35 @@ Plantilla:
 - **Parentesco:** es la cara defensiva de `T-031` y `D-037`. Ahi se decidio **no reescribir `D-018`**
   para que exhibiera un comando que no se ejecuto; aqui se evita reescribir un comando que **si** se
   ejecuto. La misma regla desde los dos lados: el bloque de verificacion es historia, no estado.
+
+---
+
+### L-008 - Corregir un hallazgo puede romper la decision que lo genero: corre el control despues de arreglar, no solo antes
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Etapa | 000_preproject |
+| Origen | executor |
+
+- **Contexto:** `T-033` (hallazgo `F-007` de `R-004`) pedia que el bloque `bash` del Paso 1c
+  volviera a ser una orden ejecutable. El hallazgo ofrecia dos opciones y la primera era obvia:
+  escribir la ruta en el bloque, `cat ../AIzar_Auditor/_review/index.md`.
+- **Que ocurrio:** se escribio esa version. Al correr acto seguido el control de `D-021`
+  —`git grep -nE "AIzar|..." -- .claude CLAUDE.md`— dejo de dar cero: la correccion acababa de
+  reintroducir el nombre del auditor **dentro de `.claude/`**, que es justo lo que `D-021`, decidida
+  por el usuario, habia vaciado. El arreglo de un hallazgo `Media` estaba deshaciendo en silencio
+  una decision del usuario. Se revirtio y se tomo la segunda opcion del hallazgo (`D-039`).
+- **Leccion:** un hallazgo llega **acotado a lo que el auditor miro**, y su remedio puede chocar con
+  una decision que el no tenia delante. La colision no se ve razonando sobre el remedio: se ve
+  **corriendo el control de la otra decision despues de aplicarlo**. En este caso pasaron menos de
+  dos minutos entre escribir la regresion y detectarla, y solo porque el control existia escrito con
+  su patron.
+- **Como aplicarla:** al cerrar un hallazgo, **volver a correr los controles de las decisiones que
+  tocan los mismos archivos**, no solo comprobar el criterio de cierre del hallazgo. Y cuando el
+  propio hallazgo ofrece varias opciones, tratarlas como lo que son: alternativas de igual validez
+  para el auditor, entre las que elige quien si conoce las decisiones vigentes de este lado.
+- **Parentesco:** es la justificacion practica de `T-037`. El control se escribio para detectar la
+  regresion de `D-021` en sesiones futuras; su primera captura real fue **una correccion nuestra, el
+  mismo dia, hecha para cerrar un hallazgo**. Tambien explica por que `D-039` documenta la ventaja
+  de la opcion descartada en vez de ocultarla: la opcion (a) fallaba ruidosamente al copiar el
+  metodo a otro proyecto, y eso es una perdida real que se acepto a cambio de no revertir `D-021`.

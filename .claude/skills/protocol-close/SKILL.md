@@ -61,6 +61,41 @@ cerrar. No inventes avance para llenar el reporte.
 existe ningun commit, no es un error: es el commit inicial. Sigue el protocolo normal; la
 evidencia es entonces `git status`, que lista todo como sin seguimiento.
 
+### 1b. El control de fuga de datos del proyecto
+
+Con la evidencia delante, corre **tal cual** este control y **pega su salida cruda en el informe**:
+
+```bash
+git grep -nE "<Nombre del proyecto>|<carpeta raiz de las rutas absolutas>|<host del remoto>" -- .claude CLAUDE.md
+```
+
+Los tres valores salen de `PROJECT.md`: **Identidad → Nombre del proyecto**, el segmento comun de
+las dos rutas absolutas de **Rutas**, y el host del campo **Remoto** de *Control de versiones*.
+
+🔑 **La respuesta correcta es CERO lineas** (`exit 1`). Si devuelve alguna, un dato propio del
+proyecto se ha colado en un archivo que deberia ser reutilizable tal cual: es una regresion de
+`D-021` y **se reporta como hallazgo propio en el informe**, no se arregla en silencio ni se omite.
+
+🚨 **El ambito es parte del control, no un detalle de implementacion.** Se acota a `.claude/` y
+`CLAUDE.md`, y a nada mas, porque es el **unico sitio donde «cero» es la respuesta correcta**. El
+mismo patron sobre el arbol entero da siempre positivos **legitimos**:
+
+| Donde | Por que es correcto que aparezca |
+|---|---|
+| `PROJECT.md` | es su sitio, por diseño: el archivo existe justamente para concentrarlos |
+| `_audit/S-XXX.md` | informes ya entregados; no se reescriben |
+| `_persistence/` | registro historico: describe lo que paso, y el pasado no se reescribe |
+
+⚠️ **Un control que avisa de todo termina apagado.** Si se ensancha el ambito «por si acaso», el
+control pasa a devolver decenas de lineas correctas cada sesion, alguien deja de mirarlas, y
+entonces no detecta nada — que es peor que no tenerlo, porque ademas se cree que existe.
+
+📌 **Por que este control existe:** `D-021` vacio de datos propios los protocolos, y la regresion
+aparecio **dentro del mismo commit que la implemento** — tres veces (`F-006`, `F-007`, `F-008` de
+`R-004`). No es un riesgo hipotetico. Y es detectable sin ejecutar nada, porque es una busqueda de
+texto: cuesta un segundo. Va escrito con su patron **precisamente** porque el hallazgo `F-009`
+nacio de que cada quien lo reinventara.
+
 ---
 
 ## Paso 2 — El traspaso, solo para el porque
@@ -346,8 +381,8 @@ relato.
 El auditor **no vivio la sesion, no conoce nuestras convenciones y trabaja en otro repositorio**.
 No escribas como si compartiera contexto:
 
-- **Cita siempre codigo y ruta** (`T-014`, `D-018`, `_persistence/tasks.md`). Son su unica via
-  para ir a comprobar.
+- **Cita siempre codigo y ruta** —el codigo y la ruta tal como aparecen en tu registro, p. ej.
+  `T-NNN`, `D-NNN`, `_persistence/tasks.md`. Son su unica via para ir a comprobar.
 - **Explica lo que un externo no puede deducir**, pero no repitas los archivos enteros: el informe
   cuenta **esta sesion**, no el proyecto entero.
 - 🚨 **Escribe el informe completo, sin resumir.** Lo que se ahorre aqui es exactamente lo que el
@@ -363,16 +398,16 @@ No escribas como si compartiera contexto:
 | Sesion | S-XXX |
 | Fecha | AAAA-MM-DD |
 | Etapa | |
-| Rama | main |
+| Rama | la rama principal, segun `PROJECT.md` |
 | Commit auditado | el commit que contiene este archivo (`git log -1 -- _audit/S-XXX.md`) |
 
 ## 0. Respuesta a la auditoria anterior     <-- omitir solo si no hay ninguna sin responder
 
 | Hallazgo | Veredicto | Evidencia / Razon |
 |---|---|---|
-| F-001 — <resumen> | Implementado | T-014, en este commit |
-| F-002 — <resumen> | Aceptado — pendiente | T-015, `No implementada` |
-| F-003 — <resumen> | No se implementa | D-018 |
+| F-NNN — <resumen> | Implementado | `T-NNN`, en este commit |
+| F-NNN — <resumen> | Aceptado — pendiente | `T-NNN`, `No implementada` |
+| F-NNN — <resumen> | No se implementa | `D-NNN` |
 
 Los tres veredictos son los unicos validos:
 

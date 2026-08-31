@@ -79,9 +79,23 @@ Si alguno no existe o esta vacio, **dilo en el reporte** en lugar de inventar co
 
 ### 1c. Y el tablero del auditor
 
+Del Paso 1b ya tienes `PROJECT.md` leido. Toma el valor del campo **«Canal de vuelta»** de su
+tabla **Rutas** y pegalo tal cual:
+
 ```bash
-cat "<ruta del campo «Canal de vuelta» de PROJECT.md>"
+cat <Canal de vuelta>
 ```
+
+🚨 **El valor se pega literal: no lo traduzcas, no lo adaptes, no lo reconstruyas de memoria.**
+`PROJECT.md` declara que sus rutas relativas estan en **forma canonica** —relativas, con `/`, desde
+la raiz de este repositorio—, es decir, escritas ya como se pegan en un comando. Sustituido el
+campo, esa linea **es una orden que corre tal cual** en Bash y en PowerShell. Si al pegarla no
+corre, el error esta en `PROJECT.md` y se reporta; no se arregla improvisando una ruta.
+
+⚠️ **Este paso es obligatorio y su fallo es silencioso.** Si te lo saltas, el arranque no dice
+nada de las auditorias entregadas y nadie nota que falto — no hay error, solo un reporte incompleto.
+Por eso el Paso 3 exige mencionar el tablero **siempre**, aunque no haya ninguna fila nueva
+(hallazgo `F-007`, T-033).
 
 Es el **canal de vuelta** (D-018): una fila por auditoria entregada, apuntando a un `R-XXX.md` que
 audita uno de nuestros `_audit/S-XXX.md`, en emparejamiento 1:1.
@@ -311,9 +325,18 @@ En espanol, sin relleno:
 - **Supuestos:** ...
 - **Lecciones:** ...
 - **Deuda:** ...
+
+## Tablero del auditor        <-- OBLIGATORIO, nunca se omite
+- <una linea por auditoria entregada sin acuse, o «ninguna entregada sin acuse»>
 ```
 
 Reglas del reporte:
+
+- 🚨 **El bloque «Tablero del auditor» es obligatorio y no se omite nunca**, ni cuando no
+  haya ninguna fila nueva: entonces se escribe *«ninguna entregada sin acuse»*. Es la unica salida
+  visible del Paso 1c, y sin ella **saltarse ese paso no se distingue de haberlo hecho** — las dos
+  cosas producen exactamente el mismo reporte. Un paso obligatorio cuyo olvido no deja huella se
+  olvida (hallazgo `F-007`, T-033).
 
 - 🔑 **Las siguientes tareas se ordenan por urgencia y despues por importancia**, no por orden de
   aparicion en el archivo: primero las `Bloqueante`, y dentro de ellas `Alta` antes que `Media` y

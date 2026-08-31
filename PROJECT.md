@@ -24,9 +24,20 @@
 |---|---|
 | Repositorio del proyecto | `C:\Users\USUARIO\Documents\Company_TripleS\Proyectos_TripleS\AIzar_App` |
 | Repositorio del auditor | `C:\Users\USUARIO\Documents\Company_TripleS\Proyectos_TripleS\AIzar_Auditor` |
-| Canal de vuelta (tablero de auditorias) | `..\AIzar_Auditor\_review\index.md` |
-| Auditorias en detalle | `..\AIzar_Auditor\_review\R-XXX.md` |
-| Contrato entre las dos terminales | `..\AIzar_Auditor\contract.md` |
+| Canal de vuelta (tablero de auditorias) | `../AIzar_Auditor/_review/index.md` |
+| Auditorias en detalle | `../AIzar_Auditor/_review/R-XXX.md` |
+| Estado de los hallazgos | `../AIzar_Auditor/_persistence/findings.md` |
+| Contrato entre las dos terminales | `../AIzar_Auditor/contract.md` |
+
+🔑 **Forma canonica: relativa y con `/`.** Las rutas relativas de esta tabla se escriben
+**tal como se pegan en un comando**, con separador `/` y desde la raiz de este repositorio. Es la
+unica forma valida, y por una razon concreta: funciona igual en Bash y en PowerShell, mientras que
+`..\AIzar_Auditor\...` solo funciona en uno de los dos. Quien copie un valor de aqui a un bloque
+`bash` obtiene una orden que corre; no una que hay que traducir antes (T-033, hallazgo `F-007`).
+
+⚠️ **Las dos absolutas de arriba son la excepcion declarada**, no una segunda forma a
+elegir: existen porque nombran la ubicacion de cada repositorio en esta maquina, no porque sirvan
+para navegar entre ellos. **Para citar un archivo del auditor se usa la relativa.**
 
 🚨 El repositorio del auditor es de **solo lectura** para nosotros (restriccion C-002).
 

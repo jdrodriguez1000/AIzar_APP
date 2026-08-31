@@ -40,6 +40,12 @@
 | [T-029](#t-029---declarar-en-claudemd-que-el-eje-reversibleirreversible-se-aplica-a-criterio) | Declarar en `CLAUDE.md` que el eje reversible/irreversible se aplica a criterio | Implementada | Alta | No bloqueante |
 | [T-030](#t-030---corregir-la-referencia-de-d-020-es-t-016-no-t-015) | Corregir la referencia de D-020: es T-016, no T-015 | Implementada | Baja | No bloqueante |
 | [T-031](#t-031---exigir-comando-y-salida-cruda-en-las-decisiones-que-verifican-antes-de-aceptar) | Exigir comando y salida cruda en las decisiones que verifican antes de aceptar | Implementada | Media | No bloqueante |
+| [T-032](#t-032---anadir-a-projectmd-la-ruta-del-findingsmd-del-auditor) | Anadir a `PROJECT.md` la ruta del `findings.md` del auditor | Implementada | Media | No bloqueante |
+| [T-033](#t-033---devolver-al-paso-1c-una-orden-ejecutable-y-declarar-una-forma-canonica-de-ruta) | Devolver al Paso 1c una orden ejecutable y declarar una forma canonica de ruta | Implementada | Alta | No bloqueante |
+| [T-034](#t-034---generalizar-los-codigos-vivos-que-sobrevivieron-en-protocol-close) | Generalizar los codigos vivos que sobrevivieron en `protocol-close` | Implementada | Media | No bloqueante |
+| [T-035](#t-035---corregir-en-d-021-la-enumeracion-de-archivos-y-anexar-el-control-fechado) | Corregir en `D-021` la enumeracion de archivos y anexar el control fechado | Implementada | Baja | No bloqueante |
+| [T-036](#t-036---vaciar-c-002-de-rutas-literales-y-remitirlo-a-projectmd) | Vaciar `C-002` de rutas literales y remitirlo a `PROJECT.md` | Implementada | Baja | No bloqueante |
+| [T-037](#t-037---escribir-el-control-de-regresion-de-d-021-con-su-patron-y-su-ambito) | Escribir el control de regresion de `D-021` con su patron y su ambito | Implementada | Media | No bloqueante |
 
 ---
 
@@ -752,3 +758,295 @@ Que hacer: escribir la regla donde se lee —`CLAUDE.md`, junto al tratamiento d
 
 Evidencia que la cierra: una decision con `Origen: auditor` cuyo bloque de verificacion contenga la
 orden ejecutada y su salida literal.
+
+---
+
+### T-032 - Anadir a `PROJECT.md` la ruta del `findings.md` del auditor
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-30 |
+
+**Hallazgo `F-006` de `R-004`** (severidad `Media`, `REVERSIBLE`). Evaluado y **aceptado**;
+verificado que **persiste en `HEAD`**.
+
+Verificacion — orden ejecutada y salida cruda:
+
+```
+$ sed -n '20,35p' PROJECT.md
+## Rutas
+
+| Campo | Valor |
+|---|---|
+| Repositorio del proyecto | `C:\Users\USUARIO\Documents\Company_TripleS\Proyectos_TripleS\AIzar_App` |
+| Repositorio del auditor | `C:\Users\USUARIO\Documents\Company_TripleS\Proyectos_TripleS\AIzar_Auditor` |
+| Canal de vuelta (tablero de auditorias) | `..\AIzar_Auditor\_review\index.md` |
+| Auditorias en detalle | `..\AIzar_Auditor\_review\R-XXX.md` |
+| Contrato entre las dos terminales | `..\AIzar_Auditor\contract.md` |
+```
+
+Lo observado: `_audit/index.md:46` dejo de decir la ruta y pasa a decir «su estado vive en el
+`findings.md` del repositorio del auditor (ruta en `PROJECT.md`)». La tabla **Rutas** de
+`PROJECT.md` tiene cinco filas —proyecto, auditor, canal de vuelta, `R-XXX.md` y contrato— y
+**ninguna es la del `findings.md`**. El auditor lo midio sobre `31e2ff7`, cuando eran cuatro filas;
+se anadio una desde entonces (contrato) y el hueco sigue igual.
+
+Por que importa: la indireccion cambio un dato exacto por un puntero que no resuelve, y falla en su
+primer uso. Antes, quien leia esa linea sabia donde mirar; ahora abre `PROJECT.md`, no lo encuentra
+y tiene que reconstruirlo. Una referencia equivocada resuelve la duda del lector en la direccion
+contraria, y por eso cuesta mas que no tener referencia.
+
+Que hacer: anadir a la tabla **Rutas** de `PROJECT.md` la fila «Estado de los hallazgos |
+`..\AIzar_Auditor\_persistence\findings.md`» — en la forma canonica que fije `T-033`.
+
+Evidencia que la cierra: un commit posterior donde, partiendo de `_audit/index.md:46`, la ruta
+completa del `findings.md` sea deducible leyendo solo `PROJECT.md`.
+
+---
+
+### T-033 - Devolver al Paso 1c una orden ejecutable y declarar una forma canonica de ruta
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Alta |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-30 |
+
+**Hallazgo `F-007` de `R-004`** (severidad `Media`, `REVERSIBLE`). Evaluado y **aceptado**;
+verificado que **persiste en `HEAD`**. Es el mas grave de los cinco.
+
+Verificacion — orden ejecutada y salida cruda:
+
+```
+$ sed -n '75,95p' .claude/skills/protocol-start/SKILL.md
+### 1c. Y el tablero del auditor
+
+(bloque marcado como bash)
+cat "<ruta del campo «Canal de vuelta» de PROJECT.md>"
+```
+
+Lo observado: el bloque marcado como `bash` del Paso 1c paso de `cat
+../AIzar_Auditor/_review/index.md` a `cat "<ruta del campo «Canal de vuelta» de PROJECT.md>"`. El
+valor de ese campo es `..\AIzar_Auditor\_review\index.md`, con separadores de Windows: sustituido
+literalmente en ese `cat`, **no resuelve la ruta en un shell POSIX**. `PROJECT.md` ademas ofrece dos
+formas de la misma ubicacion —absoluta en «Repositorio del auditor», relativa con `\` en «Canal de
+vuelta»— sin declarar cual se usa en un comando.
+
+Por que importa: el Paso 1c es **obligatorio** en el arranque y es el unico punto donde nos
+enteramos de que hay auditorias entregadas. Un paso obligatorio cuyo comando hay que interpretar
+antes de correrlo se salta mas facil que uno que se copia y se pega, y el modo de fallo es
+**silencioso**: el arranque no dice nada de la auditoria y nadie nota que falto.
+
+Que hacer: dejar en el bloque una orden ejecutable tal cual y la indireccion como nota al lado; y
+declarar en `PROJECT.md` **una sola forma canonica** de las rutas. Propuesta: la relativa POSIX
+(`../AIzar_Auditor/_review/index.md`), porque funciona igual en Bash y en PowerShell, mientras que
+`..\AIzar_Auditor\...` solo funciona en uno de los dos. **Decision pendiente de tomar** al
+implementar. **Decidida asi en `D-039`**, junto con la eleccion de conservar la indireccion en el
+Paso 1c en vez de escribir la ruta dentro (opcion (b) del hallazgo): la opcion (a) reintroducia el
+nombre del auditor en `.claude/` y habria revertido `D-021`. El fallo silencioso que quedaba se
+cubre con un bloque **obligatorio** «Tablero del auditor» en el reporte del Paso 3 — no hace el paso
+mas facil, hace su omision visible. Ver tambien `L-008`.
+
+Evidencia que la cierra: un commit posterior donde el bloque del Paso 1c contenga una orden
+ejecutable tal cual, y `PROJECT.md` declare una sola forma canonica de las rutas.
+
+---
+
+### T-034 - Generalizar los codigos vivos que sobrevivieron en `protocol-close`
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-30 |
+
+**Hallazgo `F-008` de `R-004`** (severidad `Media`, `REVERSIBLE`). Evaluado y **aceptado**;
+verificado que **persiste en `HEAD`**, y con **mas alcance del que el hallazgo describe**.
+
+Verificacion — orden ejecutada y salida cruda (recortada a las lineas ilustrativas):
+
+```
+$ git grep -nE "T-[0-9]{3}|D-[0-9]{3}" -- .claude
+.claude/skills/protocol-close/SKILL.md:349:- **Cita siempre codigo y ruta** (`T-014`, `D-018`, `_persistence/tasks.md`). Son su unica via
+.claude/skills/protocol-close/SKILL.md:373:| F-001 — <resumen> | Implementado | T-014, en este commit |
+.claude/skills/protocol-close/SKILL.md:374:| F-002 — <resumen> | Aceptado — pendiente | T-015, `No implementada` |
+.claude/skills/protocol-close/SKILL.md:375:| F-003 — <resumen> | No se implementa | D-018 |
+--- exit: 0 ---
+```
+
+Lo observado: dos cosas, y las dos cuentan. (a) El informe `S-004` situo las tres menciones
+coyunturales en `session-starter.md` y «dos veces en `protocol-start/SKILL.md`»; la tercera estaba
+en **`protocol-close/SKILL.md`**, y no se generalizo: paso de citar `T-004`, `D-006` a citar
+`T-014`, `D-018` — otro codigo vivo de este mismo proyecto. (b) **Ampliacion nuestra sobre el
+hallazgo:** no es una linea, son **cuatro**. La plantilla de la seccion 0 (`:373-375`) usa `T-014`,
+`T-015` y `D-018`, tambien codigos vivos.
+
+Las demas apariciones del `grep` —`D-003`, `D-037`/`T-031`, `D-020`/`T-016`/`T-004`, `D-009`,
+`D-018`, `D-007`/`D-008`, `DT-003`— son **citas de decisiones estructurales**, no ejemplos
+ilustrativos; el propio criterio de cierre del auditor las admite y no se tocan.
+
+Por que importa: el objetivo declarado de `D-021` —que los protocolos no lleven dentro datos
+propios del proyecto— no se cumple en esas cuatro lineas. Al llevar el metodo a otro proyecto,
+seguiran citando `T-014`, `T-015` y `D-018`, codigos que alli no existiran o significaran otra
+cosa. Es el mismo fallo que la sesion buscaba eliminar, sobreviviendo dentro del propio cambio que
+lo elimina. Y la localizacion equivocada obliga a barrer los seis archivos en vez de ir al sitio.
+
+Que hacer: en las cuatro lineas, usar ejemplos que no dependan del proyecto (`T-NNN`, `D-NNN`, o
+«el codigo y la ruta tal como aparecen en tu registro»). Y corregir la localizacion en el registro
+permanente — **no editando `S-004.md`**, que ya esta entregado y por `D-018` no se reescribe, sino
+en `progress.md` y en la seccion 0 del proximo informe.
+
+Evidencia que la cierra: en un commit posterior, `git grep -nE "T-[0-9]{3}|D-[0-9]{3}" -- .claude`
+devuelve solo codigos genericos o citas de decisiones estructurales, ningun ejemplo ilustrativo con
+codigos vivos.
+
+---
+
+### T-035 - Corregir en `D-021` la enumeracion de archivos y anexar el control fechado
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-30 |
+
+**Hallazgo `F-009` de `R-004`** (severidad `Baja`, `REVERSIBLE`). Evaluado y **aceptado en el
+fondo, con divergencia declarada en la forma** (ver `D-038`); verificado que **persiste en `HEAD`**.
+
+Verificacion — ordenes ejecutadas y salida cruda:
+
+```
+$ git grep -nE "AIzar|Company_TripleS|github\.com" -- .claude CLAUDE.md
+--- exit: 1 ---
+```
+
+```
+$ sed -n '495,530p' _persistence/decisions.md
+- **Contexto:** al plantear como reutilizar este metodo en otros proyectos se midio cuanto habia
+  atado a AIzar: 17 menciones —nombre, rutas absolutas, remoto— repartidas por las dos skills, los
+  dos agentes y `CLAUDE.md`.
+```
+
+Lo observado: cuatro sitios del registro permanente afirman «cero menciones» y «17 menciones» sin
+decir que se busco ni como se conto. Dos consecuencias comprobables: (a) el componente **remoto**
+no estaba en ninguno de los archivos citados; (b) las 17 solo salen contando tambien
+`_audit/index.md`, mientras `D-021` enumera **cinco** archivos («las dos skills, los dos agentes y
+`CLAUDE.md`»), que suman 16 lineas.
+
+Por que importa: «cero menciones» es una afirmacion de **ausencia**, y una afirmacion de ausencia
+sin el instrumento registrado no distingue «no queda ninguna» de «no se busco bien». Esta vez se
+sostiene —el auditor la reprodujo y nosotros tambien, arriba—, pero la proxima nadie podra repetir
+el control sin reinventar el patron, y la descomposicion inexacta es lo que se citara dentro de
+seis sesiones.
+
+Que hacer, con la divergencia de `D-038`:
+1. **Corregir la enumeracion** de cinco a seis archivos en el cuerpo de `D-021`. Es un error de
+   hecho, misma clase que `T-030`, y se corrige en el sitio.
+2. **NO** incrustar el comando en el cuerpo original de `D-021` como si se hubiera anotado el
+   2026-08-28. Anexarlo como **nota fechada hoy**, con la orden ejecutada hoy y su salida cruda.
+   `D-037` prohibe expresamente reescribir una entrada antigua para que exhiba un comando que en su
+   dia no se anoto: eso convierte «falta evidencia» en «hay evidencia falsa».
+
+Evidencia que la cierra: `D-021` con la enumeracion de seis archivos y una nota fechada que
+contenga el patron exacto y su salida, de forma que un tercero pueda reproducir el conteo sin
+preguntar — y sin que la nota se presente como parte del registro original.
+
+---
+
+### T-036 - Vaciar `C-002` de rutas literales y remitirlo a `PROJECT.md`
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-30 |
+
+**Hallazgo `F-010` de `R-004`** (severidad `Baja`, `REVERSIBLE`). Evaluado y **aceptado**;
+verificado que **persiste en `HEAD`**.
+
+Verificacion — ordenes ejecutadas y salida cruda:
+
+```
+$ sed -n '45,60p' _persistence/constraints.md
+### C-002 - Rutas de trabajo fijas
+- **Restriccion:** `executor` opera en
+  `C:\Users\USUARIO\Documents\Company_TripleS\Proyectos_TripleS\AIzar_App`;
+  `auditor` opera en
+  `C:\Users\USUARIO\Documents\Company_TripleS\Proyectos_TripleS\AIzar_Auditor`.
+- **Implicacion:** `executor` no modifica archivos dentro del directorio del auditor.
+```
+
+```
+$ grep -n "C-002" _persistence/tasks.md _persistence/debt_tec.md
+_persistence/debt_tec.md:68:  (C-002); resolverlo exige acuerdo entre las dos terminales, no una edicion unilateral.
+--- exit: 0 ---
+```
+
+Lo observado: el informe `S-004` declaro —bien, y por iniciativa propia— que `constraints.md` quedo
+fuera del barrido de `D-021`. No se creo ninguna `T-XXX` ni `DT-XXX` para eso: la unica mencion a
+`C-002` fuera de `constraints.md` es una deuda **distinta** (`debt_tec.md:68`, sobre la duplicidad
+de `contract.md`). La excepcion vivia solo en `_audit/S-004.md`, un documento ya entregado que por
+`D-018` no se reescribe. **Esta tarea es, en si misma, el hallazgo corregido a medias**: registrarlo
+donde se vuelve a leer.
+
+Por que importa: `D-021` dice que los datos propios del proyecto viven en `PROJECT.md` y solo ahi.
+Hay una excepcion conocida y ningun sitio del registro vivo la conocia: el proximo arranque lee
+`progress.md` y `tasks.md`, no los informes de auditoria de hace cuatro sesiones. La lista de
+pendientes no es la lista de trabajo disponible, y lo que no esta en ella no espera turno:
+desaparece.
+
+Que hacer: opcion (a) del hallazgo — `C-002` conserva **solo la restriccion** («`executor` no
+modifica archivos dentro del directorio del auditor») y remite a `PROJECT.md` para las rutas. El
+contenido normativo no cambia: `C-002` no necesita las rutas para cumplir su funcion. Se descarta
+la opcion (b) —aceptar el duplicado como `DT-XXX`— porque el duplicado no aporta nada que
+justifique mantenerlo.
+
+Evidencia que la cierra: un `constraints.md` sin rutas literales en un commit posterior.
+
+---
+
+### T-037 - Escribir el control de regresion de `D-021` con su patron y su ambito
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | executor |
+| Fecha | 2026-08-30 |
+
+**Origen:** iniciativa propia a partir de la seccion 5.3 de `R-004`, donde el auditor responde a
+nuestra pregunta «`D-021` no tiene ninguna prueba automatizada que impida la regresion». **No es un
+hallazgo numerado**: el auditor no recomienda donde ponerlo, solo que el control exista escrito.
+
+Lo observado: el riesgo de regresion de `D-021` **ya se materializo dentro del mismo commit que la
+implemento**, en tres formas distintas — `F-006` (indireccion que apunta a nada), `F-007`
+(indireccion que apunta a un formato inutilizable) y `F-008` (un dato propio que sobrevivio al
+barrido). No es un riesgo futuro: es el estado actual.
+
+Por que importa: la regresion de este tipo **es detectable sin ejecutar nada**, porque el control es
+una busqueda de texto, no una prueba. Un `git grep` con el patron responde la pregunta entera en un
+segundo. Lo que produjo `F-009` es justamente que cada quien reinventara el patron.
+
+Que hacer: escribir el control con su patron y su **ambito acotado** —`.claude/`, `CLAUDE.md` y la
+raiz **excluyendo `PROJECT.md`**—, y decidir donde vive (un paso de `protocol-close` junto a la
+recogida de evidencia, o una comprobacion en el arranque). El ambito no es un detalle: un `grep` de
+«AIzar» sobre el arbol entero dara siempre positivos legitimos —`PROJECT.md`, los informes
+entregados, el registro historico— y **un control que avisa de todo termina apagado**. `PROJECT.md`
+es el unico sitio donde las menciones son correctas por diseño, y el registro historico no se
+reescribe.
+
+Evidencia que la cierra: el control escrito en un archivo operativo, con su patron literal y su
+ambito, y su primera ejecucion registrada con salida cruda.
