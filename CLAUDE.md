@@ -54,6 +54,13 @@ que indica `PROJECT.md`: `index.md` es el tablero y cada `R-XXX.md` audita nuest
 nunca con la conclusion.** Toda decision con `Origen: auditor` lleva un bloque de verificacion con
 la **orden ejecutada literal** y **lo que devolvio**, tal cual salio.
 
+🚨 **Y lo mismo vale para lo que comprobamos por iniciativa propia.** Si el registro afirma un
+resultado —«no hay secretos», «cero coincidencias», «los dos numeros cuadran»—, ese resultado va con
+**el patron y el ambito** con que se obtuvo, aunque nadie lo haya pedido. Un resultado sin su orden
+no es reproducible, y el que no se puede reproducir hay que **rehacerlo entero** para contrastarlo:
+al auditor le cuesta lo mismo que si no lo hubieramos hecho, y entonces el que vale es el suyo.
+Escrito el patron, el barrido se repite en un minuto. Rige hacia adelante, como el de arriba.
+
 ⛔ **«Se comprobo», «verificado», «existe y es legible» son veredictos, no evidencia.** Lo que
 alimenta una auditoria es «corri esto, salio esto». Sin la salida, el auditor no puede contrastar
 nada: tiene que reconstruir por su cuenta una comprobacion que nosotros ya hicimos, y entonces la

@@ -14,7 +14,7 @@
 | [C-002](#c-002---rutas-de-trabajo-fijas) | Rutas de trabajo fijas | Entorno | Vigente |
 | [C-003](#c-003---etapa-actual-000_preproject) | Etapa actual 000_preproject | Proceso | Vigente |
 | [C-004](#c-004---entorno-de-ejecucion-windows) | Entorno de ejecucion Windows | Entorno | Vigente |
-| [C-005](#c-005---_globalsourcesguidemd-es-de-solo-lectura) | `_global/sources/GUIDE.md` es de solo lectura | Proceso | Vigente |
+| [C-005](#c-005---las-carpetas-sources-son-registro-congelado) | Las carpetas `sources/` son registro congelado | Proceso | Vigente |
 
 ---
 
@@ -86,18 +86,40 @@
 
 ---
 
-### C-005 - `_global/sources/GUIDE.md` es de solo lectura
+### C-005 - Las carpetas `sources/` son registro congelado
 | Campo | Valor |
 |---|---|
 | Tipo | Proceso |
 | Origen | D-029 |
 | Estado | Vigente |
 
-- **Restriccion:** `_global/sources/GUIDE.md` es una **copia intacta** de `Edu_TripleS/GUIDE.md`
-  tomada el 2026-08-28, y **no se edita**. Si el original cambia y merece la pena, se retoma el
-  snapshot **entero** y se anota la linea en `_global/changelog.md`.
-- **Implicacion:** una correccion que nazca leyendo esa fuente **no se escribe ahi**: va a
-  `_global/guide.md`, que es el destilado y el que manda. Editar el snapshot lo convierte en una
-  tercera version que no es ni la fuente ni el destilado, y a partir de ese momento las trece
-  flechas `↳ GUIDE §N` apuntan a un texto que ya no es el que las origino.
-- **Alcance:** misma regla que `_methodology/sources/`, que ya era intocable por la misma razon.
+- **Restriccion:** las carpetas `sources/` del repositorio contienen **fuentes congeladas** y
+  **no se editan**. Son dos, y la regla es la misma para las dos:
+
+  | Carpeta | Que guarda | Su destilado |
+  |---|---|---|
+  | `_global/sources/` | copia intacta de la fuente del recetario, tomada el 2026-08-28 | `_global/guide.md` |
+  | `_methodology/sources/` | las fuentes de las que se destilo el canonico del metodo | `_methodology/000_method.md` |
+
+  Si un original cambia y merece la pena, se retoma el snapshot **entero** — nunca por partes — y se
+  anota la linea en el changelog que corresponda.
+
+- **Implicacion:** una correccion que nazca leyendo una de estas fuentes **no se escribe ahi**: va a
+  su destilado, que es el que manda. Editar un snapshot lo convierte en una tercera version que no es
+  ni la fuente ni el destilado, y a partir de ese momento las flechas `↳ GUIDE §N` de `guide.md`
+  apuntan a un texto que ya no es el que las origino.
+
+- 🚨 **Disparador de la regla de precedencia:** `D-029` decide **quien gana** si el snapshot y el
+  destilado discrepan —gana el destilado—, pero no decia **quien mira**. Como el snapshot solo se
+  retoma entero, una discrepancia no se descubre por accidente: habria que comparar el manual entero
+  contra el destilado. Por eso el momento de ejercerla es **este**: al retomar un snapshot se revisan
+  ademas **las flechas de las recetas afectadas**, que es el unico instante en que puede haber
+  discrepancia y hay alguien mirandola. (Recomendacion de `R-006` §5.1, `T-046`.)
+
+- 📌 **Ampliada el 2026-08-31 (`T-046`, hallazgo `F-018` de `R-006`).** Antes esta restriccion
+  cubria solo `_global/sources/GUIDE.md` y cerraba diciendo «misma regla que `_methodology/sources/`,
+  que ya era intocable por la misma razon» — un precedente que **no existia como `C-XXX`**: vivia en
+  una linea de cabecera de `_methodology/000_method.md`. El indice de restricciones, que es donde se
+  mira antes de tocar algo, registraba una de las dos carpetas y no la otra. Se **descarta** crear una
+  `C-006` gemela: es una sola regla, y dos filas para un mismo hecho son dos afirmaciones que un dia
+  divergen.

@@ -18,6 +18,7 @@
 | [L-007](#l-007---al-corregir-un-codigo-mal-escrito-la-salida-cruda-que-lo-cita-no-se-toca) | Al corregir un codigo mal escrito, la salida cruda que lo cita no se toca | 2026-08-30 | 000_preproject |
 | [L-008](#l-008---corregir-un-hallazgo-puede-romper-la-decision-que-lo-genero-corre-el-control-despues-de-arreglar-no-solo-antes) | Corregir un hallazgo puede romper la decision que lo genero: corre el control despues de arreglar, no solo antes | 2026-08-30 | 000_preproject |
 | [L-009](#l-009---un-grep-sobre-el-registro-vivo-cuenta-la-evidencia-citada-como-si-fuera-estado) | Un grep sobre el registro vivo cuenta la evidencia citada como si fuera estado | 2026-08-30 | 000_preproject |
+| [L-010](#l-010---la-nota-que-explica-una-correccion-puede-romper-el-control-que-la-cierra) | La nota que explica una correccion puede romper el control que la cierra | 2026-08-31 | 000_preproject |
 
 ---
 
@@ -328,3 +329,37 @@ Plantilla:
   buscar primero si pertenece a un bloque de verificacion: si lo es, es historia y no se toca.
 - **Parentesco:** cara de lectura de `L-007`, que cubre la misma colision al escribir. Juntas
   delimitan `T-031`: la salida cruda es inmune a los reemplazos **y** invisible para los conteos.
+
+---
+
+### L-010 - La nota que explica una correccion puede romper el control que la cierra
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-31 |
+| Etapa | 000_preproject |
+| Origen | executor |
+
+- **Contexto:** `F-017` de `R-006` señalaba que `D-028` citaba su changelog con la capitalizacion
+  equivocada. Su criterio de cierre es literal y automatico: un `grep` del nombre en mayusculas sobre
+  `decisions.md` que debe devolver **cero lineas**.
+- **Que ocurrio:** se corrigio la cita y se añadio —siguiendo el patron de `T-035`— una nota fechada
+  explicando la correccion. La nota **deletreaba el nombre erroneo** para decir que se habia
+  corregido. Al correr acto seguido el criterio del propio hallazgo, el `grep` devolvia **dos
+  lineas**: las dos nuestras, las dos de la nota. La correccion estaba hecha y el detector en rojo,
+  para siempre, por el texto que explicaba el arreglo. Se reescribio la nota para decir «estaba en
+  mayusculas» sin escribirlo, y el control volvio a `exit 1`.
+- **Leccion:** cuando el criterio de cierre de un hallazgo es **una busqueda de texto**, el texto
+  prohibido no puede aparecer **ni siquiera para explicar que se elimino**. La documentacion de una
+  correccion vive en el mismo archivo que la correccion, y el `grep` no distingue una mencion de un
+  uso. Un control automatico no lee intenciones: lee cadenas.
+- **Como aplicarla:** antes de escribir la nota de una correccion, **leer el criterio de cierre del
+  hallazgo y correrlo contra el texto que vas a añadir**. Si el criterio es un `grep`, describir el
+  error en palabras («estaba en mayusculas», «faltaba la barra final») en vez de reproducirlo. La
+  regla no aplica a los **bloques de verificacion**, que son salida cruda de un comando y por tanto
+  historia: ahi la cadena aparece porque asi salio, y el criterio del hallazgo apunta a un archivo
+  concreto, no a todo el registro.
+- **Parentesco:** es `L-008` aplicada a un caso nuevo —correr el control **despues** de arreglar, no
+  solo antes— con un giro: esta vez el control que se rompio no era el de otra decision, sino **el
+  del hallazgo que se estaba cerrando**. Y complementa a `L-007` y `L-009`: las tres son la misma
+  familia, la coleccion de sitios donde el texto del registro y las herramientas que lo revisan se
+  pisan.

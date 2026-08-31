@@ -102,10 +102,29 @@ se entienda que se creia mientras estuvo abierto.
   con el agravante de que la cabecera afirma una version que nadie comprueba — y un dato que se ve
   fiable y no lo es es peor que no tener dato. Es exactamente el fallo que `RR-002` describe: lo que
   «ya se hara» se cobra solo cuando ya hay algo que perder.
-- **Como validarlo:** en la **primera copia real** de la guia a un proyecto, comprobar que el paso 2
-  del ritual fija un momento concreto para la comparacion, y que ese momento se ejecuta al menos una
-  vez. Si al hacer la primera copia nadie fija el momento, el supuesto queda **refutado** y hay que
-  llevar la comprobacion al arranque de sesion, que es el unico sitio con dueno garantizado.
+- **Como validarlo** — ♻️ **reescrito el 2026-08-31 (`T-047`, recomendacion de `R-006` §5.4).**
+
+  El enunciado anterior decia: «en la **primera copia real** de la guia a un proyecto, comprobar que
+  el paso 2 del ritual fija un momento concreto para la comparacion, y que ese momento se ejecuta al
+  menos una vez». **No servia, y el auditor dio el motivo exacto:** el dia en que se valida y el dia
+  en que el mecanismo se estrena eran el mismo, y ese dia no tiene red. Un supuesto **cuya refutacion
+  es indistinguible de su funcionamiento** no se detecta observando — el sintoma de que el sello es
+  decoracion es que **no pasa nada**, y «no pasa nada» es tambien lo que se ve cuando funciona.
+
+  Ahora se valida en dos tiempos, y el primero ya no depende de que nadie se acuerde:
+
+  | Cuando | Que se comprueba | Si falla |
+  |---|---|---|
+  | en **cada copia**, al hacerla | que la tercera linea del sello —`Comprobacion del desfase`— esta escrita y nombra un sitio concreto. Es un `grep`, no un juicio | la copia esta mal sellada: se corrige antes de seguir |
+  | en la **segunda copia**, no en la primera | que alguien comparo de verdad los dos numeros al menos una vez desde la primera | supuesto **refutado**: la comprobacion se lleva al arranque de sesion, el unico sitio con dueno garantizado |
+
+  🔑 **Por que la segunda y no la primera:** hasta que no existen dos copias no hay dos numeros que
+  puedan discrepar, y sin discrepancia posible no hay nada que el mecanismo pueda dejar de detectar.
+  La primera copia solo demuestra que se sabe rellenar una plantilla.
+
+  Lo que cambio en el archivo para que esto sea comprobable: `_global/guide.md` v6 anade la tercera
+  linea al sello del paso 2, con la prohibicion explicita de dejarla en blanco o rellenarla con
+  «cuando haga falta».
 
 ---
 

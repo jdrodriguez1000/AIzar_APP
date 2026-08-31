@@ -62,7 +62,7 @@ dejaria de servir para lo unico que sirve.
 | `S-003.md` | S-003 | 2026-08-28 | Con hallazgos | [`..\AIzar_Auditor\_review\R-003.md`](../../AIzar_Auditor/_review/R-003.md) - 3 hallazgos (F-003, F-004, F-005) | S-010 |
 | `S-004.md` | S-004 | 2026-08-28 | Con hallazgos | [`..\AIzar_Auditor\_review\R-004.md`](../../AIzar_Auditor/_review/R-004.md) - 5 hallazgos (F-006, F-007, F-008, F-009, F-010) | S-012 |
 | `S-005.md` | S-005 | 2026-08-28 | Con hallazgos | [`../AIzar_Auditor/_review/R-005.md`](../../AIzar_Auditor/_review/R-005.md) - 5 hallazgos (F-011, F-012, F-013, F-014, F-015) | S-013 |
-| `S-006.md` | S-006 | 2026-08-28 | Pendiente | - | - |
+| `S-006.md` | S-006 | 2026-08-28 | Con hallazgos | [`../AIzar_Auditor/_review/R-006.md`](../../AIzar_Auditor/_review/R-006.md) - 3 hallazgos (F-016, F-017, F-018) | S-014 |
 | `S-007.md` | S-007 | 2026-08-30 | Pendiente | - | - |
 | `S-008.md` | S-008 | 2026-08-30 | Pendiente | - | - |
 | `S-009.md` | S-009 | 2026-08-30 | Pendiente | - | - |
@@ -70,5 +70,6 @@ dejaria de servir para lo unico que sirve.
 | `S-011.md` | S-011 | 2026-08-30 | Pendiente | - | - |
 | `S-012.md` | S-012 | 2026-08-30 | Pendiente | - | - |
 | `S-013.md` | S-013 | 2026-08-30 | Pendiente | - | - |
+| `S-014.md` | S-014 | 2026-08-31 | Pendiente | - | - |
 
 > `S-001` cerro antes de que existiera este mecanismo (D-016), asi que no tiene informe.

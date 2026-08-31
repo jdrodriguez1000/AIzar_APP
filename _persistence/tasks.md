@@ -52,6 +52,11 @@
 | [T-041](#t-041---separar-si-es-deuda-de-si-esta-pagada-en-debt_tecmd) | Separar «si es deuda» de «si esta pagada» en `debt_tec.md` | Implementada | Baja | No bloqueante |
 | [T-042](#t-042---generalizar-el-ultimo-ejemplo-ilustrativo-con-codigo-vivo-de-protocol-start) | Generalizar el ultimo ejemplo ilustrativo con codigo vivo de `protocol-start` | Implementada | Baja | No bloqueante |
 | [T-043](#t-043---poner-la-advertencia-de-no-copiar-phases-dentro-de-_methodology) | Poner la advertencia de no copiar `phases/` dentro de `_methodology/` | No implementada | Baja | No bloqueante |
+| [T-044](#t-044---declarar-que-la-marca-de-maquina-no-entra-en-el-ritual-de-poda) | Declarar que la marca de maquina no entra en el ritual de poda | Implementada | Media | No bloqueante |
+| [T-045](#t-045---corregir-en-d-028-la-capitalizacion-del-archivo-que-esa-decision-crea) | Corregir en `D-028` la capitalizacion del archivo que esa decision crea | Implementada | Baja | No bloqueante |
+| [T-046](#t-046---ampliar-c-005-a-las-dos-carpetas-sources-y-darle-disparador-a-la-precedencia) | Ampliar `C-005` a las dos carpetas `sources/` y darle disparador a la precedencia | Implementada | Baja | No bloqueante |
+| [T-047](#t-047---dar-al-sello-una-tercera-linea-y-hacer-refutable-a-004) | Dar al sello una tercera linea y hacer refutable `A-004` | Implementada | Media | No bloqueante |
+| [T-048](#t-048---extender-la-regla-de-comando-y-salida-a-las-comprobaciones-de-iniciativa-propia) | Extender la regla de comando y salida a las comprobaciones de iniciativa propia | Implementada | Media | No bloqueante |
 
 ---
 
@@ -1371,3 +1376,270 @@ En ese momento la regla ya estara decidida y la marca sera su consecuencia, no s
 
 Evidencia que la cierra: una marca dentro de `_methodology/` que diga que `phases/` no se copia,
 puesta despues de decidir `DT-002` y coherente con esa decision.
+
+---
+
+### T-044 - Declarar que la marca de maquina no entra en el ritual de poda
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-31 |
+
+**Hallazgo `F-016` de `R-006`** (severidad `Media`, `REVERSIBLE`). Evaluado y **aceptado**;
+verificado que **persiste en `HEAD`**.
+
+Verificacion — orden ejecutada y salida cruda:
+
+```
+$ grep -n "💻" _global/guide.md
+93:- [💻 Anexo C — Si trabajas en Windows](#-anexo-c--si-trabajas-en-windows)
+123:| 💻 | depende de la **máquina**, no del proyecto | trabajas en otro sistema operativo |
+368:💻 **El buscador tiene que ir en modo sensible a mayúsculas.** Si por defecto no lo está —y en
+850:## 💻 Anexo C — Si trabajas en Windows
+--- exit: 0 ---
+```
+
+Lo observado: la tabla de marcas declara **cuatro** valores y tres condicionan la poda. El paso 2
+del ritual sella **dos** —eje A y eje B—; el paso 3, presentado como «con los ejes declarados esto
+deja de ser un juicio y pasa a ser mecanico», trae **dos** tablas de poda y **ninguna** para 💻. El
+Anexo C no aparece en ninguna de las dos, y el dato que decidiria si se borra —el sistema
+operativo— no se declara en ningun paso.
+
+Por que importa: el paso 3 es el unico sitio del archivo donde la poda deja de ser criterio y pasa a
+ser regla, y esa es la promesa que `D-030` compra. Para un tercio de las marcas no se cumple, y el
+titular —«mecanico»— no lo dice.
+
+Que se hizo, y por que la opcion (b) y no la (a): el hallazgo ofrecia anadir una tercera linea de
+sello (`💻 Maquina: …`) con su fila de poda, **o** declarar que 💻 no se poda. Se elige la segunda, y
+no por barata —el auditor la llama «mas barata y probablemente mas correcta», y la razon de fondo es
+mas fuerte que eso—: **los ejes A y B son propiedades del proyecto** y valen para todos los que lean
+esa copia; **el sistema operativo es propiedad de quien lee**, y dos personas pueden abrir la misma
+copia desde sistemas distintos. Podar el Anexo C al copiar destruiria contenido valido para el
+siguiente que lo abra, en nombre de una decision que quien copia no tiene derecho a tomar por el.
+💻 no es una marca de poda mal especificada: **es una marca de otra clase**, dirigida al lector.
+
+Se corrigio ademas la columna «Se borra si…» de la tabla, que decia «trabajas en otro sistema
+operativo» — la frase que invitaba justo al error. Ahora la columna se llama «Se borra al copiar
+si…» y 💻 dice «nunca — no entra en la poda».
+
+`_global/guide.md` sube a **VERSION 6** con su linea en `changelog.md`, en la misma pasada (`D-028`).
+
+Evidencia que la cierra: la tabla de marcas dice que 💻 no entra en el ritual de poda y por que, con
+su linea de changelog.
+
+---
+
+### T-045 - Corregir en `D-028` la capitalizacion del archivo que esa decision crea
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-31 |
+
+**Hallazgo `F-017` de `R-006`** (severidad `Baja`, `REVERSIBLE`). Evaluado y **aceptado**;
+verificado que **persiste en `HEAD`**.
+
+Verificacion — ordenes ejecutadas y salida cruda:
+
+```
+$ grep -n "CHANGELOG.md" _persistence/decisions.md
+865:  2. **`_global/CHANGELOG.md`.** Una linea por version, la mas reciente arriba.
+--- exit: 0 ---
+```
+
+```
+$ ls _global/
+changelog.md
+guide.md
+sources
+--- exit: 0 ---
+```
+
+Lo observado: la decision que **crea** el archivo lo nombraba en mayusculas; el archivo esta en
+minusculas y las otras cuatro citas del proyecto tambien. La unica discrepante era la fundacional.
+
+Por que importa: el remoto es GitHub y el commit ya esta en `origin/main`. En un sistema de archivos
+sensible a mayusculas —cualquier clon en Linux, y la navegacion web del repositorio— esa ruta no
+existe. Sera mas caro el dia que viaje a otro proyecto junto con la guia, que es lo que `D-028`
+diseña.
+
+Que se hizo: corregida la cita en `D-028`, con nota fechada de correccion factual, siguiendo el
+patron de `T-035`.
+
+🚨 **Y algo que salio de correr el criterio de cierre del propio hallazgo contra nuestra
+correccion** (`L-008`): la primera version de la nota **deletreaba el nombre erroneo** para explicar
+que se habia corregido. Eso dejaba el control de cierre —un `grep` del nombre en mayusculas que debe
+dar cero— **en rojo para siempre**, y por una linea nuestra, no por el defecto. Se reescribio la
+nota para decir «estaba en mayusculas» sin escribirlo. Ver `L-010`.
+
+```
+$ grep -n "CHANGELOG.md" _persistence/decisions.md
+--- exit: 1 ---
+```
+
+Evidencia que la cierra: ese `grep` devuelve cero lineas sobre un commit posterior.
+
+---
+
+### T-046 - Ampliar `C-005` a las dos carpetas `sources/` y darle disparador a la precedencia
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-31 |
+
+**Hallazgo `F-018` de `R-006`** (severidad `Baja`, `REVERSIBLE`), mas la recomendacion de `R-006`
+§5.1. Evaluado y **aceptado**; verificado que **persiste en `HEAD`**.
+
+Verificacion — ordenes ejecutadas y salida cruda:
+
+```
+$ grep -n "_methodology/sources" _persistence/constraints.md
+103:- **Alcance:** misma regla que `_methodology/sources/`, que ya era intocable por la misma razon.
+--- exit: 0 ---
+```
+
+```
+$ sed -n '12,18p' _persistence/constraints.md
+| Codigo | Restriccion | Tipo | Estado |
+|---|---|---|---|
+| [C-001](#c-001---separacion-de-roles-entre-terminales) | Separacion de roles entre terminales | Proceso | Vigente |
+| [C-002](#c-002---rutas-de-trabajo-fijas) | Rutas de trabajo fijas | Entorno | Vigente |
+| [C-003](#c-003---etapa-actual-000_preproject) | Etapa actual 000_preproject | Proceso | Vigente |
+| [C-004](#c-004---entorno-de-ejecucion-windows) | Entorno de ejecucion Windows | Entorno | Vigente |
+| [C-005](#c-005---_globalsourcesguidemd-es-de-solo-lectura) | `_global/sources/GUIDE.md` es de solo lectura | Proceso | Vigente |
+--- exit: 0 ---
+```
+
+Lo observado: `C-005` se apoyaba en un precedente —«misma regla que `_methodology/sources/`»— que no
+existia como `C-XXX`. Vivia en una linea de cabecera de `_methodology/000_method.md`. El indice
+registraba una de las dos carpetas de fuentes y no la otra.
+
+Por que importa: el indice de `constraints.md` es donde se mira **antes** de tocar algo, y su lectura
+literal era «una de las dos carpetas de fuentes es intocable». La otra dependia de que alguien
+abriera un archivo de mas de mil lineas y leyera su cabecera. Es la asimetria que nuestra `L-003`
+describe para los indices, aplicada al inventario de restricciones.
+
+Que se hizo, y por que ampliar y no crear `C-006`: el hallazgo dejaba la eleccion abierta. Se
+**descarta** la restriccion gemela porque **es una sola regla** —«las carpetas `sources/` son
+registro congelado»— y dos filas para el mismo hecho son dos afirmaciones que un dia divergen, que
+es lo que el propio metodo prohibe con el indice de trazabilidad. `C-005` se retitula, cubre las dos
+carpetas en una tabla, y el indice cambia con ella.
+
+**Ampliacion aceptada de `R-006` §5.1, en la misma pasada:** la regla de precedencia de `D-029`
+decide *quien gana* pero no decia *quien mira*, y como el snapshot solo se retoma entero una
+discrepancia no se descubre por accidente. El disparador ya existia dentro de `C-005` —«si el
+original cambia y merece la pena, se retoma el snapshot entero»—; se le añade «y se revisan las
+flechas de las recetas afectadas», que es el unico instante en que puede haber discrepancia y hay
+alguien mirandola.
+
+Evidencia que la cierra: el indice de `constraints.md` contiene una fila que cubre
+`_methodology/sources/`, y el cuerpo de `C-005` ya no cita un precedente sin codigo.
+
+---
+
+### T-047 - Dar al sello una tercera linea y hacer refutable `A-004`
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-31 |
+
+**No es un hallazgo:** es la recomendacion de `R-006` §5.4, respondiendo a nuestra pregunta 4.
+Evaluada y **aceptada**, y a mi juicio vale mas que dos de los tres hallazgos del informe.
+
+Lo observado: `A-004` decia validarse «en la **primera copia real**», comprobando que el paso 2 del
+ritual fija un momento para comparar versiones. El auditor señala que el momento de validar y el de
+estrenar el mecanismo **son el mismo dia**, y ese dia no tiene red: **un supuesto cuya refutacion es
+indistinguible de su funcionamiento no se detecta observando.** El sintoma de que el sello es
+decoracion es que no pasa nada — y «no pasa nada» es tambien lo que se ve cuando funciona.
+
+Comprobado que el paso 2 sellaba solo dos datos:
+
+```
+$ sed -n '899,905p' _global/guide.md
+   ```markdown
+   > **Copiada de la guía global, versión <N>** · el <AAAA-MM-DD>
+   > **A. Quién construye:** orquestador + workers
+   > **B. ¿El producto llama a un modelo en producción?:** no
+   > Lo que se dejó fuera está en la tabla de exclusiones, al final.
+   ```
+--- exit: 0 ---
+```
+
+Que se hizo, en dos sitios:
+1. **`_global/guide.md` v6** — el sello gana una tercera linea, `Comprobacion del desfase: <donde
+   vive>`, con prohibicion explicita de dejarla en blanco o rellenarla con «cuando haga falta». Un
+   proposito pasa a ser **un dato que se lee con un `grep` desde fuera**.
+2. **`A-004`** — su «Como validarlo» se reescribe en dos tiempos: en **cada copia** se comprueba que
+   la linea esta escrita y nombra un sitio concreto (es un `grep`, no un juicio); en la **segunda
+   copia** se comprueba que alguien comparo de verdad los dos numeros. La primera copia solo demuestra
+   que se sabe rellenar una plantilla — hasta que no hay dos copias no hay dos numeros que puedan
+   discrepar.
+
+**Por que va junto a `T-044`:** el auditor lo señala y es exacto — los dos huecos tienen la misma
+forma. El paso 2 declaraba dos de los datos que el resto del archivo necesita y dejaba el tercero
+sin dueño, dos veces: una con 💻 y otra con la comprobacion del desfase. Se arreglan en la misma
+pasada y en la misma version.
+
+Evidencia que la cierra: el sello del paso 2 tiene tres lineas declaradas, y `A-004` nombra una
+condicion de refutacion que no coincide con su primer uso.
+
+---
+
+### T-048 - Extender la regla de comando y salida a las comprobaciones de iniciativa propia
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-31 |
+
+**No es un hallazgo:** es el matiz de `R-006` §5.2. Evaluado y **aceptado**.
+
+Lo observado: el auditor **repitio por su cuenta** el escaneo de secretos de `D-029` sobre las 2.573
+lineas del snapshot y confirmo el resultado —cero correos, cero claves reales, dos rutas de usuario
+genericas—. Al hacerlo señala que `D-029` declaro el **resultado** pero no el **patron** ni el
+**ambito**.
+
+Por que no es un caso de `T-031` ya cubierto: `T-031` obliga a comando y salida cruda en las
+decisiones con **`Origen: auditor`**. El escaneo fue **iniciativa propia**. Cae exactamente fuera del
+ambito de la regla — no es un incumplimiento de `T-031`, es un hueco de `T-031`.
+
+Por que importa: una comprobacion que hacemos por nuestra cuenta **se siente como parte del trabajo,
+no como una afirmacion auditable**, y por eso se cuela sin evidencia. Pero en el registro se lee
+igual que cualquier otra. Sin patron ni ambito, el auditor tiene que rehacer el barrido entero para
+contrastarlo, y entonces el que vale es el suyo — que es literalmente el argumento con el que nacio
+`T-031` (`F-005` de `R-003`).
+
+Que se hizo, en los dos sitios donde vive la regla:
+- **`CLAUDE.md`** — parrafo nuevo pegado al de `T-031`: si el registro afirma un resultado, va con el
+  patron y el ambito con que se obtuvo, aunque nadie lo haya pedido. Rige hacia adelante.
+- **`protocol-close`** — el control del Paso 7 pasa de mirar «las entradas con `Origen: auditor`» a
+  mirar «las entradas que afirmen un resultado comprobado», con los dos grupos en una tabla y el
+  aviso de que **el segundo es el que se olvida**.
+
+Control de regresion de `D-021` corrido despues de tocar `.claude/` y `CLAUDE.md`, por `L-008`:
+
+```
+$ git grep -nE "AIzar|Company_TripleS|github\.com" -- .claude CLAUDE.md
+--- exit: 1 ---
+```
+
+Evidencia que la cierra: la regla escrita cubre las comprobaciones de iniciativa propia, y las
+entradas posteriores que afirman un resultado llevan su patron.

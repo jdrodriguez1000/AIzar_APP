@@ -10,6 +10,7 @@
 
 | Versión | Fecha | Qué cambió |
 |---|---|---|
+| **6** | 2026-08-31 | Los dos ejes - la marca de maquina sale del ritual de poda: es marca de lector, no de proyecto, y el sistema operativo lo decide quien lee, no quien copia. Ritual, paso 2 - el sello gana una tercera linea, `Comprobacion del desfase`, que fija donde vive la comparacion de versiones en cada copia |
 | **5** | 2026-08-30 | Cabecera — se le quitan las fechas: la de cada version vive en su linea de aqui y no se repite. El sello de la copia pasa a marcadores (`<N>`, `<AAAA-MM-DD>`). §1 — nombra su unica excepcion: el dia que se copia si se lee entera, y el tamano se mide contra ese dia |
 | **4** | 2026-08-30 | §1 — anadido el criterio de admision («Que merece ser una receta»: cuatro filtros, y el presupuesto es el indice, no el numero de recetas). Nueva `RR-013` — como se deshace algo ya publicado |
 | **3** | 2026-08-30 | §1 — anadida la regla de estabilidad de los codigos: los `RR-NNN` los asigna solo la global, no se renumeran ni se reutilizan, un hueco es informacion, y una copia nunca inventa un codigo nuevo |

@@ -319,8 +319,19 @@ reviso y uno que no reviso se ven igual.
 
 ### 🚨 Una comprobacion concreta sobre `decisions.md`: las que verifican, con comando y salida
 
-Al leer `decisions.md`, mira **las entradas con `Origen: auditor` de esta sesion**. Cada una debe
-llevar un bloque de verificacion con la **orden ejecutada literal** y **su salida cruda**.
+Al leer `decisions.md`, mira **las entradas de esta sesion que afirmen un resultado comprobado**.
+Cada una debe llevar un bloque de verificacion con la **orden ejecutada literal** y **su salida
+cruda**. Son dos grupos, y el segundo se olvida:
+
+| Grupo | Ejemplos |
+|---|---|
+| las de `Origen: auditor` | «verificado que el hallazgo persiste en `HEAD`» |
+| **las de iniciativa propia que afirman un resultado** | «no hay secretos en el archivo», «cero coincidencias», «los dos numeros cuadran» |
+
+⚠️ **El segundo grupo no lo pidio nadie, y por eso se cuela sin evidencia.** Una comprobacion que
+hacemos por nuestra cuenta se siente como parte del trabajo, no como una afirmacion auditable — pero
+en el registro se lee igual que cualquier otra. Sin patron ni ambito escritos, el auditor tiene que
+rehacer el barrido entero para contrastarlo.
 
 | Que dice la entrada | Que es | Que haces |
 |---|---|---|

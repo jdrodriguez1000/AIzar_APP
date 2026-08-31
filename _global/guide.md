@@ -6,7 +6,7 @@
 > **El porqué va dentro.** Cada receta lleva pegada la razón por la que existe — qué falla cuando
 > no se sigue. No hay un archivo aparte para eso: una receta sin su porqué se salta.
 
-**VERSIÓN 5**
+**VERSIÓN 6**
 
 > 🔢 **Este número es lo único que dice si una copia está atrasada.** Sube en cada cambio de fondo,
 > y solo entonces. Qué cambió en cada versión está en `changelog.md`, una línea por versión. Cómo
@@ -115,12 +115,21 @@ mecánicamente qué se borra:
 agentes puede entregar una aplicación que no llama a ningún modelo; y una persona puede escribir a
 mano un producto que sí lo llama.
 
-| Marca | Qué significa | Se borra si… |
+| Marca | Qué significa | Se borra al copiar si… |
 |---|---|---|
 | *(sin marca)* | **universal**, siempre aplica | nunca |
 | 🅰️ | depende del eje A | la construcción no lo alcanza |
 | 🅱️ | depende del eje B | el producto no llama a ningún modelo |
-| 💻 | depende de la **máquina**, no del proyecto | trabajas en otro sistema operativo |
+| 💻 | depende de la **máquina**, no del proyecto | **nunca — no entra en la poda.** Ver abajo |
+
+🚨 **💻 no se poda, y no es un olvido: es de otra clase.** Los ejes A y B son propiedades **del
+proyecto** — se declaran una vez en el sello y valen para todos los que lean esa copia. El sistema
+operativo es propiedad **de quien lee**, y dos personas pueden abrir la misma copia desde sistemas
+distintos. Borrar el Anexo C al copiar destruiría contenido válido para el siguiente que lo abra,
+y lo haría en nombre de una decisión que quien copia no tiene derecho a tomar por él.
+
+Por eso 💻 **se salta al leer, no se borra al copiar**: es una marca dirigida al lector, no al que
+poda. Los pasos 2 y 3 del ritual no la mencionan, y ahora se sabe por qué.
 
 > 🚨 **El proveedor NO es un tercer eje.** Anthropic, OpenAI o quien sea: los frenos del harness,
 > medir tokens antes de pagar y validar al juez se hacen igual contra cualquier API. Ninguna receta
@@ -895,8 +904,25 @@ tres piezas — el **sello**, la **regla de no reescribir** y la **comprobación
    > **Copiada de la guía global, versión <N>** · el <AAAA-MM-DD>
    > **A. Quién construye:** orquestador + workers
    > **B. ¿El producto llama a un modelo en producción?:** no
+   > **Comprobación del desfase:** <dónde vive, en este proyecto>
    > Lo que se dejó fuera está en la tabla de exclusiones, al final.
    ```
+
+   🚨 **La tercera línea es la que sostiene a la primera.** El número de versión solo sirve si
+   alguien compara los dos, y ese «alguien» no aparece solo. Escribirlo aquí —«en el arranque de
+   sesión», «en la revisión mensual», «al abrir el repositorio»— convierte un propósito en un dato
+   que se puede leer con un `grep` desde fuera.
+
+   ⛔ **No se deja en blanco ni se rellena con «cuando haga falta».** Un sello sin dueño de la
+   comprobación es exactamente el fallo que el número pretende evitar, con una capa más de
+   apariencia encima: la cabecera afirma una versión que nadie contrasta, y un dato que parece
+   fiable y no lo es es peor que no tener dato.
+
+   🔑 **Por qué va aquí y no «el día que haga falta»:** el día que el mecanismo se necesita es el
+   mismo día en que se descubre que nadie lo montó, y para entonces las copias ya divergieron. El
+   síntoma de que el sello es decoración **es que no pasa nada** — no hay error que avise. Es el
+   mismo argumento que el aviso de abajo hace con los ejes: declarado antes decide, declarado
+   después describe.
 
    ⚠️ **Los ejes se declaran ANTES de podar, no después.** Declarados al final describen lo que
    borraste; declarados antes deciden qué se borra. Es el mismo argumento que `RR-008` hace con el
