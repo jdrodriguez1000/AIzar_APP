@@ -122,11 +122,19 @@ nada que regenerar. Lo que si se rompe es otra cosa:
 
 Las dos formas de dejarlo a medias mienten igual. Esta comprobacion las detecta:
 
+🚨 **El `awk` del principio de cada rama no es decoracion: descarta los bloques de codigo
+cercados.** Desde que el registro guarda **salida cruda de comandos** como evidencia, esos bloques
+contienen encabezados y codigos identicos a los reales — `### C-002`, `| [T-014]…` — que son citas de
+como estaba el archivo, no entradas. Sin el filtro, el control senala como huerfano lo que en
+realidad es una prueba bien puesta. Ocurrio cuatro veces en dos jornadas y las cuatro hubo que
+descartarlo a mano; una alarma que siempre resulta falsa se aprende a ignorar, y entonces el dia que
+sea verdadera tampoco se mirara.
+
 ```bash
 for f in tasks decisions constraints assumptions lessons debt_tec progress; do
   echo "== $f"
-  diff <(grep -oE '^\| \[?[A-Z]+-[0-9]+' "_persistence/$f.md" | grep -oE '[A-Z]+-[0-9]+' | sort -u) \
-       <(grep -oE '^#{3} [A-Z]+-[0-9]+'   "_persistence/$f.md" | grep -oE '[A-Z]+-[0-9]+' | sort -u)
+  diff <(awk '/^```/{c=!c; next} !c' "_persistence/$f.md" | grep -oE '^\| \[?[A-Z]+-[0-9]+' | grep -oE '[A-Z]+-[0-9]+' | sort -u) \
+       <(awk '/^```/{c=!c; next} !c' "_persistence/$f.md" | grep -oE '^#{3} [A-Z]+-[0-9]+'   | grep -oE '[A-Z]+-[0-9]+' | sort -u)
 done
 ```
 
@@ -189,6 +197,39 @@ Al anadir una entrada:
 
 Fechas absolutas (`2026-08-28`), nunca «ayer» ni «la semana pasada». En el indice, titulos cortos:
 tienen que caber en una fila y decidirse sin abrir la entrada.
+
+---
+
+## Paso 2c — Las carpetas del arbol contra las declaradas (antes del `git add`)
+
+El Paso 2b compara un archivo consigo mismo. Este compara **el repositorio contra su declaracion**:
+los directorios de primer nivel que existen de verdad, frente a las filas de la tabla «Carpetas
+propias» de `PROJECT.md`.
+
+```bash
+diff <(git ls-tree -d --name-only HEAD | sed 's|$|/|' | sort) \
+     <(sed -n '/^## Carpetas propias/,/^## /p' PROJECT.md | grep -oE '^\| `[^`]+/`' | tr -d '|` ' | sort)
+```
+
+**Las dos direcciones importan, y dicen cosas distintas:**
+
+| Lo que ves | Que significa | Que haces |
+|---|---|---|
+| `<` una carpeta que existe y **no** esta declarada | el repositorio crecio y el registro no se entero | 🚨 proponlo como `DT-XXX`, o declarala si es obvio. **Es lo que paso con una carpeta entera durante dos sesiones** |
+| `>` una fila declarada cuya carpeta **no** existe | o se borro sin actualizar el registro, o esta declarada por adelantado a proposito | comprueba cual de las dos. Si es deliberado, **tiene que haber un `D-XXX` que lo diga** |
+
+⚠️ **Una diferencia con motivo escrito no es un fallo; una sin el, si.** Este control no lleva lista
+de excepciones dentro, y es deliberado: una lista de excepciones envejece sin que nadie la revise y
+acaba tapando justo lo que el control existe para ver. Lo que se exige es que **cada diferencia que
+sobreviva tenga su razon en `PROJECT.md` o en una `D-XXX`** — y si no la tiene, esa es la noticia.
+
+📌 **Por que existe este paso:** el desfase que lo motivo se encontro **de casualidad**, mientras se
+preparaba otra cosa. Un metodo cuyo disparador es «alguien lo nota» no falla ruidosamente: falla en
+silencio, y no hay forma de saber cuantas veces no se activo. Esto puede **salir rojo** sin que nadie
+sospeche nada, que es la unica diferencia entre un detector y una coartada (`R-007` §5.1, `T-053`).
+
+⛔ **No sustituye a releer.** La relectura encuentra cosas que ninguna comparacion mecanica ve; lo
+que no puede es ser el unico filtro para lo que si es mecanizable.
 
 ---
 
@@ -346,10 +387,55 @@ evidencia» en «hay evidencia falsa». Senalar, no rellenar.
 ⚠️ **Rige hacia adelante.** Las entradas antiguas que solo dijeron «se comprobo» se quedan como
 estan; no las reportes como pendientes. Ver `D-037` y `T-031`.
 
+### 🚨 Un riesgo nombrado en el informe y en ningun otro sitio: senalalo
+
+Al leer el borrador del informe, busca los riesgos que **el propio texto reconoce** —«si algun dia
+X, hoy nada lo detectaria», «esto asume que Y», «queda por confirmar Z»— y comprueba si cada uno
+tiene **codigo** en `_persistence/`: un `A-XXX`, una `T-XXX` o un `DT-XXX`. Si no lo tiene,
+**senalalo en el reporte del Paso 8**.
+
+🔑 **El informe es el canal, no el registro.** Un riesgo escrito solo ahi se lee mientras ese informe
+sea el ultimo, y deja de leerse en cuanto llega el siguiente. Peor si el riesgo colgaba de una deuda
+que se marca `Implementada` en la misma sesion: **desaparece del radar en el momento exacto en que se
+cierra lo que lo contenia**, porque una entrada pagada ya no se relee.
+
+⛔ **No lo registres tu** —los cuatro archivos del porque no son tuyos—: senalalo, con la frase del
+informe que lo enuncia, para que `executor` le ponga codigo antes del commit.
+
+⚠️ **Esto ya ha ocurrido tres veces con la misma forma** y las tres se arreglaron como caso
+particular. Por eso esta escrito aqui: para que la cuarta la detecte el protocolo y no la siguiente
+auditoria (`F-012`, `F-019`, `T-054`).
+
 **La unica excepcion, y es mecanica:** si un supuesto `A-XXX` quedo comprobado por la evidencia
 del diff, puedes moverlo a `decisions.md` o `lessons.md` y marcarlo `Confirmado` en
 `assumptions.md`. Eso no es interpretar, es aplicar la regla del ascenso — y **dilo en el reporte**.
 Al moverlo, toca **los dos indices**, con id nuevo en el destino.
+
+### 🚨 Si citas el repositorio del auditor, cita tambien el commit
+
+Su repositorio es de solo lectura para nosotros, pero **no es estatico**: su sesion puede estar a
+mitad de escritura mientras nosotros leemos. Lo que se ve entonces es un **arbol de trabajo**, cierto
+en ese instante y que puede no llegar nunca a ningun commit.
+
+Por eso, toda afirmacion sobre el contenido de su repositorio que vaya a `progress.md` o al informe
+—registro permanente— va **anclada**:
+
+```bash
+git -C <repositorio del auditor, segun PROJECT.md> log -1 --format=%h
+```
+
+Ese hash acompana al valor leido. Si no se ancla, se declara: *«lectura del arbol de trabajo, no
+reproducible»*.
+
+⛔ **Nunca cites su archivo por numero de linea sin ancla.** Un numero de linea afirma precision y
+no la tiene: el archivo se reescribe, y quien intente reproducirlo mañana no encontrara nada — ni
+sabra si el error es suyo, del archivo o de quien lo escribio.
+
+📌 **Ya paso una vez, y no fue culpa de nadie:** se comparo su ultimo estado **commiteado** con lo
+que habia en su **arbol de trabajo** dos minutos antes de que commitearan. Las dos lecturas eran
+ciertas a la vez porque median arboles distintos. Es exactamente lo que el contrato nos exige a
+nosotros —auditar contra el commit del informe, no contra `HEAD`— en el sentido contrario
+(`F-021` de `R-007`, `T-051`).
 
 ### 🚨 Una casilla mas, obligatoria: que entra al repositorio remoto
 
@@ -428,6 +514,30 @@ Los tres veredictos son los unicos validos:
 | `Aceptado — pendiente` | de acuerdo, pero aun no hecho — **con su `T-XXX`** |
 | `No se implementa` | rechazado — **con su `D-XXX`** |
 
+### 🚨 Las dos listas del informe se **generan**; escribirlas de memoria es como se quedan cortas
+
+Las secciones 1 y 2 llevan cada una una enumeracion, y **una enumeracion sin salvedad se lee como
+exhaustiva**. Es justo el tipo de frase que el auditor usa como atajo para no recorrer el diff
+entero — asi que una lista corta no se queda en un descuido: **ensena a confiar en algo que no se
+puede contrastar sin rehacerlo**.
+
+Las dos son generables. Sacalas de aqui, no de lo que recuerdes haber tocado:
+
+```bash
+git show --stat --name-only --format= <commit>          # seccion 1: archivos tocados
+sed -n '/^## Indice/,/^---/p' _persistence/tasks.md \
+  | grep "No implementada"                              # seccion 2: tareas abiertas
+```
+
+⚠️ **El cierre anade archivos que no son «de contenido»** —la fila de `_audit/index.md`, el propio
+informe— y son justo los que se olvidan al escribir de memoria. Si prefieres listar solo los de
+contenido, **dilo**: «los archivos de contenido; el cierre anade ademas…». Una lista declarada
+parcial es honesta; una lista corta presentada como completa, no.
+
+🚨 **Y no filtres «las relevantes» sin decirlo.** Si la seccion 2 solo cubre algunas tareas abiertas,
+la frase lo tiene que decir. El coste de la version correcta es cero; el de la incorrecta es que la
+proxima omision, cuando importe, llegue con la misma cara de completa (`F-022` de `R-007`, `T-052`).
+
 ### 🚨 Esta tabla se audita fila a fila. Cada veredicto exige algo comprobable
 
 | Veredicto | Lo que el auditor va a comprobar | Si no esta |
@@ -470,9 +580,11 @@ unica vez que veras `D-020`: si el eje aparece en la tabla, la salvedad va con e
 
 ## 1. Que se hizo
 <lo que muestra el diff, con codigos y rutas. Archivos creados, modificados y por que>
+<la lista de archivos sale de `git show --stat`, no de la memoria: ver el aviso de abajo>
 
 ## 2. Que NO se hizo, y por que
-<lo que quedo pendiente o a medias, y en que punto quedo. Tareas `No implementada` relevantes>
+<lo que quedo pendiente o a medias, y en que punto quedo>
+<las tareas abiertas salen del indice de `tasks.md` filtrando `No implementada`, no de la memoria>
 
 ## 3. Decisiones tomadas
 <cada `D-XXX` de esta sesion: que se decidio, por que, y **las alternativas descartadas**>

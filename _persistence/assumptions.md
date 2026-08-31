@@ -15,6 +15,7 @@
 | [A-003](#a-003---el-proyecto-arranca-desde-cero) | El proyecto arranca desde cero | 2026-08-28 | Abierto |
 | [A-004](#a-004---la-comprobacion-del-desfase-de-la-guia-tendra-dueno-cuando-se-copie) | La comprobacion del desfase de la guia tendra dueno cuando se copie | 2026-08-28 | Abierto |
 | [A-005](#a-005---el-dictamen-de-un-gate-cabe-en-la-forma-de-entrega-que-contractmd-4-ya-define) | El dictamen de un Gate cabe en la forma de entrega que `contract.md` §4 ya define | 2026-08-30 | Abierto |
+| [A-006](#a-006---ningun-archivo-de-_global-es-material-en-transito) | Ningun archivo de `_global/` es material en transito | 2026-08-31 | Abierto |
 
 ---
 
@@ -156,3 +157,42 @@ se entienda que se creia mientras estuvo abierto.
   segun D-027. Antes seria la especulacion que D-027 prohibe. El trabajo concreto es **T-039**.
 - **Origen:** hallazgo `F-012` de `R-005`. El riesgo estaba detectado desde S-005 y **declarado
   explicitamente como no registrado**: vivia solo en `_audit/S-005.md`, un informe de un dia.
+
+---
+
+### A-006 - Ningun archivo de `_global/` es material en transito
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-31 |
+| Estado | Abierto |
+| Decision relacionada | D-031 |
+| Deuda relacionada | DT-003 |
+
+- **Que se supone:** que **todo** lo que llegue a vivir en `_global/` es registro del proyecto y
+  debe versionarse — y por tanto que esa carpeta **nunca** necesitara una linea de exclusion en
+  `.gitignore`. Hoy son tres archivos (`guide.md`, `changelog.md`, `sources/GUIDE.md`) y los tres
+  lo cumplen.
+
+- **Por que se registra, y por que no basta con lo que ya hay escrito:** `PROJECT.md` dice «se
+  versiona entera, sin exclusiones». Eso es una **regla**, y como regla esta bien donde esta. Pero
+  la regla se apoya en una **prediccion sobre el futuro** —que nunca aparecera ahi un archivo de
+  otra clase— y una prediccion no es un hecho verificado: se registra donde se vigila. `DT-003`
+  cerro el caso presente; el supuesto es lo que queda vivo despues de cerrarlo.
+
+- **Riesgo si es falso:** si una receta futura de la guia introduce en `_global/` una copia de
+  trabajo, un borrador o cualquier material temporal, **hoy nada lo detectaria** salvo que alguien
+  vuelva a mirar a mano. Y nadie va a volver: `DT-003` esta `Implementada`, que es precisamente el
+  estado en que una entrada deja de releerse. El agravante es ese — **el riesgo desaparece del radar
+  en el momento exacto en que la deuda que lo contenia se marca pagada** (`F-019` de `R-007`).
+
+- **Como se refuta:** aparece en `_global/` un archivo que **no es** ni recetario, ni changelog, ni
+  fuente congelada. Uno solo basta. En ese momento el supuesto queda **refutado** y `.gitignore`
+  necesita la exclusion que `D-031` dio por innecesaria.
+
+- **Disparador:** el control de carpetas del cierre de sesion (`T-053`), que compara los directorios
+  de primer nivel del arbol contra la tabla «Carpetas propias» de `PROJECT.md`. Es barato porque ya
+  se corre por otro motivo, y mira el sitio correcto sin que nadie tenga que acordarse.
+
+- **Origen:** hallazgo `F-019` de `R-007`, y su §5.2, que responde afirmativamente a la pregunta que
+  el propio `S-007` planteo — si la conclusion sobre el `.gitignore` merecia quedar como supuesto en
+  vez de como nota cerrada.

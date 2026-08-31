@@ -143,6 +143,7 @@ una decision, y `decisions.md` ya tiene la forma que necesita.
 
 | Carpeta | Que es |
 |---|---|
+| `.claude/` | **Con que** se construye: los agentes y las skills que ejecutan los protocolos. Agnostica por `D-021` — no lleva dentro ningun dato de este proyecto |
 | `_methodology/` | **Como** se construye: el metodo VERTICAL (agnostico) mas `phases/`, su aplicacion aqui |
 | `_global/` | **Como** se hace lo que se hace en cualquier proyecto: el recetario transversal `guide.md`, su `changelog.md` y su fuente. Agnostico: se copia a otros proyectos |
 | `_product/` | **Que** se construye: necesidades, Baseline, slices. *Se crea al entrar en Descubrimiento* |
@@ -160,6 +161,15 @@ lado. Lo que se edita es `guide.md`.
 
 📌 **Se versiona entera.** No lleva exclusiones en `.gitignore`: los tres archivos —recetario,
 changelog y fuente— son registro del proyecto, no material en transito.
+
+🚨 **Esta tabla se contrasta contra el arbol en cada cierre de sesion** (Paso 2c de `protocol-close`):
+las carpetas de primer nivel que existen, frente a las filas de aqui, **en las dos direcciones**. Una
+carpeta sin declarar y una fila sin carpeta son el mismo defecto por sus dos caras.
+
+⚠️ **Dos filas de esta tabla no tienen carpeta en el arbol, y es a proposito:** `_product/` esta
+declarada por adelantado y se crea al entrar en Descubrimiento (`D-025`), y `temporal/` vive **fuera
+del repositorio** (`D-015`). El control de arriba las senala cada vez; esa es su razon escrita, y por
+eso sobreviven a la comprobacion en vez de desaparecer en una lista de excepciones que nadie revisa.
 
 ## Codigos
 

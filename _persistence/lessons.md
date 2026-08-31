@@ -19,6 +19,7 @@
 | [L-008](#l-008---corregir-un-hallazgo-puede-romper-la-decision-que-lo-genero-corre-el-control-despues-de-arreglar-no-solo-antes) | Corregir un hallazgo puede romper la decision que lo genero: corre el control despues de arreglar, no solo antes | 2026-08-30 | 000_preproject |
 | [L-009](#l-009---un-grep-sobre-el-registro-vivo-cuenta-la-evidencia-citada-como-si-fuera-estado) | Un grep sobre el registro vivo cuenta la evidencia citada como si fuera estado | 2026-08-30 | 000_preproject |
 | [L-010](#l-010---la-nota-que-explica-una-correccion-puede-romper-el-control-que-la-cierra) | La nota que explica una correccion puede romper el control que la cierra | 2026-08-31 | 000_preproject |
+| [L-011](#l-011---arreglar-tres-veces-el-mismo-patron-como-caso-particular-es-no-haberlo-arreglado) | Arreglar tres veces el mismo patron como caso particular es no haberlo arreglado | 2026-08-31 | 000_preproject |
 
 ---
 
@@ -363,3 +364,34 @@ Plantilla:
   del hallazgo que se estaba cerrando**. Y complementa a `L-007` y `L-009`: las tres son la misma
   familia, la coleccion de sitios donde el texto del registro y las herramientas que lo revisan se
   pisan.
+
+---
+
+### L-011 - Arreglar tres veces el mismo patron como caso particular es no haberlo arreglado
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-31 |
+| Etapa | 000_preproject |
+| Origen | auditor |
+
+- **Contexto:** `F-019` de `R-007` señala un riesgo que vivia solo en un informe de sesion. Es la
+  **tercera vez**: `F-012` (`S-005`, el dictamen de Gate), `F-019` (`S-007`, la deriva de `_global/`)
+  y el §5.2 de ese mismo informe (la comprobacion del `.gitignore`, que era una prediccion vendida
+  como hecho).
+- **Que ocurrio:** las tres se aceptaron y se arreglaron **bien** y rapido — cada una con su codigo,
+  su disparador y su verificacion. Y las tres las detecto el auditor, no nosotros. Al cerrar la
+  segunda escribimos que era «la misma forma que `F-012`» y aun asi la cerramos igual: como caso. El
+  propio auditor lo diagnostica en una frase — «se cerro **como caso**, no como regla» — y no abre
+  hallazgo por ello, porque el hallazgo seria nuestro.
+- **Leccion:** un arreglo correcto puede **ocultar** que el problema es sistemico. Cada caso, por
+  separado, se cierra de forma impecable y con evidencia; la reincidencia no aparece en ninguno de
+  los tres registros porque cada uno mira solo su propio caso. **La segunda vez que un hallazgo
+  «tiene la misma forma» que otro anterior, la forma es el hallazgo** — y el remedio ya no es
+  registrar otra entrada, es cambiar el paso del protocolo que dejo pasar las dos.
+- **Como aplicarla:** al escribir la `T-XXX` de un hallazgo, si el texto necesita la frase «es la
+  misma forma que `F-NNN`» para explicarse, **parar y abrir una segunda tarea sobre el protocolo**,
+  no solo sobre el caso. La frase es el detector: aparece sola, en cuanto uno intenta explicar el
+  parecido. Aqui aparecio dos veces antes de que alguien la tratara como señal (`T-054`, `D-052`).
+- **Parentesco:** explica por que `T-054` existe y por que su importancia es `Media` y no `Baja`
+  pese a que ningun caso concreto quedo sin arreglar. Lo que estaba roto no era ninguno de los tres
+  registros: era que nada preguntaba «¿y esto tiene codigo?» antes de commitear.

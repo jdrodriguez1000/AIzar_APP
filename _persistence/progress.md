@@ -38,6 +38,7 @@
 | [S-012](#s-012---llega-r-004-y-se-implementan-sus-cinco-hallazgos-t-032-a-t-036-mas-t-037-de-iniciativa-propia) | Llega R-004 y se implementan sus cinco hallazgos (T-032 a T-036), mas T-037 de iniciativa propia | 2026-08-30 | 000_preproject |
 | [S-013](#s-013---llega-r-005-y-se-aceptan-sus-cinco-hallazgos-cuatro-se-implementan-uno-se-acepta-como-regla) | Llega R-005 y se aceptan sus cinco hallazgos; cuatro se implementan, uno se acepta como regla | 2026-08-30 | 000_preproject |
 | [S-014](#s-014---llega-r-006-y-se-aceptan-e-implementan-sus-tres-hallazgos-mas-dos-recomendaciones-de-su-seccion-5) | Llega R-006 y se aceptan e implementan sus tres hallazgos, mas dos recomendaciones de su seccion 5 | 2026-08-31 | 000_preproject |
+| [S-015](#s-015---llega-r-007-y-se-aceptan-e-implementan-sus-cuatro-hallazgos-mas-su-seccion-51-el-paso-2c-encuentra-a-claude-sin-declarar) | Llega R-007 y se aceptan e implementan sus cuatro hallazgos, mas su seccion 5.1; el Paso 2c encuentra a `.claude/` sin declarar | 2026-08-31 | 000_preproject |
 
 ---
 
@@ -48,62 +49,73 @@
 | Etapa actual | `000_preproject` |
 | Ultima actualizacion | 2026-08-31 |
 | Salud | En marcha |
-| Avance de la etapa | Metodo de trabajo, persistencia, repositorio, ciclo completo inicio/cierre, canal de vuelta con la auditoria, datos propios del proyecto en `PROJECT.md`, el metodo VERTICAL incorporado y ajustado, y el analisis de nueve puntos de `_global/guide.md` completo (`guide.md` en `VERSION 6`). T-026 registra que falta disenar la fase `Descubrimiento` antes de entrar en ella (bloqueante). Llego la **quinta auditoria** (`R-006`, sobre `S-006`, commit `eb17b6e`): **Con hallazgos (3)** — F-016 (`Media`), F-017, F-018 (`Baja`). Los tres se verificaron contra `HEAD`, los tres persistian, los tres se aceptaron y se implementaron (`D-046`): T-044 (la marca de maquina 💻 no entra en el ritual de poda, `guide.md` sube a VERSION 6), T-045 (correccion de capitalizacion de `_global/changelog.md` en `D-028`; al cerrarla se descubrio que la propia nota de correccion rompia el criterio de cierre del hallazgo — `L-010`), T-046 (`C-005` ampliada a las dos carpetas `sources/` y retitulada, con disparador para revisar las flechas `↳ GUIDE §N` al retomar un snapshot). Se aceptaron ademas dos recomendaciones de la seccion 5 del informe, que no eran hallazgos: T-047 (§5.4 — el sello del paso 2 gana una tercera linea, `Comprobacion del desfase`, y `A-004` se reescribe en dos tiempos de validacion) y T-048 (§5.2 — la regla de comando y salida cruda se extiende a las comprobaciones de iniciativa propia, no solo a las de `Origen: auditor`; tocada en `CLAUDE.md` y en el propio `protocol-close`). §5.3 quedo cerrada sin accion porque `DT-003` ya estaba pagada. Las cinco auditorias previas (`R-002` a `R-005`) siguen implementadas e integras. Sigue pendiente el alcance del proyecto |
+| Avance de la etapa | Metodo de trabajo, persistencia, repositorio, ciclo completo inicio/cierre, canal de vuelta con la auditoria, datos propios del proyecto en `PROJECT.md`, el metodo VERTICAL incorporado y ajustado, y el analisis de nueve puntos de `_global/guide.md` completo (`guide.md` en `VERSION 6`). T-026 registra que falta disenar la fase `Descubrimiento` antes de entrar en ella (bloqueante). Llego la **sexta auditoria** (`R-007`, sobre `S-007`, commit `268d3f1`): **Con hallazgos (4)** — F-019 (`Media`), F-020, F-021, F-022 (`Baja`). Los cuatro se verificaron contra `HEAD` (`9868dd2`), los cuatro persistian, los cuatro se aceptaron y se implementaron (`D-051`): T-049 (supuesto nuevo `A-006` — nada de `_global/` es material en transito), T-050 (el cuerpo de `DT-003` deja de hablar en presente de un defecto ya pagado; el titulo se queda, con su razon escrita — `D-053`), T-051 (toda cita del repositorio del auditor va anclada a su commit, o se declara lectura de arbol de trabajo), T-052 (las dos listas del informe de auditoria se generan con comandos, no se escriben de memoria). Se acepto ademas la recomendacion de su §5.1 en T-053 (`Alta`): el Paso 2c de `protocol-close` contrasta las carpetas del arbol contra la tabla «Carpetas propias» de `PROJECT.md`, en las dos direcciones, sin lista de excepciones dentro del control (`D-054`) — y **en su primera ejecucion encontro un defecto real**: `.claude/` era carpeta versionada sin declarar, el mismo patron que `DT-003` (corregido en T-056). Tres tareas propias completan la jornada: T-054 lleva al Paso 6 del cierre la deteccion de un riesgo que un informe reconoce y que no tiene codigo (`L-011`, tres veces con la misma forma: F-012, F-019 y el §5.2 de R-007); T-055 quita del control del Paso 2b los falsos positivos de bloques cercados de evidencia (`L-009`, cuatro veces en dos jornadas). Las seis auditorias previas (`R-002` a `R-006`) siguen implementadas e integras. Sigue pendiente el alcance del proyecto |
 | Bloqueos activos | Alcance y objetivo del proyecto sin definir (T-004); bloquea a su vez T-025 y el diseño de la fase Descubrimiento. **T-026** (disenar la fase `Descubrimiento` antes de entrar en ella) sin resolver y bloqueante por si misma |
 
 ---
 
 ## 2. Ultimo realizado
 
-**Llego `R-006`** (`../AIzar_Auditor/_review/R-006.md`), auditando `_audit/S-006.md` sobre el
-commit `eb17b6e`. Veredicto: **Con hallazgos (3)** — `F-016` (`Media`), `F-017`, `F-018` (`Baja`).
-Llego con `S-013` ya cerrada, asi que recogerla abrio jornada nueva.
+**Llego `R-007`** (`../AIzar_Auditor/_review/R-007.md`), auditando `_audit/S-007.md` sobre el
+commit `268d3f1`. Veredicto: **Con hallazgos (4)** — `F-019` (`Media`), `F-020`, `F-021`, `F-022`
+(`Baja`). Llego con `S-014` ya cerrada, asi que recogerla abrio jornada nueva.
 
-**Verificacion antes de tratarlos:** los tres se comprobaron contra `HEAD` (`e1fb1eb`), no contra
-el commit auditado. **Los tres persisten**; comando y salida cruda quedaron en cada `T-XXX`. Acuse
-de recibo: la fila `S-006` de `_audit/index.md` paso de `Pendiente` a `Con hallazgos`, con la ruta
-de `R-006.md` y los tres codigos.
+**Verificacion antes de tratarlos:** los cuatro se comprobaron contra `HEAD` (`9868dd2`), no contra
+el commit auditado. **Los cuatro persisten**; comando y salida cruda quedaron en cada `T-XXX`.
+Acuse de recibo: la fila `S-007` de `_audit/index.md` paso de `Pendiente` a `Con hallazgos`, con la
+ruta de `R-007.md` y los cuatro codigos.
 
-**Los tres hallazgos se aceptaron (`D-046`), cero rechazos:**
+**Los cuatro hallazgos se aceptaron (`D-051`), cero rechazos:**
 
-- **F-016 -> T-044** (`Media`) — la tabla de marcas de `_global/guide.md` declaraba cuatro valores
-  y solo daba regla de poda a tres; la marca de maquina 💻 quedaba sin fila en el paso 3. Se
-  declara que 💻 **no se poda** — es propiedad de quien lee, no del proyecto (`D-047`) — y la
-  columna de la tabla se corrige. `guide.md` sube a **VERSION 6**.
-- **F-017 -> T-045** (`Baja`) — `D-028` citaba el archivo que ella misma crea (`_global/changelog.md`)
-  en mayusculas, la unica cita discrepante entre cinco. Corregida, con nota fechada. **Al correr el
-  criterio de cierre del propio hallazgo contra la correccion se descubrio que la nota deletreaba
-  la cadena prohibida**, dejando el `grep` en rojo para siempre; se reescribio para describir el
-  error sin reproducirlo (`L-010`).
-- **F-018 -> T-046** (`Baja`) — `C-005` citaba un precedente («misma regla que
-  `_methodology/sources/`») que no existia como `C-XXX`. Se amplia `C-005` a las dos carpetas
-  `sources/` y se retitula, en vez de crear una `C-006` gemela (`D-048`); se le añade ademas el
-  disparador de `R-006` §5.1 — revisar las flechas `↳ GUIDE §N` al retomar un snapshot.
+- **F-019 -> T-049** (`Media`) — el riesgo de que una receta futura meta en `_global/` un archivo
+  excluible vivia solo en `_audit/S-007.md`, un informe que ya tiene ocho detras. Se registra
+  **A-006**: ningun archivo de `_global/` es material en transito, con como se refuta y su
+  disparador (el propio Paso 2c de `T-053`).
+- **F-020 -> T-050** (`Baja`) — `DT-003` esta `Implementada` desde `268d3f1` y su cuerpo seguia
+  hablando en presente de un defecto que ese mismo commit corrigio. El bloque de diagnostico se
+  fecha explicitamente («🕐 estado al 2026-08-28, ya corregido»). El titulo se queda, con su razon
+  escrita bajo el (`D-053`): no es discrepancia con el auditor, su criterio de cierre apunta al
+  cuerpo, no al titulo.
+- **F-021 -> T-051** (`Baja`) — la discrepancia que `S-007` registro sobre el repositorio del
+  auditor, citada por numero de linea, no era culpa de nadie: sus commits `268d3f1` y `dea9327`
+  distan dos minutos y medio, y se leyo su arbol de trabajo a mitad de escritura. Regla nueva en
+  `protocol-close` y `protocol-start`: toda cita de su repositorio se ancla a su commit o se
+  declara lectura de arbol de trabajo, nunca por numero de linea sin ancla.
+- **F-022 -> T-052** (`Baja`) — las dos listas del informe de auditoria (archivos tocados, tareas
+  abiertas) se quedaron cortas por escribirse de memoria. Se sustituyen por los comandos que las
+  generan (`git show --stat`, filtro del indice de `tasks.md`).
 
-**Dos recomendaciones de la seccion 5, aceptadas sin ser hallazgos:**
+**Recomendacion de la seccion 5.1, aceptada como no-hallazgo, `T-053` (`Alta`):** el Paso 2c de
+`protocol-close` contrasta las carpetas de primer nivel del arbol contra la tabla «Carpetas
+propias» de `PROJECT.md`, en las dos direcciones, sin lista de excepciones dentro del control
+(`D-054`). **En su primera ejecucion encontro un defecto real:** `.claude/` era carpeta versionada
+sin declarar — el mismo patron que `DT-003` — corregido en **T-056**. §5.2 del informe queda
+cubierta por `T-049`/`A-006`.
 
-- **§5.4 -> T-047** — `A-004` se validaba en «la primera copia real», pero ese dia el mecanismo se
-  estrena y se valida a la vez: un supuesto cuya refutacion es indistinguible de su funcionamiento
-  no se detecta observando (`D-049`). El sello del paso 2 gana una tercera linea, `Comprobacion
-  del desfase`, y `A-004` se valida en dos tiempos: cada copia (que la linea existe) y la segunda
-  copia (que alguien comparo de verdad).
-- **§5.2 -> T-048** — el auditor repitio por su cuenta el escaneo de secretos de `D-029` y senalo
-  que la regla de comando y salida cruda (`T-031`) solo cubria las entradas con `Origen: auditor`,
-  no las de iniciativa propia. Se extiende la regla en `CLAUDE.md` y en el propio `protocol-close`
-  (`D-050`).
+**Dos tareas propias, que salen de leer el informe y no de un hallazgo:**
 
-**§5.3 se cierra sin accion:** su `PROPUESTA` sobre `DT-003` ya estaba resuelta — `DT-003` esta
-`Implementada` y `Confirmada` desde `S-007`.
+- **T-054** (`Media`) — `F-019` es la tercera vez que un riesgo reconocido por un informe vive solo
+  ahi (`F-012`, `F-019`, §5.2 de `R-007`); las tres se arreglaron como caso, ninguna como regla
+  (`L-011`). El Paso 6 de `protocol-close` gana el control: al leer el borrador del informe, buscar
+  los riesgos que el propio texto reconoce y comprobar si tienen codigo (`D-052`).
+- **T-055** (`Media`) — el control del Paso 2b contaba como huerfanas las citas de evidencia dentro
+  de bloques cercados (`L-009`), disparado cuatro veces en dos jornadas. Las dos ramas del `diff`
+  pasan ahora por un `awk` que descarta esos bloques.
 
-`decisions.md` gana `D-046` a `D-050`. `assumptions.md` reescribe `A-004` (`T-047`), citando el
-enunciado anterior antes de sustituirlo. `constraints.md` amplia y retitula `C-005` (`T-046`).
-`lessons.md` gana `L-010`. No hubo construccion de producto ni cambios de codigo de aplicacion.
+`decisions.md` gana `D-051` a `D-054`. `assumptions.md` gana `A-006`. `lessons.md` gana `L-011`.
+`debt_tec.md` reescribe el cuerpo de `DT-003` (`T-050`); no hay deuda nueva. `PROJECT.md` declara
+`.claude/` en «Carpetas propias» y documenta el control del Paso 2c (`T-056`). No hubo construccion
+de producto ni cambios de codigo de aplicacion.
+
+⚠️ **Lo que el informe deja escrito sin resolverlo (`D-051`):** `R-007` llega sobre un commit del
+30-ago con siete informes nuestros por detras. No es un hallazgo y no lo resuelve una decision
+nuestra —depende de la cadencia del auditor—, pero queda anotado para que no empeore en silencio.
 
 ---
 
 ## 3. Siguiente paso
 
-**Las cinco tareas de esta sesion (T-044 a T-048) quedan `Implementada`.** No hay ninguna abierta
+**Las ocho tareas de esta sesion (T-049 a T-056) quedan `Implementada`.** No hay ninguna abierta
 que dispare el siguiente paso. El siguiente paso concreto sigue siendo retomar las dos tareas
 bloqueantes en espera, sin cambios respecto a la sesion anterior:
 
@@ -112,11 +124,11 @@ bloqueantes en espera, sin cambios respecto a la sesion anterior:
 2. **T-026** (`Alta`, bloqueante) — disenar la fase `Descubrimiento` antes de entrar en ella
    (D-027); depende de que `T-004` fije el alcance.
 
-En el informe de esta sesion (`_audit/S-014.md`) se responde a `R-006` en su seccion 0 con los
-tres veredictos: `Implementado` (F-016, F-017, F-018).
+En el informe de esta sesion (`_audit/S-015.md`) se responde a `R-007` en su seccion 0 con los
+cuatro veredictos: `Implementado` (F-019, F-020, F-021, F-022).
 
-El ciclo de auditoria sigue abierto: `_audit/index.md` mantiene S-007 a S-013 en `Pendiente`
-(S-002 a S-006 ya con hallazgos recogidos), mas la nueva `S-014.md` que este cierre añade.
+El ciclo de auditoria sigue abierto: `_audit/index.md` mantiene S-008 a S-014 en `Pendiente`
+(S-002 a S-007 ya con hallazgos recogidos), mas la nueva `S-015.md` que este cierre añade.
 
 ---
 
@@ -653,6 +665,67 @@ El ciclo de auditoria sigue abierto: `_audit/index.md` mantiene S-007 a S-013 en
   documental (`CLAUDE.md`, la skill `protocol-close`, `_audit/index.md`, `_global/guide.md` y
   `changelog.md`, cinco archivos de `_persistence/`).
 - **`tasks.md`:** `T-044` a `T-048` pasan a `Implementada` (2026-08-31).
+- **Siguiente paso concreto:** retomar **T-004** (alcance y objetivo del proyecto) y, con eso
+  resuelto, **T-026** (diseno de la fase `Descubrimiento`) — las dos bloqueantes de la etapa.
+
+---
+
+### S-015 - Llega R-007 y se aceptan e implementan sus cuatro hallazgos, mas su seccion 5.1; el Paso 2c encuentra a `.claude/` sin declarar
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-31 |
+| Etapa | 000_preproject |
+
+- **Etapa del proyecto:** `000_preproject` — sobre el commit `9868dd2` (S-014), ya cerrado. T-004 y
+  T-026 siguen siendo los dos bloqueos de fondo de la etapa; ninguno se toco en esta sesion.
+- **Que quedo hecho, segun el diff:** llego `R-007`, la **sexta auditoria entregada del proyecto**
+  (`../AIzar_Auditor/_review/R-007.md`), auditando `_audit/S-007.md` sobre el commit `268d3f1`.
+  Verificado antes de tratarlos: los cuatro hallazgos se comprobaron contra `HEAD` (`9868dd2`), no
+  contra `268d3f1` — **los cuatro persisten**, con comando y salida cruda en cada `T-XXX`. Acuse de
+  recibo: la fila `S-007` de `_audit/index.md` paso de `Pendiente` a `Con hallazgos`, con la ruta de
+  `R-007.md` y los cuatro codigos. Veredicto: **Con hallazgos (4)** — `F-019` `Media`, `F-020`,
+  `F-021`, `F-022` `Baja`. **Los cuatro se aceptaron, cero rechazos** (`D-051`).
+  - **F-019 -> T-049** (`Media`) — el riesgo de que una receta futura mete en `_global/` un archivo
+    que deberia excluirse vivia solo en un informe de sesion. Se registra **A-006** — ningun archivo
+    de `_global/` es material en transito — con su forma de refutacion y su disparador (el control
+    de carpetas de `T-053`).
+  - **F-020 -> T-050** (`Baja`) — `DT-003` esta `Implementada` y su cuerpo hablaba en presente de un
+    defecto ya corregido. Se fecha el bloque de diagnostico. El titulo se queda, con su razon escrita
+    bajo el (`D-053`); no es discrepancia con el auditor, cuyo criterio de cierre apunta al cuerpo.
+  - **F-021 -> T-051** (`Baja`) — la cita del repositorio del auditor por numero de linea en `S-007`
+    comparaba dos arboles distintos (sus commits `268d3f1` y `dea9327` distan dos minutos y medio, y
+    el segundo se leyo a mitad de escritura); no fue culpa de nadie. Regla nueva: anclar al commit, o
+    declarar lectura de arbol de trabajo — nunca por linea sin ancla.
+  - **F-022 -> T-052** (`Baja`) — las dos listas del informe de auditoria (archivos, tareas abiertas)
+    se quedaron cortas por escribirse de memoria. Se sustituyen por los comandos que las generan.
+  - **T-053** (`Alta`, `Origen: auditor`, no-hallazgo) — recomendacion de `R-007` §5.1: Paso 2c de
+    `protocol-close`, contraste de carpetas del arbol contra `PROJECT.md` en las dos direcciones, sin
+    lista de excepciones dentro del control (`D-054`). **Encontro un defecto real en su primera
+    ejecucion:** `.claude/` era carpeta versionada sin declarar, el mismo patron que `DT-003`.
+  - **T-056** (`Media`, `Origen: executor`) — se declara `.claude/` en «Carpetas propias», con su
+    nota de agnosticismo (`D-021`).
+  - **§5.2 del informe** queda cubierta por `T-049`/`A-006`: no requirio accion adicional.
+  - **T-054** (`Media`, `Origen: executor`, no-hallazgo) — `F-019` es la tercera vez que un riesgo
+    reconocido por un informe vive solo ahi (`F-012`, `F-019`, §5.2 de `R-007`); las tres se
+    arreglaron como caso, no como regla (`L-011`). El Paso 6 de `protocol-close` gana el control que
+    busca esos riesgos y comprueba si tienen codigo (`D-052`).
+  - **T-055** (`Media`, `Origen: executor`, no-hallazgo) — el control del Paso 2b contaba como
+    huerfanas las citas de evidencia dentro de bloques cercados (`L-009`, disparado cuatro veces en
+    dos jornadas). Las dos ramas del `diff` pasan ahora por un `awk` que los descarta.
+- **Decision del usuario:** ninguna intervencion directa; los cuatro hallazgos, la recomendacion de
+  §5.1 y las dos tareas propias se evaluaron, aceptaron e implementaron en la misma jornada por
+  `executor`.
+- **Los cuatro archivos del porque:** `decisions.md` gana `D-051` a `D-054`. `assumptions.md` gana
+  `A-006`. `lessons.md` gana `L-011`, sobre el mismo patron repetido tres veces sin regla. `constraints.md`
+  sin cambios: ningun hallazgo de `R-007` introdujo una restriccion nueva.
+- **Sin construccion de producto:** no hubo cambios de codigo de aplicacion; todo el diff es
+  documental (dos skills, `PROJECT.md`, `_audit/index.md`, cinco archivos de `_persistence/`).
+- **`tasks.md`:** `T-049` a `T-056` pasan a `Implementada` (2026-08-31).
+- ⚠️ **Lo que el informe deja escrito sin resolverlo:** `R-007` llega sobre un commit del 30-ago con
+  siete informes nuestros por detras (`S-008` a `S-014`). Consecuencia ya visible: `F-019` senala un
+  patron que se arreglo en `F-012` dos jornadas antes. No es un hallazgo y no lo resuelve una
+  decision nuestra —depende de la cadencia del auditor—, pero queda escrito para que no empeore en
+  silencio (`D-051`).
 - **Siguiente paso concreto:** retomar **T-004** (alcance y objetivo del proyecto) y, con eso
   resuelto, **T-026** (diseno de la fase `Descubrimiento`) — las dos bloqueantes de la etapa.
 

@@ -148,6 +148,13 @@ actualiza es `executor`, despues.
 
 ⚠️ Si el contrato no existe o no se puede leer, **dilo en el reporte** y sigue.
 
+🚨 **Lo que leas de su repositorio, anclalo o marcalo.** Vale para el Paso 1c y para este: su
+repositorio **no es estatico**, y su sesion puede estar a mitad de escritura mientras lees. Si el
+reporte va a afirmar algo sobre el contenido de su repositorio, acompanalo del hash de su ultimo
+commit —`git -C <repositorio del auditor> log -1 --format=%h`— o di que es una lectura del arbol de
+trabajo, no reproducible. **Nunca por numero de linea sin ancla:** afirma una precision que no
+tiene.
+
 > **Por que este paso existe:** `PROJECT.md` afirma que la version es el mecanismo de deteccion de
 > divergencia entre las dos terminales. Hasta el hallazgo `F-013` de `R-005` nadie lo corria: un
 > detector que nadie mira no detecta. El desfase no aparecia como desfase — aparecia como un

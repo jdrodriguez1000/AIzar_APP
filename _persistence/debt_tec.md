@@ -143,13 +143,20 @@ Plantilla:
 | Fecha | 2026-08-28 |
 | Pagada | 2026-08-30 (S-007) |
 
-- **Que se hizo:** en esta sesion se incorporo `_global/` al repositorio (`guide.md`,
-  `changelog.md`, `sources/GUIDE.md`), analizada entera y ajustada en cuatro decisiones (D-028,
-  D-029, D-030 y la version 1 registrada). Se creo y edito la carpeta, pero **no se toco ni
-  `PROJECT.md` ni `.gitignore`**: `PROJECT.md` §«Carpetas propias» sigue listando solo
-  `_methodology/`, `_product/`, `_persistence/`, `_audit/` y `temporal/`, y `_global/` no aparece
-  en ninguna linea del `.gitignore` actual.
-- **Por que:** la sesion se dedico integramente al contenido de la guia (los nueve puntos del
+📌 **El titulo nombra el defecto tal como nacio, y se queda asi a proposito.** Una deuda se nombra
+por lo que registra; renombrarla al pagarla haria ilegible el indice —«¿de que iba `DT-003`?»— y
+rompería el ancla que ya citan otros documentos. Lo que si se corrige es el **tiempo verbal del
+cuerpo**: el diagnostico de abajo describe el estado en que la deuda nacio, no el de hoy. El campo
+`Estado` dice `Implementada` y **manda sobre el titulo** (`T-050`, hallazgo `F-020` de `R-007`).
+
+- **Que se hizo — 🕐 estado al 2026-08-28 (S-006), ya corregido:** en aquella sesion se incorporo
+  `_global/` al repositorio (`guide.md`, `changelog.md`, `sources/GUIDE.md`), analizada entera y
+  ajustada en cuatro decisiones (D-028, D-029, D-030 y la version 1 registrada). Se creo y edito la
+  carpeta, pero **no se toco ni `PROJECT.md` ni `.gitignore`**: `PROJECT.md` §«Carpetas propias»
+  enumeraba entonces solo `_methodology/`, `_product/`, `_persistence/`, `_audit/` y `temporal/`, y
+  `_global/` no aparecia en ninguna linea del `.gitignore` de aquel commit. **Las dos cosas dejaron
+  de ser ciertas el 2026-08-30**, al pagarse la deuda; ver «Como se pago» abajo.
+- **Por que:** aquella sesion se dedico integramente al contenido de la guia (los nueve puntos del
   analisis); el registro de la carpeta en si misma no se abordo.
 - **Costo de no pagarla:** `_global/` es una carpeta de primer nivel real en el repositorio, con
   reglas propias (D-029: `sources/` es de solo lectura, igual que `_methodology/sources/`) que hoy

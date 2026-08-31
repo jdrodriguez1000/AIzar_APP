@@ -59,6 +59,10 @@
 | [D-048](#d-048---c-005-se-amplia-a-las-dos-carpetas-sources-en-vez-de-nacer-una-restriccion-gemela) | `C-005` se amplia a las dos carpetas `sources/` en vez de nacer una restriccion gemela | 2026-08-31 | Vigente |
 | [D-049](#d-049---un-supuesto-se-valida-donde-su-fallo-se-distingue-de-su-funcionamiento) | Un supuesto se valida donde su fallo se distingue de su funcionamiento | 2026-08-31 | Vigente |
 | [D-050](#d-050---la-regla-de-comando-y-salida-cubre-tambien-lo-que-comprobamos-sin-que-nadie-lo-pida) | La regla de comando y salida cubre tambien lo que comprobamos sin que nadie lo pida | 2026-08-31 | Vigente |
+| [D-051](#d-051---los-cuatro-hallazgos-de-r-007-se-aceptan-y-dos-de-ellos-se-mecanizan-en-vez-de-reglarse) | Los cuatro hallazgos de `R-007` se aceptan, y dos de ellos se mecanizan en vez de reglarse | 2026-08-31 | Vigente |
+| [D-052](#d-052---un-riesgo-que-el-informe-reconoce-necesita-codigo-antes-de-cerrar-la-sesion) | Un riesgo que el informe reconoce necesita codigo antes de cerrar la sesion | 2026-08-31 | Vigente |
+| [D-053](#d-053---el-titulo-de-una-deuda-nombra-el-defecto-y-no-cambia-al-pagarla) | El titulo de una deuda nombra el defecto, y no cambia al pagarla | 2026-08-31 | Vigente |
+| [D-054](#d-054---el-control-de-carpetas-no-lleva-lista-de-excepciones-dentro) | El control de carpetas no lleva lista de excepciones dentro | 2026-08-31 | Vigente |
 
 ---
 
@@ -2031,3 +2035,152 @@ $ cat ../AIzar_Auditor/_review/index.md | head -3
   porque la lista de «comprobaciones importantes» se decide siempre **despues** de hacerlas, y
   entonces no es una regla: es un criterio. La linea que si es objetiva es «¿el registro afirma un
   resultado?».
+
+---
+
+### D-051 - Los cuatro hallazgos de `R-007` se aceptan, y dos de ellos se mecanizan en vez de reglarse
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-31 |
+| Etapa | 000_preproject |
+| Decidido por | executor |
+| Estado | Vigente |
+
+- **Contexto:** llega `R-007` sobre `S-007` (commit `268d3f1`, del 2026-08-30). **Con hallazgos
+  (4)**: `F-019` (`Media`), `F-020`, `F-021`, `F-022` (`Baja`). Los cuatro son de registro, no de
+  contenido: el pago de `DT-003` se sostiene entero y verificado.
+
+- **Decision:** los cuatro se **aceptan**, cero rechazos (`T-049` a `T-052`). Se acepta ademas la
+  recomendacion de su §5.1 (`T-053`) y se anaden tres tareas propias que salen de aplicarlas:
+  `T-054`, `T-055` y `T-056`.
+
+- **Que se verifico antes de aceptar:** los cuatro contra `HEAD` (`9868dd2`). **Los cuatro
+  persisten**; cada `T-XXX` lleva su orden y su salida cruda.
+
+- 🔑 **Dos de los cuatro no se cierran con una regla, sino quitando la ocasion de fallar.** `F-022`
+  (listas incompletas) y §5.1 (deteccion de carpetas sin declarar) piden ambos «ten mas cuidado», y
+  el cuidado no escala. Las dos listas del informe **son generables** y la comparacion de carpetas
+  **es un `diff`**: en vez de pedir atencion, se escriben los comandos en `protocol-close`. Una lista
+  generada no se queda corta y un `diff` no se distrae. Se **descarta** la version «regla escrita
+  sin comando» porque es la que ya teniamos, y es la que fallo.
+
+- **Lo que el informe resuelve y conviene no perder:** la discrepancia que `S-007` registro sobre el
+  repositorio del auditor **no era culpa de nadie**. El recorrio todos sus commits y demostro que
+  ninguno registro nunca ese par de valores: `268d3f1` se commiteo a las 16:17:00 y su `dea9327` a
+  las 16:19:33 — **dos minutos y medio**. Leimos su arbol de trabajo a mitad de su cierre. Las dos
+  lecturas eran ciertas porque median arboles distintos. Eso es `F-021`, y por eso no es un reproche
+  sino una regla.
+
+- **Reversibilidad:** los cuatro `REVERSIBLE`, **clasificado a criterio** —ediciones de texto en
+  archivos versionados, deshacibles con `git revert`—, no leido de una tabla: el inventario de
+  irreversibles sigue vacio hasta que `T-016` lo pueble, y `T-016` sigue bloqueada por `T-004`.
+
+- ⚠️ **Lo que preocupa mas que los cuatro hallazgos, y el auditor lo pone por escrito:** esta
+  auditoria llega sobre un commit del 30-ago con **siete informes nuestros por detras** (`S-008` a
+  `S-014`). Consecuencia ya visible: `F-019` señala un patron que nosotros arreglamos en `F-012` dos
+  jornadas antes, y `F-022` audita un informe que describe un mundo de hace ocho sesiones. Estamos
+  produciendo informes mas rapido de lo que se auditan. No es un hallazgo y no lo resuelve una
+  decision nuestra —depende de su cadencia—, pero queda escrito para que no empeore en silencio.
+
+---
+
+### D-052 - Un riesgo que el informe reconoce necesita codigo antes de cerrar la sesion
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-31 |
+| Etapa | 000_preproject |
+| Decidido por | executor |
+| Estado | Vigente |
+
+- **Contexto:** `F-019` observa que el riesgo de deriva de `_global/` vivia solo en `_audit/S-007.md`.
+  Al registrarlo aparece lo incomodo: **es la tercera vez con la misma forma**. `F-012` (dictamen de
+  Gate, `S-005`), `F-019` (deriva de `_global/`, `S-007`) y el §5.2 del mismo informe (la
+  comprobacion del `.gitignore` como prediccion). Las tres se arreglaron una a una, y **ninguna se
+  detecto de nuestro lado**. El auditor lo dice sin adornos: se cerro «como caso, no como regla».
+
+- **Decision:** llevarlo al protocolo. `protocol-close`, Paso 6: al revisar el borrador del informe,
+  buscar los riesgos que **el propio texto reconoce** —«si algun dia X, hoy nada lo detectaria»,
+  «esto asume que Y», «queda por confirmar Z»— y comprobar si cada uno tiene `A-XXX`, `T-XXX` o
+  `DT-XXX`. Si no, se senala en el reporte con la frase que lo enuncia.
+
+- **Por que el closer senala y no registra:** los cuatro archivos del porque no son suyos, y por la
+  razon de siempre — el arranca en frio y un porque nace en la conversacion. Se mantiene el reparto:
+  el detecta, `executor` escribe.
+
+- 🔑 **Por que el fallo es invisible sin esto:** un riesgo que el informe reconoce esta **a un paso**
+  de tener codigo — quien lo escribio ya lo penso y ya lo redacto. Lo que falta no es criterio: es el
+  momento en que alguien pregunta «¿y esto tiene codigo?». Sin ese momento la pregunta llega dos
+  semanas despues y en boca del auditor. Y hay un agravante que lo hace peor: si el riesgo colgaba de
+  una deuda que se marca `Implementada` en la misma sesion, **desaparece del radar justo cuando se
+  cierra lo que lo contenia** — una entrada pagada ya no se relee.
+
+- **Alternativa descartada:** anotarlo como leccion y confiar en recordarlo. Se descarta porque es
+  exactamente lo que se hizo las tres veces anteriores. Una leccion explica; un paso del protocolo
+  pregunta.
+
+---
+
+### D-053 - El titulo de una deuda nombra el defecto, y no cambia al pagarla
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-31 |
+| Etapa | 000_preproject |
+| Decidido por | executor |
+| Estado | Vigente |
+
+- **Contexto:** `F-020` señala que `DT-003` esta `Implementada` y sin embargo su titulo y su cuerpo
+  siguen afirmando en presente el defecto ya corregido.
+
+- **Decision, en dos mitades distintas:**
+  - **El cuerpo se corrige.** El bloque de diagnostico pasa a estar explicitamente fechado —«🕐
+    estado al 2026-08-28 (S-006), ya corregido»— con sus afirmaciones en pasado y la frase que dice
+    cuando dejaron de ser ciertas. Aqui el auditor tiene toda la razon.
+  - **El titulo se queda.** Una deuda **se nombra por el defecto que registra**: es lo normal y lo
+    correcto. Renombrarla al pagarla haria ilegible el indice —«¿de que iba `DT-003`?»— y romperia
+    un ancla ya citada por otros documentos. Se anade bajo el titulo una nota que dice justamente
+    esto, para que la proxima lectura no reabra la duda.
+
+- **Por que esto no es una discrepancia con el auditor:** su criterio de cierre apunta al **cuerpo**
+  (`git grep "sigue listando solo"` debe dar cero), no al titulo. La observacion sobre el titulo va
+  en su «que se observo», no en su criterio. Se contesta igualmente y con su razon, porque el
+  silencio aqui se leeria como haberlo pasado por alto.
+
+- **Lo que si se acepta entero es su argumento de fondo**, que vale mas que el caso: el campo
+  `Estado` es la salvedad y el titulo es el titular, y **una salvedad correcta no arregla un titular
+  falso**. Es el mecanismo por el que una entrada de registro envejece hacia la mentira. Por eso el
+  cuerpo se fecha en vez de dejarse «compensado» por el `Estado`.
+
+---
+
+### D-054 - El control de carpetas no lleva lista de excepciones dentro
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-31 |
+| Etapa | 000_preproject |
+| Decidido por | executor |
+| Estado | Vigente |
+
+- **Contexto:** `R-007` §5.1 recomienda comparar los directorios de primer nivel del arbol con la
+  tabla «Carpetas propias» de `PROJECT.md`, en las dos direcciones. Se acepta y se escribe como Paso
+  2c de `protocol-close` (`T-053`). En su **primera ejecucion** devuelve tres diferencias: `.claude/`
+  existe y no estaba declarada —defecto real, corregido en `T-056`—, y `_product/` y `temporal/`
+  estan declaradas sin carpeta, las dos a proposito.
+
+- **La decision:** el control **no lleva dentro una lista de excepciones**. Lo que se exige es que
+  **cada diferencia superviviente tenga su razon escrita** en `PROJECT.md` o en una `D-XXX`; si no la
+  tiene, esa es la noticia.
+
+- **Por que, y es lo que separa un detector de una coartada:** una lista de excepciones dentro del
+  control envejece sin que nadie la revise. Cada excepcion nueva se anade el dia que molesta, nadie
+  vuelve a preguntarse si sigue siendo valida, y al final el control tapa justo lo que existia para
+  ver. Poniendo la razon **fuera** —en el documento que se lee— la excepcion queda expuesta a la
+  lectura normal y se cae sola cuando deja de ser cierta.
+
+- **Alternativa descartada:** filtrar `_product/` y `temporal/` dentro del comando para que el
+  control salga siempre limpio. Se descarta por lo de arriba, y por algo mas concreto: `_product/`
+  **va a existir** al entrar en Descubrimiento, y ese dia el filtro habria que quitarlo. Un control
+  que hay que editar cuando el proyecto avanza normalmente no se edita: se ignora.
+
+- **Nota sobre `.claude/`:** al declararla se dice ademas lo que la distingue de las demas — es
+  **agnostica por `D-021`**, no lleva dentro ningun dato de este proyecto. Sin esa linea, la fila
+  invitaria a meter ahi datos propios, que es lo contrario de lo que `D-021` decidio.

@@ -57,6 +57,14 @@
 | [T-046](#t-046---ampliar-c-005-a-las-dos-carpetas-sources-y-darle-disparador-a-la-precedencia) | Ampliar `C-005` a las dos carpetas `sources/` y darle disparador a la precedencia | Implementada | Baja | No bloqueante |
 | [T-047](#t-047---dar-al-sello-una-tercera-linea-y-hacer-refutable-a-004) | Dar al sello una tercera linea y hacer refutable `A-004` | Implementada | Media | No bloqueante |
 | [T-048](#t-048---extender-la-regla-de-comando-y-salida-a-las-comprobaciones-de-iniciativa-propia) | Extender la regla de comando y salida a las comprobaciones de iniciativa propia | Implementada | Media | No bloqueante |
+| [T-049](#t-049---registrar-como-supuesto-que-nada-de-_global-es-material-en-transito) | Registrar como supuesto que nada de `_global/` es material en transito | Implementada | Media | No bloqueante |
+| [T-050](#t-050---quitar-el-presente-al-diagnostico-de-dt-003-ya-pagada) | Quitar el presente al diagnostico de `DT-003`, ya pagada | Implementada | Baja | No bloqueante |
+| [T-051](#t-051---anclar-al-commit-lo-que-se-cita-del-repositorio-del-auditor) | Anclar al commit lo que se cita del repositorio del auditor | Implementada | Baja | No bloqueante |
+| [T-052](#t-052---generar-las-dos-listas-del-informe-en-vez-de-escribirlas) | Generar las dos listas del informe en vez de escribirlas | Implementada | Baja | No bloqueante |
+| [T-053](#t-053---contrastar-las-carpetas-del-arbol-contra-las-declaradas-en-projectmd) | Contrastar las carpetas del arbol contra las declaradas en `PROJECT.md` | Implementada | Alta | No bloqueante |
+| [T-054](#t-054---hacer-que-el-cierre-detecte-un-riesgo-nombrado-y-sin-codigo) | Hacer que el cierre detecte un riesgo nombrado y sin codigo | Implementada | Media | No bloqueante |
+| [T-055](#t-055---quitar-del-control-del-paso-2b-la-evidencia-citada-en-bloques-cercados) | Quitar del control del Paso 2b la evidencia citada en bloques cercados | Implementada | Media | No bloqueante |
+| [T-056](#t-056---declarar-claude-en-la-tabla-de-carpetas-propias) | Declarar `.claude/` en la tabla de carpetas propias | Implementada | Media | No bloqueante |
 
 ---
 
@@ -1643,3 +1651,397 @@ $ git grep -nE "AIzar|Company_TripleS|github\.com" -- .claude CLAUDE.md
 
 Evidencia que la cierra: la regla escrita cubre las comprobaciones de iniciativa propia, y las
 entradas posteriores que afirman un resultado llevan su patron.
+
+---
+
+### T-049 - Registrar como supuesto que nada de `_global/` es material en transito
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-31 |
+
+**Hallazgo `F-019` de `R-007`** (severidad `Media`, `REVERSIBLE`), mas su §5.2. Evaluado y
+**aceptado**; verificado que **persiste en `HEAD`**.
+
+Verificacion — orden ejecutada y salida cruda:
+
+```
+$ git grep -n "_global" -- _persistence/assumptions.md _persistence/debt_tec.md
+_persistence/assumptions.md:96:- **Supuesto:** el sello de version de `_global/guide.md` sirve porque **alguien comparara los dos
+_persistence/assumptions.md:125:  Lo que cambio en el archivo para que esto sea comprobable: `_global/guide.md` v6 anade la tercera
+_persistence/debt_tec.md:15:| [DT-003](#dt-003---_global-no-tiene-gitignore-propio-ni-esta-declarada-en-projectmd) | ... | Implementada | ...
+_persistence/debt_tec.md:134:### DT-003 - `_global/` no tiene `.gitignore` propio ni esta declarada en `PROJECT.md`
+--- exit: 0 ---
+```
+
+Las dos de `assumptions.md` son `A-004` (el sello de version), sin relacion; las de `debt_tec.md`
+son la propia `DT-003`, ya `Implementada`. **Ningun codigo sostenia el riesgo.**
+
+Lo observado: `S-007` identifico un riesgo concreto y bien planteado —si una receta futura mete en
+`_global/` un archivo que si deberia excluirse, hoy nada lo detectaria— y lo dejo **solo en el
+informe**, declarando ademas «ningun supuesto nuevo se abrio».
+
+Por que importa, y cual es el agravante: el informe es el canal, no el registro. Cuando `S-007` deja
+de ser el ultimo —y ya hay ocho detras— ese parrafo deja de leerse. Y `DT-003` esta `Implementada`,
+asi que **nadie va a volver por ahi**: el riesgo desaparece del radar en el momento exacto en que la
+deuda que lo contenia se marca pagada.
+
+🚨 **Lo incomodo del hallazgo no es el caso, es que se repite.** Es la misma forma que `F-012` —un
+riesgo que vivia solo en un informe—, que cerramos hace dos jornadas. El auditor lo dice sin
+adornos: se cerro **como caso, no como regla**. Por eso esta tarea trae compania: **`T-054`** lleva
+la deteccion al protocolo de cierre, que es lo que faltaba las tres veces.
+
+Que se hizo: **`A-006`** en `assumptions.md` — «ningun archivo de `_global/` es material en
+transito»— con lo que se supone, sobre que se construyo, **como se refuta** (aparece ahi un archivo
+que no es recetario, changelog ni fuente; uno solo basta) y **disparador**: el control de carpetas de
+`T-053`, que ya se corre por otro motivo y mira el sitio correcto.
+
+Se sigue la distincion que da el auditor en §5.2 y que es la parte fina del asunto: lo que
+`PROJECT.md` dice —«se versiona entera, sin exclusiones»— es una **regla**, y como regla esta bien
+donde esta. Lo que faltaba es el **supuesto que la sostiene**, que es una prediccion sobre el futuro
+— y las predicciones se registran donde se vigilan.
+
+Evidencia que la cierra: `git grep -n "_global" -- _persistence/assumptions.md
+_persistence/debt_tec.md` devuelve una entrada que enuncia el riesgo y cita `D-031` o `DT-003`.
+
+---
+
+### T-050 - Quitar el presente al diagnostico de `DT-003`, ya pagada
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-31 |
+
+**Hallazgo `F-020` de `R-007`** (severidad `Baja`, `REVERSIBLE`). Evaluado y **aceptado**, con un
+matiz sobre el titulo; verificado que **persiste en `HEAD`**.
+
+Verificacion — orden ejecutada y salida cruda:
+
+```
+$ git grep -n "sigue listando solo" -- _persistence/debt_tec.md
+_persistence/debt_tec.md:149:  `PROJECT.md` ni `.gitignore`**: `PROJECT.md` §«Carpetas propias» sigue listando solo
+--- exit: 0 ---
+```
+
+Lo observado: `DT-003` esta `Implementada` desde `268d3f1`, y su cuerpo seguia afirmando **en
+presente** un defecto que ese mismo commit corrigio.
+
+Por que importa: quien abra la entrada dentro de dos meses leera «sigue listando solo…» antes de
+llegar al parrafo que lo desmiente cincuenta lineas mas abajo. El caso es inocuo porque `Estado` se
+ve enseguida; el patron no lo es — **es el mecanismo por el que una entrada de registro envejece
+hacia la mentira.**
+
+Que se hizo: el bloque de diagnostico pasa a estar **explicitamente fechado** («🕐 estado al
+2026-08-28 (S-006), ya corregido»), con las dos afirmaciones en pasado y una frase que dice cuando
+dejaron de ser ciertas.
+
+**Donde discrepo en parte, y por que no es una discrepancia real:** el hallazgo apunta tambien al
+titulo, que nombra el defecto. **El titulo se queda**, y lo digo con su razon: una deuda **se nombra
+por lo que registra**; renombrarla al pagarla haria ilegible el indice —«¿de que iba `DT-003`?»— y
+romperia un ancla ya citada. No hay conflicto con el auditor: su propio criterio de cierre apunta al
+**cuerpo**, no al titulo. Se anade bajo el titulo una nota que dice justamente eso, para que la
+proxima lectura no vuelva a abrir la duda.
+
+Evidencia que la cierra: `git grep -n "sigue listando solo" -- _persistence/debt_tec.md` devuelve
+cero lineas, o la que quede esta dentro de un bloque fechado como estado anterior.
+
+```
+$ git grep -n "sigue listando solo" -- _persistence/debt_tec.md
+--- exit: 1 ---
+```
+
+---
+
+### T-051 - Anclar al commit lo que se cita del repositorio del auditor
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-31 |
+
+**Hallazgo `F-021` de `R-007`** (severidad `Baja`, `REVERSIBLE`). Evaluado y **aceptado como
+regla**; verificado que **persiste en `HEAD`**.
+
+Verificacion — orden ejecutada y salida cruda:
+
+```
+$ grep -n "linea 16-17" _persistence/progress.md
+351:  `_persistence/progress.md` (linea 16-17) ya registra el `HEAD` del ejecutor como `eb17b6e`
+--- exit: 0 ---
+```
+
+Lo observado: `S-007` afirmo, **con numero de linea y sin ancla**, que el repositorio del auditor
+registraba un estado que su traspaso no reflejaba, y concluyo «manda la evidencia». Esa conclusion
+quedo en `progress.md`, que es registro permanente.
+
+Lo que el auditor demostro, recorriendo **todos** los commits de su repositorio: **ninguno registro
+nunca ese par de valores.** `268d3f1` se commiteo a las 16:17:00 y su `dea9327` a las 16:19:33 —
+**dos minutos y medio**. Leimos su arbol de trabajo con su sesion de cierre a mitad de escritura. El
+traspaso era correcto y nuestra lectura tambien: **median arboles distintos.**
+
+Por que importa: es exactamente lo que el contrato nos exige a nosotros —auditar contra el commit del
+informe, no contra `HEAD`— aplicado en el sentido contrario. Un numero de linea afirma una precision
+que no tiene: el archivo se reescribe, y quien intente reproducirlo mañana no sabra si el error es
+suyo, del archivo o de quien lo escribio.
+
+Que se hizo, en los dos protocolos que leen su repositorio: toda afirmacion sobre su contenido que
+vaya a registro permanente se ancla con `git -C <repositorio del auditor> log -1 --format=%h`, o se
+declara «lectura del arbol de trabajo, no reproducible». Prohibido citar por numero de linea sin
+ancla.
+
+**No se reescribe la entrada de `S-007`**, y el propio auditor lo dice: basta con que la regla exista
+para la proxima vez. Reescribirla seria lo que `D-018` y `L-007` prohiben.
+
+Evidencia que la cierra: la siguiente afirmacion sobre su repositorio viene con hash o con la marca
+de lectura sin ancla.
+
+---
+
+### T-052 - Generar las dos listas del informe en vez de escribirlas
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Baja |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-31 |
+
+**Hallazgo `F-022` de `R-007`** (severidad `Baja`, `REVERSIBLE`). Evaluado y **aceptado**.
+
+Verificacion — ordenes ejecutadas y salida cruda:
+
+```
+$ git show --stat --name-only --format= 268d3f1
+PROJECT.md
+_audit/S-007.md
+_audit/index.md
+_persistence/debt_tec.md
+_persistence/decisions.md
+_persistence/progress.md
+--- exit: 0 ---
+```
+
+Seis archivos; el informe enumeraba **cinco**, sin `_audit/index.md`.
+
+```
+$ git show 268d3f1:_persistence/tasks.md | sed -n '/^## Indice/,/^---/p' | grep -c "No implementada"
+9
+--- exit: 0 ---
+```
+
+Nueve tareas abiertas; el informe repasaba **ocho**, sin `T-019`.
+
+Por que importa: ninguna de las dos omisiones esconde nada —la fila del indice es efecto mecanico del
+cierre, `T-019` es la tarea abierta de menor peso—, pero **una enumeracion sin salvedad se lee como
+exhaustiva**, y es justo el tipo de frase que el auditor usa como atajo para no recorrer el diff
+entero. El coste de la version correcta es cero; el de la incorrecta es que la proxima omision,
+cuando importe, llegue con la misma cara de completa.
+
+Que se hizo, y por que es mas que una regla: `_audit/S-007.md` es inmutable por `D-018`, asi que el
+criterio de cierre es hacia adelante — misma forma que `F-015`. Pero aqui **las dos listas son
+generables**, asi que en vez de pedir cuidado se quita la ocasion de fallar: `protocol-close` lleva
+ahora los dos comandos que las producen (`git show --stat --name-only` y el filtro del indice de
+`tasks.md`), y la exigencia de **declarar la lista como parcial** si se prefiere acotarla. Una lista
+generada no se queda corta.
+
+Nota del propio informe, que conviene registrar: `F-022` es el primer hallazgo que el auditor entrega
+**sin leccion detras en su vara**, y lo propone como candidata a leccion propia suya.
+
+Evidencia que la cierra: en el siguiente informe, la lista de archivos coincide con
+`git show --stat` y la seccion 2 cubre todas las `No implementada`, o se declara parcial.
+
+---
+
+### T-053 - Contrastar las carpetas del arbol contra las declaradas en `PROJECT.md`
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Alta |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | auditor |
+| Fecha | 2026-08-31 |
+
+**No es un hallazgo:** es la recomendacion de `R-007` §5.1, respondiendo a nuestra pregunta 1.
+Evaluada y **aceptada**. Se le pone importancia `Alta` por lo que encontro en su primera ejecucion.
+
+La pregunta era si basta con releer cada informe contra `PROJECT.md` para detectar deuda. La
+respuesta del auditor, que se acepta entera: **no, y el propio caso lo demuestra** — `DT-003` se
+encontro *mientras se preparaba otra cosa*. **Un metodo cuyo disparador es «alguien lo nota» no falla
+ruidosamente: falla en silencio, y no hay forma de saber cuantas veces no se activo.**
+
+Que se hizo: **Paso 2c de `protocol-close`**, antes del `git add`:
+
+```bash
+diff <(git ls-tree -d --name-only HEAD | sed 's|$|/|' | sort) \
+     <(sed -n '/^## Carpetas propias/,/^## /p' PROJECT.md | grep -oE '^\| `[^`]+/`' | tr -d '|` ' | sort)
+```
+
+**Las dos direcciones**, porque dicen cosas distintas: una carpeta que existe y no esta declarada es
+lo que paso con `_global/`; una fila declarada cuya carpeta no existe es el mismo defecto al reves, y
+ese llega solo con el tiempo.
+
+🚨 **Encontro algo en su primera ejecucion**, que es la mejor defensa que puede tener un control:
+
+```
+$ diff <(git ls-tree -d --name-only HEAD | sed 's|$|/|' | sort) <(...PROJECT.md...)
+1d0
+< .claude/
+5a5,6
+> _product/
+> temporal/
+--- exit: 1 ---
+```
+
+`.claude/` es una carpeta de primer nivel, versionada, que contiene los agentes y las skills — y
+`PROJECT.md` no la nombraba. **Es el mismo defecto que `DT-003`, vivo y sin detectar.** Se corrige en
+`T-056`. Las otras dos diferencias son deliberadas y ahora tienen su razon escrita en `PROJECT.md`.
+
+**Por que el control no lleva lista de excepciones dentro:** una lista de excepciones envejece sin que
+nadie la revise y acaba tapando justo lo que el control existe para ver. Lo que se exige es que cada
+diferencia superviviente tenga su razon en `PROJECT.md` o en una `D-XXX`; si no la tiene, esa es la
+noticia.
+
+Se recoge tambien la salvedad del auditor: **no sustituye a releer.** La relectura encuentra cosas
+que ninguna comparacion mecanica ve; lo que no puede es ser el unico filtro para lo mecanizable.
+
+Evidencia que la cierra: el control esta en `protocol-close` y sus diferencias supervivientes tienen
+razon escrita.
+
+---
+
+### T-054 - Hacer que el cierre detecte un riesgo nombrado y sin codigo
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | executor |
+| Fecha | 2026-08-31 |
+
+**No sale del informe: sale de leerlo.** `F-019` diagnostica el problema sin llegar a pedir esto —
+dice que la forma «se cerro **como caso**, no como regla»— y tiene razon en algo que nos toca a
+nosotros arreglar, no a el.
+
+Lo observado, tres veces con la misma forma:
+
+| Cuando | Que riesgo | Donde vivia |
+|---|---|---|
+| `S-005` | el dictamen de Gate no cabe en `contract.md` §4 | solo en el informe (`F-012`) |
+| `S-007` | una receta futura podria meter en `_global/` algo excluible | solo en el informe (`F-019`) |
+| `S-007` | la comprobacion del `.gitignore` era una prediccion, no un hecho | solo en el informe (§5.2) |
+
+Las tres se arreglaron **una a una**, cuando el auditor las señalo. Ninguna de las tres se detecto
+del lado nuestro.
+
+Por que importa: un riesgo que el propio informe reconoce esta a un paso de tener codigo — quien lo
+escribio ya lo penso y ya lo redacto. Lo que falta no es criterio, es **el momento en que alguien
+pregunte «¿y esto tiene codigo?»**. Sin ese momento, la respuesta llega dos semanas despues y en boca
+del auditor.
+
+Que se hizo: `protocol-close`, Paso 6 — al revisar el borrador del informe, buscar los riesgos que el
+propio texto reconoce («si algun dia X, hoy nada lo detectaria», «esto asume que Y») y comprobar si
+cada uno tiene `A-XXX`, `T-XXX` o `DT-XXX`. Si no, **se senala en el reporte del Paso 8** con la
+frase que lo enuncia. **No lo registra el closer** —los cuatro archivos del porque no son suyos—:
+lo senala para que `executor` le ponga codigo antes del commit.
+
+Se escribe ademas el agravante, porque es lo que hace el fallo invisible: si el riesgo colgaba de una
+deuda que se marca `Implementada` en la misma sesion, **desaparece del radar justo cuando se cierra
+lo que lo contenia**.
+
+Evidencia que la cierra: el proximo informe que reconozca un riesgo lo entrega con codigo, o el
+reporte del cierre dice que falta.
+
+---
+
+### T-055 - Quitar del control del Paso 2b la evidencia citada en bloques cercados
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | executor |
+| Fecha | 2026-08-31 |
+
+**No es un hallazgo del auditor.** Es `L-009` llevada por fin al codigo del control, despues de que
+el falso positivo se disparara **cuatro veces en dos jornadas**: arranque de S-013, cierre de S-013,
+cierre de S-014 y el analisis de `R-006`. Las cuatro hubo que descartarlo a mano.
+
+Lo observado: desde `T-031` el registro guarda **salida cruda de comandos** como evidencia, y esos
+bloques contienen encabezados y filas identicos a los reales —`### C-002`, `| [T-014]…`—. El control
+de coherencia indice ↔ detalle los contaba como entradas, y señalaba como huerfano lo que era una
+prueba bien puesta.
+
+Por que importa: **una alarma que siempre resulta falsa se aprende a ignorar**, y entonces el dia que
+sea verdadera tampoco se mirara. Es el mismo argumento con el que `D-021` acoto el ambito de su
+control en vez de barrer el arbol entero.
+
+Que se hizo: las dos ramas del `diff` pasan por `awk '/^```/{c=!c; next} !c'`, que descarta las
+lineas dentro de bloques cercados. Comprobado sobre los siete archivos:
+
+```
+$ for f in tasks decisions constraints assumptions lessons debt_tec progress; do echo "== $f"; diff <(awk '/^```/{c=!c; next} !c' "_persistence/$f.md" | grep -oE '^\| \[?[A-Z]+-[0-9]+' | grep -oE '[A-Z]+-[0-9]+' | sort -u) <(awk '/^```/{c=!c; next} !c' "_persistence/$f.md" | grep -oE '^#{3} [A-Z]+-[0-9]+' | grep -oE '[A-Z]+-[0-9]+' | sort -u); done
+== tasks
+== decisions
+== constraints
+== assumptions
+== lessons
+== debt_tec
+== progress
+--- exit: 0 ---
+```
+
+Cero diferencias en los siete: el filtro elimina el falso positivo **y** confirma que los indices
+cuadran de verdad, cosa que antes quedaba tapada por el ruido.
+
+---
+
+### T-056 - Declarar `.claude/` en la tabla de carpetas propias
+| Campo | Valor |
+|---|---|
+| Estado | Implementada |
+| Importancia | Media |
+| Urgencia | No bloqueante |
+| Etapa | 000_preproject |
+| Origen | executor |
+| Fecha | 2026-08-31 |
+
+**Lo encontro el control de `T-053` en su primera ejecucion**, que es exactamente para lo que se
+escribio.
+
+Verificacion — orden ejecutada y salida cruda:
+
+```
+$ diff <(git ls-tree -d --name-only HEAD | sed 's|$|/|' | sort) <(sed -n '/^## Carpetas propias/,/^## /p' PROJECT.md | grep -oE '^\| `[^`]+/`' | tr -d '|` ' | sort)
+1d0
+< .claude/
+5a5,6
+> _product/
+> temporal/
+--- exit: 1 ---
+```
+
+Lo observado: `.claude/` es una carpeta de primer nivel **real y versionada** —contiene los dos
+agentes y las dos skills que ejecutan los protocolos— y `PROJECT.md` no la nombraba. **Es el mismo
+defecto que `DT-003`**, que costo dos sesiones detectar de casualidad, vivo desde el primer commit.
+
+Que se hizo: fila para `.claude/` en «Carpetas propias», declarando ademas lo que la distingue —es
+**agnostica por `D-021`**, no lleva dentro ningun dato de este proyecto—, y nota que documenta el
+control de `T-053` y las dos filas que no tienen carpeta a proposito (`_product/` por `D-025`,
+`temporal/` por `D-015`).
+
+Comprobado despues: la unica diferencia que queda son esas dos, ambas con razon escrita.
