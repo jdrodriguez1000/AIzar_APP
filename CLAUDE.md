@@ -50,6 +50,20 @@ que indica `PROJECT.md`: `index.md` es el tablero y cada `R-XXX.md` audita nuest
 3. **Contesta en el siguiente informe**, en su seccion 0, con uno de los tres veredictos:
    `Implementado` / `Aceptado — pendiente` / `No se implementa`.
 
+🚨 **Lo que verifiques antes de aceptar o rechazar se registra con el comando y su salida cruda,
+nunca con la conclusion.** Toda decision con `Origen: auditor` lleva un bloque de verificacion con
+la **orden ejecutada literal** y **lo que devolvio**, tal cual salio.
+
+⛔ **«Se comprobo», «verificado», «existe y es legible» son veredictos, no evidencia.** Lo que
+alimenta una auditoria es «corri esto, salio esto». Sin la salida, el auditor no puede contrastar
+nada: tiene que reconstruir por su cuenta una comprobacion que nosotros ya hicimos, y entonces la
+que vale es la suya, no nuestro registro (`F-005` de `R-003` → `T-031`, aplicada por primera vez en
+`D-037`).
+
+⚠️ **Rige hacia adelante y no se aplica hacia atras.** Una entrada antigua que solo dijo «se
+comprobo» **no se reescribe** para que exhiba un comando que en su dia no se anoto: eso convierte
+«falta evidencia» en «hay evidencia falsa», y esta vez sin nadie que lo note (`D-037`).
+
 🚨 **El estado de cada hallazgo es del auditor, no nuestro.** El lo cierra verificando la correccion
 sobre un commit posterior. **No espejes su tablero:** lo nuestro son las tareas, decisiones y deuda
 que salgan de el.
@@ -63,6 +77,12 @@ que salgan de el.
 - Si tras esa vuelta seguis discrepando, decide **quien absorbe el coste de equivocarse**:
   **reversible** → decides tu y se registra la discrepancia; **irreversible** (borrar datos,
   publicar, migrar, gastar) → **se escala al usuario antes de actuar**, nunca despues.
+- 🚨 **Ese eje se aplica a criterio, y hay que decirlo cada vez que se use (`D-020`).** Los cuatro
+  ejemplos del parentesis son ejemplos, **no un inventario**: el inventario de acciones
+  irreversibles esta vacio y seguira vacio hasta que `T-016` lo pueble, cosa que no puede hacerse
+  sin alcance (`T-004`). Mientras tanto, **declara la clasificacion en la propia respuesta** —«lo
+  clasifico como reversible a criterio, porque…»—, nunca como si la leyeras de una tabla. Un
+  criterio declarado como criterio se puede discutir; uno disfrazado de tabla, no.
 - **Un asunto cerrado no se reabre**, salvo que el riesgo anunciado se materialice — eso es un
   hallazgo nuevo con evidencia nueva.
 

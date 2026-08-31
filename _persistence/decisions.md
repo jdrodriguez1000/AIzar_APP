@@ -502,7 +502,7 @@
   porque poblarlo exige saber que hace el proyecto — y el alcance sigue sin definirse (T-004).
 - **Decision:** aceptar que hasta entonces ese eje **se aplica a criterio**, diciendolo
   explicitamente cada vez que se use, en vez de presentarlo como la lectura de una tabla que no
-  existe. Se crea T-015 para poblar nuestro lado del inventario cuando T-004 se cierre.
+  existe. Se crea T-016 para poblar nuestro lado del inventario cuando T-004 se cierre.
 - **Razon:** la alternativa seria inventar ahora una lista de acciones irreversibles para un
   proyecto cuyo alcance no conocemos — es decir, adivinar. Un criterio declarado como criterio se
   puede discutir; un criterio disfrazado de tabla, no.

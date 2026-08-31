@@ -282,6 +282,24 @@ escribe `executor` en el momento en que las cosas pasan, porque una decision no 
 para ellos: cada uno sale con «al dia» o con lo que falta por anotar. Sin esa linea, un cierre que
 reviso y uno que no reviso se ven igual.
 
+### 🚨 Una comprobacion concreta sobre `decisions.md`: las que verifican, con comando y salida
+
+Al leer `decisions.md`, mira **las entradas con `Origen: auditor` de esta sesion**. Cada una debe
+llevar un bloque de verificacion con la **orden ejecutada literal** y **su salida cruda**.
+
+| Que dice la entrada | Que es | Que haces |
+|---|---|---|
+| «corri `git log -1 …`», y debajo lo que salio | evidencia | nada, esta bien |
+| «se comprobo», «verificado», «existe y es legible» | **un veredicto sin evidencia** | 🚨 senalalo en el reporte del Paso 8 |
+
+⛔ **No lo arregles tu, y menos aun reconstruyendo el comando ahora.** Vale lo mismo que en el resto
+del paso: los cuatro archivos no son tuyos. Y aqui hay una razon extra — un bloque de verificacion
+que no se ejecuto cuando dice haberse ejecutado es **peor que su ausencia**: convierte «falta
+evidencia» en «hay evidencia falsa». Senalar, no rellenar.
+
+⚠️ **Rige hacia adelante.** Las entradas antiguas que solo dijeron «se comprobo» se quedan como
+estan; no las reportes como pendientes. Ver `D-037` y `T-031`.
+
 **La unica excepcion, y es mecanica:** si un supuesto `A-XXX` quedo comprobado por la evidencia
 del diff, puedes moverlo a `decisions.md` o `lessons.md` y marcarlo `Confirmado` en
 `assumptions.md`. Eso no es interpretar, es aplicar la regla del ascenso — y **dilo en el reporte**.
@@ -392,6 +410,17 @@ desaparece del radar.** Esa es la forma en que se pierden los hallazgos buenos.
 ⚠️ Un hallazgo rechazado **por coste o prioridad** —no por ser incorrecto— es deuda tecnica por
 definicion y exige su `DT-XXX`. Un rechazo por coste sin entrada en `debt_tec.md` es, por si solo,
 un hallazgo del auditor, y no requiere criterio: se comprueba mirando si la entrada existe.
+
+### 🚨 Si el rechazo clasifica el asunto como reversible o irreversible, dilo como criterio
+
+Un `No se implementa` que apoye su razon en ese eje **tiene que declarar que la clasificacion se
+hizo a criterio** (`D-020`), en la propia fila o en el `D-XXX` que cita: «reversible a criterio,
+porque…». **No existe ningun inventario de acciones irreversibles**: esta vacio hasta que `T-016`
+lo pueble, y `T-016` no puede cerrarse sin alcance (`T-004`).
+
+⚠️ Escribir «es reversible» a secas presenta una tabla que no existe, y el auditor no tiene como
+distinguir un criterio de una consulta. **Tu no lees `decisions.md` entero**, asi que esta es la
+unica vez que veras `D-020`: si el eje aparece en la tabla, la salvedad va con el.
 
 ## 1. Que se hizo
 <lo que muestra el diff, con codigos y rutas. Archivos creados, modificados y por que>
@@ -569,7 +598,7 @@ retransmite. Un reporte recortado se recorta dos veces.
 - debt_tec.md — <sin novedad | PROPUESTA: DT-XXX ... (pendiente de confirmar)>
 
 ### Los cuatro del porque — revisados, no escritos
-- decisions.md — <al dia | falta anotar: ...>
+- decisions.md — <al dia | falta anotar: ... | 🚨 D-XXX (`Origen: auditor`) verifica sin comando ni salida>
 - assumptions.md — <al dia | falta anotar: ... | ascendido A-XXX → D-XXX>
 - constraints.md — <al dia | falta anotar: ...>
 - lessons.md — <al dia | falta anotar: ...>

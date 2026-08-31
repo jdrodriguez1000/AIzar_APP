@@ -34,6 +34,7 @@
 | [S-008](#s-008---se-cierran-los-cinco-puntos-restantes-del-analisis-de-_globalguidemd) | Se cierran los cinco puntos restantes del analisis de `_global/guide.md` | 2026-08-30 | 000_preproject |
 | [S-009](#s-009---primera-auditoria-recibida-r-002-los-dos-hallazgos-se-aceptan-e-implementan) | Primera auditoria recibida (R-002): los dos hallazgos se aceptan e implementan | 2026-08-30 | 000_preproject |
 | [S-010](#s-010---segunda-auditoria-recibida-r-003-los-tres-hallazgos-se-aceptan-para-la-proxima-sesion) | Segunda auditoria recibida (R-003): los tres hallazgos se aceptan para la proxima sesion | 2026-08-30 | 000_preproject |
+| [S-011](#s-011---se-implementan-los-tres-hallazgos-de-r-003-t-029-t-030-t-031) | Se implementan los tres hallazgos de R-003 (T-029, T-030, T-031) | 2026-08-30 | 000_preproject |
 
 ---
 
@@ -44,14 +45,38 @@
 | Etapa actual | `000_preproject` |
 | Ultima actualizacion | 2026-08-30 |
 | Salud | En marcha |
-| Avance de la etapa | Metodo de trabajo, persistencia, repositorio, ciclo completo inicio/cierre, canal de vuelta con la auditoria, datos propios del proyecto en `PROJECT.md`, el metodo VERTICAL incorporado y ajustado, y el analisis de nueve puntos de `_global/guide.md` completo (`guide.md` en `VERSION 5`). T-026 registra que falta disenar la fase `Descubrimiento` antes de entrar en ella (bloqueante). Llego la **segunda auditoria del proyecto** (`R-003`, sobre `S-003`): 3 hallazgos, `Media`/`Baja`/`Baja`, los tres `REVERSIBLE` y de coherencia interna (ninguna afirmacion de `S-003` resulto falsa). Se evaluaron y **se aceptan los tres**, pero el usuario decide **dejar la implementacion para la proxima sesion** (T-029, T-030, T-031, todas `No implementada`; D-037, L-006). La primera auditoria (`R-002`) sigue implementada e integra desde `S-009`. Sigue pendiente el alcance del proyecto |
-| Bloqueos activos | Alcance y objetivo del proyecto sin definir (T-004); bloquea a su vez T-025 y el diseño de la fase Descubrimiento. **T-026** (disenar la fase `Descubrimiento` antes de entrar en ella) sin resolver y bloqueante por si misma. Ninguna de las tres tareas de esta sesion (T-029/T-030/T-031) es bloqueante |
+| Avance de la etapa | Metodo de trabajo, persistencia, repositorio, ciclo completo inicio/cierre, canal de vuelta con la auditoria, datos propios del proyecto en `PROJECT.md`, el metodo VERTICAL incorporado y ajustado, y el analisis de nueve puntos de `_global/guide.md` completo (`guide.md` en `VERSION 5`). T-026 registra que falta disenar la fase `Descubrimiento` antes de entrar en ella (bloqueante). Se implementaron los **tres hallazgos de la segunda auditoria** (`R-003`, sobre `S-003`): T-029 (declarar en `CLAUDE.md` y en el Paso 6b/6 de `protocol-close` que el eje reversible/irreversible se aplica a criterio, citando D-020), T-030 (corregir en `decisions.md` la referencia de D-020: `T-015` -> `T-016`) y T-031 (exigir comando y salida cruda en las decisiones que verifican antes de aceptar, tambien en `CLAUDE.md` y `protocol-close`). Las tres quedan `Implementada`. La primera auditoria (`R-002`) sigue implementada e integra desde `S-009`. Sigue pendiente el alcance del proyecto |
+| Bloqueos activos | Alcance y objetivo del proyecto sin definir (T-004); bloquea a su vez T-025 y el diseño de la fase Descubrimiento. **T-026** (disenar la fase `Descubrimiento` antes de entrar en ella) sin resolver y bloqueante por si misma |
 
 ---
 
 ## 2. Ultimo realizado
 
-**Llego `R-003`**, la segunda auditoria entregada del proyecto
+**Se implementaron los tres hallazgos aceptados de `R-003`** (F-003, F-004, F-005), decididos en
+`D-037` y dejados para esta jornada:
+
+- **T-029** — `CLAUDE.md` gana una vinieta junto al tratamiento del desacuerdo con `auditor` que
+  cita `D-020` y exige declarar la clasificacion reversible/irreversible en la propia respuesta
+  mientras `T-016` no cierre; y `CLAUDE.md` (seccion «Tratamiento de lo entregado por auditor») mas
+  el Paso 6b de `protocol-close`/`SKILL.md` (seccion «Si el rechazo clasifica el asunto...») llevan
+  la misma exigencia para que `session-closer`, que no lee `decisions.md` entero, la vea donde
+  redacta.
+- **T-030** — corregida en `_persistence/decisions.md` la referencia del cuerpo de `D-020`:
+  `T-015` -> `T-016`. Se toco solo la linea de prosa; la salida cruda del bloque de verificacion de
+  `D-037` que cita literalmente `git grep -n "Se crea T-015"` **se dejo intacta** (registrado en
+  `L-007`).
+- **T-031** — `CLAUDE.md` (misma seccion) y el Paso 6/6b de `protocol-close`/`SKILL.md` exigen desde
+  ahora que toda decision con `Origen: auditor` que verifique algo lleve **la orden ejecutada
+  literal y su salida cruda**, no un veredicto («se comprobo», «verificado»). Regla hacia adelante:
+  las entradas antiguas (`D-018`) no se reescriben.
+
+Las tres tareas pasan a `Implementada` (2026-08-30) en `tasks.md`. `lessons.md` suma `L-007`: al
+corregir un codigo mal escrito, la salida cruda que lo cita no se toca — es la cara defensiva de
+`T-031`/`D-037`. No hubo entradas nuevas en `constraints.md` ni `assumptions.md`; no se registro
+ninguna `D-XXX` nueva porque la decision ya existia (`D-037`) y esta sesion fue su ejecucion
+mecanica. No hubo construccion de producto ni cambios de codigo de aplicacion.
+
+**Sesion anterior (S-010) — para referencia:** llego `R-003`, la segunda auditoria entregada del proyecto
 (`..\AIzar_Auditor\_review\R-003.md`), auditando `_audit/S-003.md` sobre el commit `ec8e982`.
 Veredicto: **Con hallazgos (3)** — `F-003` `Media`, `F-004` y `F-005` `Baja`, los tres
 `REVERSIBLE`. Ninguna afirmacion de `S-003` resulto falsa: los tres son de **coherencia interna**.
@@ -90,21 +115,19 @@ No hubo construccion de producto ni cambios de codigo de aplicacion.
 
 ## 3. Siguiente paso
 
-**Implementar T-029, T-030 y T-031** (los tres hallazgos aceptados de `R-003`, decision del
-usuario de dejarlos para esta proxima jornada):
+**T-029, T-030 y T-031 ya estan implementadas.** El siguiente paso concreto es retomar las dos
+tareas bloqueantes que quedaron en espera mientras se atendia la auditoria:
 
-1. **T-029** (`Alta`) — declarar en `CLAUDE.md` y en el Paso 6b de `protocol-close` que el eje
-   reversible/irreversible se aplica a criterio, citando `D-020`.
-2. **T-031** (`Media`) — escribir en `CLAUDE.md` y en el Paso 6 de `protocol-close` la exigencia de
-   comando y salida cruda en decisiones que verifican antes de aceptar.
-3. **T-030** (`Baja`) — corregir la referencia `T-015` -> `T-016` en el cuerpo de `D-020`.
+1. **T-004** (`Alta`, bloqueante) — recibir del usuario el alcance y objetivo del proyecto. Bloquea
+   a `T-025` y al diseno de la fase `Descubrimiento`.
+2. **T-026** (`Alta`, bloqueante) — disenar la fase `Descubrimiento` antes de entrar en ella
+   (D-027); depende de que `T-004` fije el alcance.
 
-En paralelo siguen abiertas y bloqueantes **T-004** (alcance y objetivo del proyecto) y **T-026**
-(disenar la fase `Descubrimiento`), pero **ninguna de las dos es el siguiente paso de la proxima
-sesion** — eso son T-029/T-030/T-031.
+En el informe de esta sesion (`_audit/S-011.md`) se responde a `R-003` en su seccion 0 con los tres
+veredictos `Implementado` (T-029, T-030, T-031).
 
-El ciclo de auditoria sigue abierto: `_audit/index.md` mantiene S-004 a S-008 en `Pendiente`
-(S-002 y S-003 ya con hallazgos recogidos), mas la nueva `S-010.md` que este cierre añade.
+El ciclo de auditoria sigue abierto: `_audit/index.md` mantiene S-004 a S-009 en `Pendiente`
+(S-002 y S-003 ya con hallazgos recogidos), mas la nueva `S-011.md` que este cierre añade.
 
 ---
 
@@ -452,6 +475,45 @@ El ciclo de auditoria sigue abierto: `_audit/index.md` mantiene S-004 a S-008 en
 - **Sin construccion de producto:** no hubo cambios de codigo de aplicacion.
 - **Siguiente paso concreto:** implementar **T-029, T-030 y T-031** en la proxima sesion. T-004 y
   T-026 siguen abiertas y bloqueantes, pero no son el siguiente paso de esta transicion.
+
+---
+
+### S-011 - Se implementan los tres hallazgos de R-003 (T-029, T-030, T-031)
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Etapa | 000_preproject |
+
+- **Etapa del proyecto:** `000_preproject` — sobre el commit `3d87e03` (S-010). T-004 y T-026
+  siguen siendo los dos bloqueos de fondo de la etapa; ninguno se toco en esta sesion.
+- **Que quedo hecho, segun el diff:** se ejecuto lo que `D-037` ya habia decidido en S-010, sin
+  reabrir el criterio:
+  - **T-029** (`Alta`) — `CLAUDE.md`, seccion «Cuando no estemos de acuerdo», gana una vinieta que
+    cita `D-020` y exige declarar la clasificacion reversible/irreversible en la propia respuesta
+    mientras `T-016` no cierre, aclarando que los cuatro ejemplos entre parentesis (borrar datos,
+    publicar, migrar, gastar) son ejemplos y no un inventario. La misma exigencia se anadio al
+    Paso 6b de `.claude/skills/protocol-close/SKILL.md`, seccion nueva «Si el rechazo clasifica el
+    asunto como reversible o irreversible, dilo como criterio».
+  - **T-030** (`Baja`) — en `_persistence/decisions.md`, el cuerpo de `D-020` corrige «Se crea
+    T-015» a «Se crea T-016». Se toco una sola linea (`git diff --stat`: 1 insercion, 1 borrado);
+    la segunda aparicion de la cadena `T-015`, que es la salida cruda del bloque de verificacion de
+    `D-037` (`git grep -n "Se crea T-015"`), se dejo intacta a proposito — es historia, no prosa.
+  - **T-031** (`Media`) — `CLAUDE.md`, misma seccion, y el Paso 6 de `SKILL.md` exigen desde ahora
+    que toda decision con `Origen: auditor` que verifique algo lleve la orden ejecutada literal y
+    su salida cruda, no un veredicto («se comprobo», «verificado», «existe y es legible»). Se deja
+    escrito que la regla rige hacia adelante y que `D-018` no se reescribe.
+- **Los cuatro archivos del porque:** `lessons.md` gana **L-007** («al corregir un codigo mal
+  escrito, la salida cruda que lo cita no se toca»), registrando el hallazgo hecho al
+  aplicar T-030: la cadena `T-015` aparecia dos veces y un reemplazo global habria reescrito la
+  evidencia de `D-037`. No se registro ninguna `D-XXX` nueva: la decision que gobierna esta sesion
+  ya existia (`D-037`, de S-010) y aqui solo se ejecuto. Sin entradas nuevas en `constraints.md` ni
+  `assumptions.md`.
+- **Sin construccion de producto:** no hubo cambios de codigo de aplicacion; todo el diff es
+  documental (`CLAUDE.md`, la skill `protocol-close`, y tres archivos de `_persistence/`).
+- **`tasks.md`:** `T-029`, `T-030` y `T-031` pasan de `No implementada` a `Implementada`
+  (2026-08-30).
+- **Siguiente paso concreto:** retomar **T-004** (alcance y objetivo del proyecto) y, con eso
+  resuelto, **T-026** (diseno de la fase `Descubrimiento`) — las dos bloqueantes de la etapa.
 
 ---
 

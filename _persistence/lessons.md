@@ -15,6 +15,7 @@
 | [L-004](#l-004---un-archivo-duplicado-sin-marca-hace-que-se-edite-el-equivocado) | Un archivo duplicado sin marca hace que se edite el equivocado | 2026-08-28 | 000_preproject |
 | [L-005](#l-005---un-paso-obligatorio-cuyo-resultado-no-se-mira-es-una-intencion-no-una-obligacion) | Un paso obligatorio cuyo resultado no se mira es una intencion, no una obligacion | 2026-08-30 | 000_preproject |
 | [L-006](#l-006---una-regla-decidida-y-no-llevada-al-archivo-operativo-no-rige-descansa-donde-nadie-la-lee-al-aplicarla) | Una regla decidida y no llevada al archivo operativo no rige: descansa donde nadie la lee al aplicarla | 2026-08-30 | 000_preproject |
+| [L-007](#l-007---al-corregir-un-codigo-mal-escrito-la-salida-cruda-que-lo-cita-no-se-toca) | Al corregir un codigo mal escrito, la salida cruda que lo cita no se toca | 2026-08-30 | 000_preproject |
 
 ---
 
@@ -230,3 +231,35 @@ Plantilla:
   que pueda fallar es una intencion; esta dice que una regla sin sitio donde se lea es un acta.
   Las dos son la misma familia de error — **confundir haberlo escrito con que ocurra**— y las dos
   las encontro la revision externa leyendo lo que nosotros ya dabamos por hecho.
+
+---
+
+### L-007 - Al corregir un codigo mal escrito, la salida cruda que lo cita no se toca
+| Campo | Valor |
+|---|---|
+| Fecha | 2026-08-30 |
+| Etapa | 000_preproject |
+| Origen | executor |
+
+- **Contexto:** `T-030` (hallazgo `F-004` de `R-003`) pedia corregir una referencia equivocada en
+  el cuerpo de `D-020`: decia `T-015` donde debia decir `T-016`. La correccion mas natural es un
+  reemplazo global de la cadena en `decisions.md`.
+- **Que ocurrio:** la cadena aparecia **dos veces** en el archivo. La segunda no era prosa nuestra:
+  era la salida literal de `git grep -n "Se crea T-015"` registrada dentro del bloque de
+  verificacion de `D-037` —la propia evidencia con la que se acepto el hallazgo—, con su numero de
+  linea de entonces. Un reemplazo global la habria reescrito, dejando un bloque que afirma haber
+  ejecutado un comando cuya salida ya no coincide con lo que ese comando devolveria. Se corrigio
+  solo la linea 505, y `git diff --stat` confirmo **1 insercion, 1 borrado**.
+- **Leccion:** dentro de `_persistence/` conviven dos clases de texto que se editan con reglas
+  opuestas. La **prosa** describe el estado actual y se corrige cuando esta mal. La **salida cruda
+  registrada** describe un momento pasado y **no se corrige nunca**: si deja de coincidir con el
+  presente, eso no es un error, es exactamente su funcion. Reescribirla no arregla nada — fabrica
+  una evidencia que no se produjo.
+- **Como aplicarla:** antes de reemplazar una cadena en `_persistence/`, **contar sus apariciones**
+  y mirar cada una. Toda la que este dentro de un bloque de codigo de verificacion queda fuera del
+  cambio. Nunca un reemplazo global a ciegas en estos archivos, por trivial que parezca la
+  correccion. Y el `git diff --stat` posterior debe cuadrar con el numero de lineas que se pretendia
+  tocar.
+- **Parentesco:** es la cara defensiva de `T-031` y `D-037`. Ahi se decidio **no reescribir `D-018`**
+  para que exhibiera un comando que no se ejecuto; aqui se evita reescribir un comando que **si** se
+  ejecuto. La misma regla desde los dos lados: el bloque de verificacion es historia, no estado.

@@ -37,9 +37,9 @@
 | [T-026](#t-026---disenar-la-fase-descubrimiento-antes-de-entrar-en-ella) | Disenar la fase `Descubrimiento` antes de entrar en ella | No implementada | Alta | Bloqueante |
 | [T-027](#t-027---dar-comprobacion-roja-al-anclaje-del-informe-de-auditoria-en-el-commit) | Dar comprobacion roja al anclaje del informe de auditoria en el commit | Implementada | Alta | No bloqueante |
 | [T-028](#t-028---dejar-recuperable-el-enunciado-anterior-de-a-001-desde-el-propio-archivo) | Dejar recuperable el enunciado anterior de `A-001` desde el propio archivo | Implementada | Media | No bloqueante |
-| [T-029](#t-029---declarar-en-claudemd-que-el-eje-reversibleirreversible-se-aplica-a-criterio) | Declarar en `CLAUDE.md` que el eje reversible/irreversible se aplica a criterio | No implementada | Alta | No bloqueante |
-| [T-030](#t-030---corregir-la-referencia-de-d-020-es-t-016-no-t-015) | Corregir la referencia de D-020: es T-016, no T-015 | No implementada | Baja | No bloqueante |
-| [T-031](#t-031---exigir-comando-y-salida-cruda-en-las-decisiones-que-verifican-antes-de-aceptar) | Exigir comando y salida cruda en las decisiones que verifican antes de aceptar | No implementada | Media | No bloqueante |
+| [T-029](#t-029---declarar-en-claudemd-que-el-eje-reversibleirreversible-se-aplica-a-criterio) | Declarar en `CLAUDE.md` que el eje reversible/irreversible se aplica a criterio | Implementada | Alta | No bloqueante |
+| [T-030](#t-030---corregir-la-referencia-de-d-020-es-t-016-no-t-015) | Corregir la referencia de D-020: es T-016, no T-015 | Implementada | Baja | No bloqueante |
+| [T-031](#t-031---exigir-comando-y-salida-cruda-en-las-decisiones-que-verifican-antes-de-aceptar) | Exigir comando y salida cruda en las decisiones que verifican antes de aceptar | Implementada | Media | No bloqueante |
 
 ---
 
@@ -656,12 +656,12 @@ sigue `Confirmado`, segun D-036.
 ### T-029 - Declarar en `CLAUDE.md` que el eje reversible/irreversible se aplica a criterio
 | Campo | Valor |
 |---|---|
-| Estado | No implementada |
+| Estado | Implementada |
 | Importancia | Alta |
 | Urgencia | No bloqueante |
 | Etapa | 000_preproject |
 | Origen | auditor |
-| Fecha | - |
+| Fecha | 2026-08-30 |
 
 **Hallazgo `F-003` de `R-003`** (severidad `Media`, `REVERSIBLE`). Evaluado y **aceptado**;
 verificado que **persiste en `HEAD`**.
@@ -691,12 +691,12 @@ y exija declarar la clasificacion al usar el eje.
 ### T-030 - Corregir la referencia de D-020: es T-016, no T-015
 | Campo | Valor |
 |---|---|
-| Estado | No implementada |
+| Estado | Implementada |
 | Importancia | Baja |
 | Urgencia | No bloqueante |
 | Etapa | 000_preproject |
 | Origen | auditor |
-| Fecha | - |
+| Fecha | 2026-08-30 |
 
 **Hallazgo `F-004` de `R-003`** (severidad `Baja`, `REVERSIBLE`). Evaluado y **aceptado**;
 verificado que **persiste en `HEAD`**.
@@ -721,12 +721,12 @@ Evidencia que la cierra: `git show <hash>:_persistence/decisions.md` con `T-016`
 ### T-031 - Exigir comando y salida cruda en las decisiones que verifican antes de aceptar
 | Campo | Valor |
 |---|---|
-| Estado | No implementada |
+| Estado | Implementada |
 | Importancia | Media |
 | Urgencia | No bloqueante |
 | Etapa | 000_preproject |
 | Origen | auditor |
-| Fecha | - |
+| Fecha | 2026-08-30 |
 
 **Hallazgo `F-005` de `R-003`** (severidad `Baja`, `REVERSIBLE`). Evaluado y **aceptado**.
 
